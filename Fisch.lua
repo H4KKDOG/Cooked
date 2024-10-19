@@ -100,15 +100,15 @@ function updateRodInWorkspace()
 end
 
 function createPlatformTP(teleportPosition)
-	local platform = Instance.new("Part")
-	platform.Size = Vector3.new(10, 1, 10)
-	platform.Position = teleportPosition - Vector3.new(0, 5, 0)
-	platform.Anchored = true
-	platform.CanCollide = true
-	platform.Transparency = 0.75
-	platform.Parent = workspace
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(10, 1, 10)
+    platform.Position = teleportPosition - Vector3.new(0, 5, 0)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 0.75
+    platform.Parent = workspace
 
-	HumanoidRootPart.CFrame = CFrame.new(teleportPosition)
+    HumanoidRootPart.CFrame = CFrame.new(teleportPosition)
 end
 
 --// Reel / Shake
@@ -151,13 +151,13 @@ end)
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
         rodName = nil
-	end
+    end
 end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
-	if BobChild.Name == "bobber" then
-		Progress = false
-	end
+    if BobChild.Name == "bobber" then
+        Progress = false
+    end
 end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
@@ -226,6 +226,8 @@ Tabs.Debug:CreateButton{
     end
 }
 
+Tabs.Debug:CreateParagraph("Paragraph", { Title = "", Content = "" })
+
 Tabs.Debug:CreateButton{
     Title = "Rejoin Server",
     Callback = function()
@@ -272,6 +274,8 @@ SellToggle:OnChanged(function(value)
     updateConfig()
     Library:Notify{ Title = "Fisch Notification", Content = "Set AutoSell : "..value, Duration = 5 }
 end)
+
+Tabs.Fishing:CreateParagraph("Paragraph", { Title = "", Content = "" })
 
 local fishingSpots = {
     { "Sunstone (Common Crate)", Vector3.new(-1149.08508, 134.49998, -1055.80151) },
