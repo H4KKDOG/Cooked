@@ -261,14 +261,14 @@ local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
     end
 })
 
-local CastToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", Default = false })
+local CastToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", Default = config.Enabled })
 CastToggle:OnChanged(function(value)
     config.Enabled = value
     updateConfig()
     Library:Notify{ Title = "Fisch Notification", Content = "Set AutoCast : "..value, Duration = 5 }
 end)
 
-local SellToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Sell", Default = false })
+local SellToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Sell", Default = config.AutoSell })
 SellToggle:OnChanged(function(value)
     config.AutoSell = value
     updateConfig()
