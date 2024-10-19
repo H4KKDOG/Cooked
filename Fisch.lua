@@ -152,6 +152,7 @@ end)
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
         rodName = nil
+        Progress = false
     end
 end)
 
@@ -164,10 +165,10 @@ end)
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     if Descendant.Name == 'reel' then
         Finished = false
+        Progress = false
         if config.AutoSell then
             ReplicatedStorage.events.selleverything:InvokeServer()
         end
-        Progress = false
     end
 end)
 
@@ -178,27 +179,23 @@ coroutine.wrap(function()
             
         if not Progress then
             local nRod = updateRodInWorkspace()
-            if nRod then
-                if not nRod:FindFirstChild("bobber") then
-                    Progress = true
-                    task.wait(3.0)
+            if not nRod:FindFirstChild("bobber") then
+                Progress = true
+                task.wait(3.0)
     
-                    VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                    task.wait(0.3)
-                    VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                task.wait(0.3)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
     
-                    wait(0.01)
+                wait(0.01)
                     
-                    if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
-                        local RodRemote = Character:FindFirstChild(rodName)
-                        if RodRemote then
-                            RodRemote.events.reset:FireServer()
-                            RodRemote.events.cast:FireServer(100.5)
-                        end
+                if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
+                    local RodRemote = Character:FindFirstChild(rodName)
+                    if RodRemote then
+                        RodRemote.events.reset:FireServer()
+                        RodRemote.events.cast:FireServer(100.5)
                     end
                 end
-            else
-                Progress = false
             end
         end
     end
