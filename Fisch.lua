@@ -174,7 +174,7 @@ end)
 --// Cast
 coroutine.wrap(function()
     while config.Enabled do
-        task.wait(0.5)
+        task.wait(0.25)
             
         if not Progress then
             local nRod = updateRodInWorkspace()
@@ -184,7 +184,7 @@ coroutine.wrap(function()
                 task.wait(3.0)
 
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                task.wait(0.30)
+                task.wait(0.3)
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
 
                 wait(0.01)
