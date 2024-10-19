@@ -8,11 +8,11 @@ getgenv().Shiro = true
 local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/Library/Fluent.lua"))()
 local Window = Library:CreateWindow{
     Title = "Fisch GUI",
-    SubTitle = "by zxc.shiro",
-    TabWidth = 125,
-    Size = UDim2.fromOffset(725, 525),
+    SubTitle = "@zxc.shiro",
+    TabWidth = 135,
+    Size = UDim2.fromOffset(650, 575),
     Resize = true,
-    MinSize = Vector2.new(470, 380),
+    MinSize = Vector2.new(450, 375),
     Acrylic = false,
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.LeftControl
@@ -100,15 +100,15 @@ function updateRodInWorkspace()
 end
 
 function createPlatformTP(teleportPosition)
-    local platform = Instance.new("Part")
-    platform.Size = Vector3.new(10, 1, 10)
-    platform.Position = teleportPosition - Vector3.new(0, 5, 0)
-    platform.Anchored = true
-    platform.CanCollide = true
-    platform.Transparency = 0.75
-    platform.Parent = workspace
+	local platform = Instance.new("Part")
+	platform.Size = Vector3.new(10, 1, 10)
+	platform.Position = teleportPosition - Vector3.new(0, 5, 0)
+	platform.Anchored = true
+	platform.CanCollide = true
+	platform.Transparency = 0.75
+	platform.Parent = workspace
 
-    HumanoidRootPart.CFrame = CFrame.new(teleportPosition)
+	HumanoidRootPart.CFrame = CFrame.new(teleportPosition)
 end
 
 --// Reel / Shake
@@ -151,13 +151,13 @@ end)
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
         rodName = nil
-    end
+	end
 end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
-    if BobChild.Name == "bobber" then
-        Progress = false
-    end
+	if BobChild.Name == "bobber" then
+		Progress = false
+	end
 end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
@@ -180,7 +180,7 @@ spawn(function()
                 task.wait(3.5)
 
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                task.wait(0.25)
+                task.wait(0.35)
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
 
                 wait(0.01)
@@ -249,6 +249,7 @@ local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
 
     Callback = function(click)
         ReplicatedStorage.events.selleverything:InvokeServer()
+        Library:Notify{ Title = "Fisch Notification", Content = "Sell Inventory", Duration = 5 }
     end,
 
     ChangedCallback = function(Key)
@@ -262,12 +263,14 @@ local CastToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", D
 CastToggle:OnChanged(function(value)
     config.Enabled = value
     updateConfig()
+    Library:Notify{ Title = "Fisch Notification", Content = "Set AutoCast : "..value, Duration = 5 }
 end)
 
 local SellToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Sell", Default = false })
 SellToggle:OnChanged(function(value)
     config.AutoSell = value
     updateConfig()
+    Library:Notify{ Title = "Fisch Notification", Content = "Set AutoSell : "..value, Duration = 5 }
 end)
 
 local fishingSpots = {
