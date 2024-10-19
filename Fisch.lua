@@ -275,7 +275,7 @@ local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
 
     Callback = function(click)
         ReplicatedStorage.events.selleverything:InvokeServer()
-        Library:Notify{ Title = "Fisch Notification", Content = "Sell Inventory", Duration = 5 }
+        Library:Notify{ Title = "Fisch Notification", Content = "Sell Inventory", Duration = 2.5 }
     end,
 
     ChangedCallback = function(Key)
@@ -289,14 +289,12 @@ local CastToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", D
 CastToggle:OnChanged(function(value)
     config.Enabled = value
     updateConfig()
-    Library:Notify{ Title = "Fisch Notification", Content = "Set AutoCast : "..value, Duration = 5 }
 end)
 
 local SellToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Sell", Default = config.AutoSell })
 SellToggle:OnChanged(function(value)
     config.AutoSell = value
     updateConfig()
-    Library:Notify{ Title = "Fisch Notification", Content = "Set AutoSell : "..value, Duration = 5 }
 end)
 
 Tabs.Fishing:CreateParagraph("Paragraph", { Title = "", Content = "" })
