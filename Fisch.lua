@@ -174,7 +174,7 @@ end)
 --// Cast
 coroutine.wrap(function()
     while config.Enabled do
-        task.wait(0.25)
+        task.wait(0.5)
             
         if not Progress then
             local nRod = updateRodInWorkspace()
