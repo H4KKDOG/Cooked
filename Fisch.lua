@@ -174,16 +174,17 @@ end)
 --// Cast
 coroutine.wrap(function()
     while config.Enabled do
-        task.wait()
+        task.wait(0.5)
+            
         if not Progress then
             local nRod = updateRodInWorkspace()
             
             if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
-                task.wait(3.5)
+                task.wait(3.0)
 
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                task.wait(0.35)
+                task.wait(0.30)
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
 
                 wait(0.01)
