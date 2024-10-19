@@ -178,24 +178,27 @@ coroutine.wrap(function()
             
         if not Progress then
             local nRod = updateRodInWorkspace()
-            
-            if nRod and not nRod:FindFirstChild("bobber") then
-                Progress = true
-                task.wait(3.0)
-
-                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                task.wait(0.3)
-                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
-
-                wait(0.01)
-                
-                if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
-                    local RodRemote = Character:FindFirstChild(rodName)
-                    if RodRemote then
-                        RodRemote.events.reset:FireServer()
-                        RodRemote.events.cast:FireServer(100.5)
+            if nRod then
+                if not nRod:FindFirstChild("bobber") then
+                    Progress = true
+                    task.wait(3.0)
+    
+                    VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                    task.wait(0.3)
+                    VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+    
+                    wait(0.01)
+                    
+                    if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
+                        local RodRemote = Character:FindFirstChild(rodName)
+                        if RodRemote then
+                            RodRemote.events.reset:FireServer()
+                            RodRemote.events.cast:FireServer(100.5)
+                        end
                     end
                 end
+            else
+                Progress = false
             end
         end
     end
