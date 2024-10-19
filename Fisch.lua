@@ -179,7 +179,7 @@ coroutine.wrap(function()
             
         if not Progress then
             local nRod = updateRodInWorkspace()
-            if not nRod:FindFirstChild("bobber") then
+            if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
                 task.wait(3.0)
     
