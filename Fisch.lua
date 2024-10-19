@@ -1,4 +1,4 @@
-if game.Place ~= 16732694052 then return end
+if game.PlaceId ~= 16732694052 then return end
 
 repeat
     task.wait()
