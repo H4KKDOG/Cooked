@@ -175,7 +175,7 @@ end)
 --// Cast
 coroutine.wrap(function()
     while config.Enabled do
-        task.wait(0.5)
+        task.wait(0.25)
             
         if not Progress then
             local nRod = updateRodInWorkspace()
@@ -201,15 +201,19 @@ coroutine.wrap(function()
     end
 end)()
 
-RunService.Heartbeat:Connect(function()
-    if tick() - lastCheck >= 30 then
-        local nRod = updateRodInWorkspace()
-        if nRod and not nRod:FindFirstChild("bobber") then
-            Progress = false
+coroutine.wrap(function()
+    while config.Enabled do
+        task.wait(0.25)
+            
+        if tick() - lastCheck >= 30 then
+            local nRod = updateRodInWorkspace()
+            if nRod and not nRod:FindFirstChild("bobber") then
+                Progress = false
+            end
+            lastCheck = tick()
         end
-        lastCheck = tick()
     end
-end)
+end)()
 
 --// GUI
 local Tabs = {
