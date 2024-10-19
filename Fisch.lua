@@ -172,10 +172,12 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
 end)
 
 --// Cast
-spawn(function()
-    while task.wait() do
-        if config.Enabled and not Progress then
+coroutine.wrap(function()
+    while config.Enabled do
+        task.wait()
+        if not Progress then
             local nRod = updateRodInWorkspace()
+            
             if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
                 task.wait(3.5)
@@ -185,14 +187,18 @@ spawn(function()
                 VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
 
                 wait(0.01)
-                if nRod and nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
-                    Character:FindFirstChild(rodName).events.reset:FireServer()
-                    Character:FindFirstChild(rodName).events.cast:FireServer(100.5)
+                
+                if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
+                    local RodRemote = Character:FindFirstChild(rodName)
+                    if RodRemote then
+                        RodRemote.events.reset:FireServer()
+                        RodRemote.events.cast:FireServer(100.5)
+                    end
                 end
             end
         end
     end
-end)
+end)()
 
 RunService.Heartbeat:Connect(function()
     if tick() - lastCheck >= 30 then
