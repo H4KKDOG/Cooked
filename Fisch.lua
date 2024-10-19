@@ -36,6 +36,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 
 local Progress = false
 local Finished = false
+local lastCheck = tick()
 local rodName
 
 getgenv().config = getgenv().config
@@ -190,6 +191,16 @@ spawn(function()
                 end
             end
         end
+    end
+end)
+
+RunService.Heartbeat:Connect(function()
+    if tick() - lastCheck >= 30 then
+        local nRod = updateRodInWorkspace()
+        if nRod and not nRod:FindFirstChild("bobber") then
+            Progress = false
+        end
+        lastCheck = tick()
     end
 end)
 
