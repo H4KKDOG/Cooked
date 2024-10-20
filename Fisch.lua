@@ -42,9 +42,14 @@ local OnMobile = UserInputService.TouchEnabled and not UserInputService.Keyboard
 local Progress = false
 local Reeling = false
 local WaitDelay = false
-local lastCheck = tick()
+local flyEnabled = false
+local horizontalSpeed = 100
+local verticalSpeed = 50
+local bodyVelocity
 local rodName
 local MouseValue
+
+local lastCheck = tick()
 
 if OnPc then
     MouseValue = 0
@@ -57,7 +62,8 @@ local isFirstTime = false
 local configTemplate = {
     Enabled = false,
     AutoSell = false,
-    SellBind = "F"
+    SellBind = "F",
+    FlyBind = "X"
 }
 
 if not isfolder("FischConfig") then
@@ -113,16 +119,39 @@ function updateRodInWorkspace()
     return nil
 end
 
-function createPlatformTP(teleportPosition)
-    local platform = Instance.new("Part")
-    platform.Size = Vector3.new(10, 1, 10)
-    platform.Position = teleportPosition - Vector3.new(0, 5, 0)
-    platform.Anchored = true
-    platform.CanCollide = true
-    platform.Transparency = 0.75
-    platform.Parent = workspace
+function fly()
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000)
+    bodyVelocity.Parent = Character:WaitForChild("HumanoidRootPart")
 
-    HumanoidRootPart.CFrame = CFrame.new(teleportPosition)
+    while flyEnabled do
+        local moveDirection = Character.Humanoid.MoveDirection
+
+        local verticalVelocity = 0
+        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+            verticalVelocity = verticalSpeed  -- Ascend speed
+        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
+            verticalVelocity = -verticalSpeed  -- Descend speed
+        end
+
+        bodyVelocity.Velocity = Vector3.new(
+            moveDirection.X * horizontalSpeed,  -- Horizontal movement
+            verticalVelocity,                    -- Vertical movement
+            moveDirection.Z * horizontalSpeed   -- Horizontal movement
+        )
+
+        wait()
+    end
+
+    bodyVelocity:Destroy()
+end
+
+function toggleFly()
+    flyEnabled = not flyEnabled
+    if flyEnabled then
+        fly()
+    end
 end
 
 --// Reel / Shake
@@ -270,12 +299,21 @@ Tabs.Debug:CreateButton{
     end
 }
 
-Tabs.Debug:CreateButton{
-    Title = "Deep Ocean (Platform)",
-    Callback = function()
-        createPlatformTP(Vector3.new(1447.85071, 139.649994, -7649.64502))
+local Fly = Tabs.Debug:CreateKeybind("Keybind", {
+    Title = "Flight",
+    Mode = "Toggle",
+    Default = config.FlyBind,
+
+    Callback = function(click)
+        toggleFly()
+    end,
+
+    ChangedCallback = function(Key)
+        config.FlyBind = tostring(Key.Name)
+        updateConfig()
+        Library:Notify{ Title = "Fisch Notification", Content = "Set Keybind : "..tostring(Key.Name), Duration = 5 }
     end
-}
+})
 
 Tabs.Debug:CreateParagraph("Paragraph", { Title = "", Content = "" })
 
@@ -305,9 +343,9 @@ local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
     end,
 
     ChangedCallback = function(Key)
-        config.SellBind = Key
+        config.SellBind = tostring(Key.Name)
         updateConfig()
-        Library:Notify{ Title = "Fisch Notification", Content = "Set Keybind : "..Key, Duration = 5 }
+        Library:Notify{ Title = "Fisch Notification", Content = "Set Keybind : "..tostring(Key.Name), Duration = 5 }
     end
 })
 
