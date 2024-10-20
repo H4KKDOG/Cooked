@@ -60,7 +60,7 @@ end
 getgenv().config = getgenv().config
 local isFirstTime = false
 local configTemplate = {
-    Enabled = false,
+    Enabled = true,
     AutoSell = false,
     AutoShake = false,
     AutoReel = false,
@@ -316,7 +316,7 @@ Tabs.Debug:CreateButton{
                         local position = HumanoidRootPart.Position
                         local newPositionY = position.Y + 5
                         local clipboardContent = "{ \"LocationName\", Vector3.new(" .. position.X .. ", " .. newPositionY .. ", " .. position.Z .. ") },"
-                        setclipboard(clipboardContent)                        
+                        setclipboard(clipboardContent)
                     end
                 }
             }
