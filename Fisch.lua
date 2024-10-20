@@ -35,6 +35,14 @@ local playerName = LocalPlayer.Name
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local playerBobberWorkspace = workspace:FindFirstChild(playerName)
+local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled
+local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
+
+if OnPc then
+    local MouseValue = 0
+elseif OnMobile then
+    local MouseValue = 1
+end
 
 local Progress = false
 local Finished = false
@@ -127,8 +135,8 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
 
         if ClickPositionX ~= 29 and ClickPositionY ~= 29 then
             task.wait(0.75)
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
+            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
         end
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Finished = true
@@ -185,9 +193,9 @@ coroutine.wrap(function()
                 Progress = true
                 task.wait(3.0)
     
-                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, true, game, 1)
                 task.wait(0.3)
-                VirtualInputManager:SendMouseButtonEvent(0, 0, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, false, game, 1)
     
                 wait(0.01)
                     
