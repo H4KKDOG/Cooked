@@ -60,9 +60,10 @@ local configTemplate = {
     Enabled = false,
     AutoSell = false,
     AutoShake = false,
+    FastShake = false,
     AutoReel = false,
     SellBind = "F",
-    FlyBind = "X"
+    FlyBind = "X",
 }
 
 if not isfolder("FischConfig") then
@@ -172,7 +173,9 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
 
         if ClickPositionX ~= 29 and ClickPositionY ~= 29 and config.AutoShake then
-            task.wait(0.75)
+            if not config.FastShake then
+                task.wait(0.75)
+            end
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
         end
@@ -386,6 +389,12 @@ end)
 local ShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Shake", Default = config.AutoShake })
 ShakeToggle:OnChanged(function(value)
     config.AutoShake = value
+    updateConfig()
+end)
+
+local FastShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Fast Shake (Settings)", Default = config.FastShake })
+FastShakeToggle:OnChanged(function(value)
+    config.FastShake = value
     updateConfig()
 end)
 
