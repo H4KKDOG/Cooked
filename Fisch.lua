@@ -164,7 +164,7 @@ local connections = {}
 connections[1] = RunService.Heartbeat:Connect(function()
     if flying then
         local originalCFrame = HumanoidRootPart.CFrame
-        local offsetCFrame = originalCFrame * CFrame.new(0, -2500, 0)
+        local offsetCFrame = originalCFrame * CFrame.new(0, -1000, 0)
         Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
         HumanoidRootPart.CFrame = offsetCFrame
 
