@@ -216,7 +216,7 @@ end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
-        task.wait(0.5)
+        task.wait(0.75)
         Progress = false
     end
 end)
