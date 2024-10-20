@@ -202,8 +202,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
 
         if ClickPositionX ~= 29 and config.AutoShake then
             if not config.FastShake then
-                Descendant:GetPropertyChangedSignal("Position"):Wait()
-                task.wait(0.1)
+                task.wait(0.69)
             end
 
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
@@ -220,7 +219,8 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         while Reeling and config.AutoReel do
             if fish and Descendant then
                 if not Perfect and WaitDelay then
-                    wait(3.0)
+                    Descendant:GetPropertyChangedSignal("Position"):Wait()
+                    task.wait(0.1)
                     WaitDelay = false
                 end
 
