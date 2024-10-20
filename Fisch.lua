@@ -154,7 +154,7 @@ function fly()
             verticalVelocity,
             moveDirection.Z * horizontalSpeed
         )
-        
+
         RunService.RenderStepped:Wait()
     end
 
@@ -181,17 +181,17 @@ connections[2] = RunService.Heartbeat:Connect(function()
     if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
         local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
         if shakeButton ~= lastButtonInstance then
-			lastButtonInstance = shakeButton
+            lastButtonInstance = shakeButton
             local ButtonPosition, ButtonSize = shakeButton.AbsolutePosition, shakeButton.AbsoluteSize
             local radius = ButtonSize.X / 2
             local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
             local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
-                
+
             if ClickPositionX ~= 29 and config.AutoShake then
                 if not config.FastShake then
                     task.wait(0.69)
                 end
-        
+
                 VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
                 VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
             end
