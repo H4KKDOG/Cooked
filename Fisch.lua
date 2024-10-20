@@ -283,7 +283,7 @@ Tabs.Debug:CreateButton{
             Content = "Select One",
             Buttons = {
                 {
-                    Title = "onFoot",
+                    Title = "OnFoot",
                     Callback = function()
                         local position = HumanoidRootPart.Position
                         local clipboardContent = "{ \"LocationName\", Vector3.new(" .. position.X .. ", " .. position.Y .. ", " .. position.Z .. ") },"
@@ -291,7 +291,7 @@ Tabs.Debug:CreateButton{
                     end
                 },
                 {
-                    Title = "onBoat",
+                    Title = "OnBoat",
                     Callback = function()
                         local position = HumanoidRootPart.Position
                         local newPositionY = position.Y + 5
@@ -422,7 +422,7 @@ end)
 Tabs.Fishing:CreateParagraph("Paragraph", { Title = "", Content = "" })
 
 local fishingSpots = {
-    { "Deep Ocean (Boat)", Vector3.new(1447.85071, 139.649994, -7649.64502) },
+    { "Deep Ocean", Vector3.new(1307.6851806640625, 139.40093994140625, -7598.64208984375) },
 }
 
 for _, location in ipairs(fishingSpots) do
