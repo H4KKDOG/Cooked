@@ -249,7 +249,7 @@ coroutine.wrap(function()
 
                 wait()
 
-                if nRod and not nRod:FindFirstChild("bobber") and nRod:FindFirstChild("events") then
+                if nRod and nRod:FindFirstChild("events") then
                     if rodName and rodName ~= "" and nRod:FindFirstChild("bobber") then
                         Character:FindFirstChild(rodName).events.reset:FireServer()
                         Character:FindFirstChild(rodName).events.cast:FireServer(100)
