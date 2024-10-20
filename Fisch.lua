@@ -176,6 +176,28 @@ connections[1] = RunService.Heartbeat:Connect(function()
     end
 end)
 
+connections[2] = RunService.Heartbeat:Connect(function()
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
+        wait()
+        local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
+        if currentButton then
+            local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
+            local radius = ButtonSize.X / 2
+            local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
+            local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
+                
+            if ClickPositionX ~= 29 and config.AutoShake then
+                if not config.FastShake then
+                    task.wait(0.69)
+                end
+        
+                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
+            end
+        end
+    end
+end)
+
 connect = connections
 
 function toggleFly()
@@ -257,28 +279,6 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
         end
         wait(0.75)
         Progress = false
-    end
-end)
-
-RunService.RenderStepped:Connect(function()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
-        wait()
-        local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
-        if currentButton then
-            local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
-            local radius = ButtonSize.X / 2
-            local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
-            local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
-                
-            if ClickPositionX ~= 29 and config.AutoShake then
-                if not config.FastShake then
-                    task.wait(0.69)
-                end
-        
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
-            end
-        end
     end
 end)
 
