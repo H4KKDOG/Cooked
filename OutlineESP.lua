@@ -15,16 +15,16 @@ local function createSeeThroughOutline(character)
             if existingOutline then
                 existingOutline:Destroy()
             end
-            
+
             local surfaceGui = Instance.new("SurfaceGui")
             surfaceGui.Name = "Outline"
             surfaceGui.AlwaysOnTop = true
             surfaceGui.Face = Enum.NormalId.Front
             surfaceGui.Adornee = part
             surfaceGui.Parent = part
-            
+
             local outlineFrame = Instance.new("Frame")
-            outlineFrame.Size = UDim2.new(0, 0, 0, 0)
+            outlineFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
             outlineFrame.BackgroundColor3 = Color3.new(1, 0, 0)
             outlineFrame.BorderSizePixel = 0
             outlineFrame.BackgroundTransparency = 0.75
@@ -39,7 +39,7 @@ local function createESP(player)
 
     local head = character:FindFirstChild("Head")
     if not head then return end
-    
+
     if head:FindFirstChild("ESP") then return end
 
     local billboardGui = Instance.new("BillboardGui")
@@ -82,7 +82,7 @@ local function updateESPs()
                 if esp then
                     esp:Destroy()
                 end
-                
+
                 for _, part in pairs(character:GetChildren()) do
                     if part:IsA("BasePart") then
                         local surfaceGui = part:FindFirstChild("Outline")
