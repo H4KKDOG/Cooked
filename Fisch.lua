@@ -127,35 +127,28 @@ function fly()
         bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
         bodyVelocity.Parent = HumanoidRootPart
 
-        local bodyGyro = Instance.new("BodyGyro")
-        bodyGyro.CFrame = HumanoidRootPart.CFrame
-        bodyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
-        bodyGyro.P = 3000
-        bodyGyro.Parent = HumanoidRootPart
-
         local function onRenderStep()
             local moveDirection = Vector3.new()
             if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
+                moveDirection = moveDirection * horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
+                moveDirection = moveDirection * horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
+                moveDirection = moveDirection * horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
+                moveDirection = moveDirection * horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.UpVector * verticalSpeed)
+                moveDirection = moveDirection * verticalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.UpVector * verticalSpeed)
+                moveDirection = moveDirection * verticalSpeed
             end
 
             bodyVelocity.Velocity = moveDirection
-            bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end
 
         table.insert(flyConnections, RunService.RenderStepped:Connect(onRenderStep))
@@ -165,7 +158,7 @@ end
 local function stopFly()
     flying = false
     for _, v in pairs(HumanoidRootPart:GetChildren()) do
-        if v:IsA("BodyVelocity") or v:IsA("BodyGyro") then
+        if v:IsA("BodyVelocity") then
             v:Destroy()
         end
     end
