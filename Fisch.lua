@@ -243,7 +243,7 @@ task.spawn(function()
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
-                task.wait(1.25)
+                task.wait(1.75)
 
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                 task.wait(0.3)
