@@ -220,7 +220,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
             if fish and Descendant then
                 if not Perfect and WaitDelay then
                     Descendant:GetPropertyChangedSignal("Position"):Wait()
-                    task.wait(0.1)
+                    task.wait(0.75)
                     WaitDelay = false
                 end
 
