@@ -204,7 +204,7 @@ coroutine.wrap(function()
                     local RodRemote = Character:FindFirstChild(rodName)
                     if RodRemote then
                         RodRemote.events.reset:FireServer()
-                        RodRemote.events.cast:FireServer(101)
+                        RodRemote.events.cast:FireServer(100)
                     end
                 end
             end
