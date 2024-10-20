@@ -171,10 +171,8 @@ end
 function toggleFly()
     if flying then
         stopFly()
-        Library:Notify{ Title = "Fisch Notification", Content = "Flight OFF", Duration = 2.5 }
     else
         fly()
-        Library:Notify{ Title = "Fisch Notification", Content = "Flight ON", Duration = 2.5 }
     end
 end
 
