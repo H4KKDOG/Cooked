@@ -43,7 +43,8 @@ local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flying = false
-local speed = 150
+local horizontalSpeed = 150
+local verticalSpeed = 100
 local flyConnections = {}
 local rodName
 local MouseValue
@@ -135,22 +136,22 @@ function fly()
         local function onRenderStep()
             local moveDirection = Vector3.new()
             if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * speed)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.LookVector * speed)
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.RightVector * speed)
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * speed)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.UpVector * speed)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.UpVector * verticalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.UpVector * speed)
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.UpVector * verticalSpeed)
             end
 
             bodyVelocity.Velocity = moveDirection
