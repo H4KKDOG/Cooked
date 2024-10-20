@@ -39,7 +39,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled
 local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
-local  = false
+local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flyEnabled = false
@@ -230,7 +230,7 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
             ReplicatedStorage.events.selleverything:InvokeServer()
         end
         task.wait(0.75)
-         = false
+        Progress = false
     end
 end)
 
@@ -239,10 +239,10 @@ coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
 
-        if not  then
+        if not Progress then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
-                 = true
+                Progress = true
 
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                 task.wait(0.3)
