@@ -1,5 +1,4 @@
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
 local ESPLoop = true
 local localPlayer = Players.LocalPlayer
