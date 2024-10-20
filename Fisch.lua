@@ -38,16 +38,17 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled
 local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
-if OnPc then
-    local MouseValue = 0
-elseif OnMobile then
-    local MouseValue = 1
-end
-
 local Progress = false
 local Finished = false
 local lastCheck = tick()
 local rodName
+local MouseValue
+
+if OnPc then
+    MouseValue = 0
+elseif OnMobile then
+    MouseValue = 1
+end
 
 getgenv().config = getgenv().config
 local isFirstTime = false
@@ -186,19 +187,19 @@ end)
 coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
-            
+
         if not Progress then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
                 task.wait(3.0)
-    
+
                 VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, true, game, 1)
                 task.wait(0.3)
                 VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, false, game, 1)
-    
+
                 wait(0.01)
-                    
+
                 if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
                     local RodRemote = Character:FindFirstChild(rodName)
                     if RodRemote then
@@ -214,7 +215,7 @@ end)()
 coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
-            
+
         if tick() - lastCheck >= 30 then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
