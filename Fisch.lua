@@ -58,7 +58,7 @@ end
 getgenv().config = getgenv().config
 local isFirstTime = false
 local configTemplate = {
-    Enabled = true,
+    Enabled = false,
     AutoSell = false,
     AutoShake = false,
     AutoReel = false,
@@ -337,7 +337,6 @@ CastToggle:OnChanged(function(value)
 
     if not config.Enabled then
         Progress = false
-        Library:Notify{ Title = "Fisch Notification", Content = "Auto Cast Off", Duration = 5 }
     else
         coroutine.wrap(function()
             local lastCheck = tick()
