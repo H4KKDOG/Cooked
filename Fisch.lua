@@ -217,7 +217,7 @@ coroutine.wrap(function()
                 task.wait(0.3)
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
 
-                wait(0.01)
+                wait()
 
                 if nRod and nRod:FindFirstChild("events") then
                     if rodName and rodName ~= "" then
