@@ -88,7 +88,7 @@ loadConfig()
 
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
-    if AFK and UserInputService.WindowFocused then
+    if AFK then
         wait(0.75)
         local FakeAFK = Instance.new("RemoteEvent")
         FakeAFK.Name = "afk"
@@ -155,7 +155,7 @@ end
 
 local connections = {}
 connections[1] = RunService.Heartbeat:Connect(function()
-    while flying do
+    if flying then
         local originalCFrame = HumanoidRootPart.CFrame
         local offsetCFrame = originalCFrame * CFrame.new(0, -10000, 0)
         Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
@@ -176,8 +176,8 @@ function toggleFly()
     end
 
     if flying then
-        Invis()
         fly()
+        Invis()
     else
         HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
     end
