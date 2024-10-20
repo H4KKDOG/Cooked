@@ -200,7 +200,7 @@ coroutine.wrap(function()
 
                 wait(0.01)
 
-                if nRod:FindFirstChild("events") and nRod:FindFirstChild("bobber") then
+                if nRod:FindFirstChild("events") then
                     local RodRemote = Character:FindFirstChild(rodName)
                     if RodRemote then
                         RodRemote.events.reset:FireServer()
