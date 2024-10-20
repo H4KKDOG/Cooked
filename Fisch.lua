@@ -176,7 +176,9 @@ connections[1] = RunService.Heartbeat:Connect(function()
     end
 end)
 
-connections[2] = RunService.RenderStepped:Connect(function()
+connect = connections
+
+RunService.RenderStepped:Connect(function()
     if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
         wait()
         local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
@@ -197,8 +199,6 @@ connections[2] = RunService.RenderStepped:Connect(function()
         end
     end
 end)
-
-connect = connections
 
 function toggleFly()
     flying = not flying
