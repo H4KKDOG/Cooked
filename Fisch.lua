@@ -269,7 +269,7 @@ task.spawn(function()
         if tick() - lastCheck >= 30 then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
-                 = false
+                Progress = false
             end
             lastCheck = tick()
         end
