@@ -252,7 +252,6 @@ task.spawn(function()
 
                 if nRod and nRod:FindFirstChild("events") then
                     if rodName and rodName ~= "" then
-                        print("RemoteCast")
                         Character:FindFirstChild(rodName).events.reset:FireServer()
                         Character:FindFirstChild(rodName).events.cast:FireServer(100)
                     end
