@@ -60,7 +60,7 @@ end
 getgenv().config = getgenv().config
 local isFirstTime = false
 local configTemplate = {
-    Enabled = true,
+    Enabled = false,
     AutoSell = false,
     AutoShake = false,
     AutoReel = false,
