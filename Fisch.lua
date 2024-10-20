@@ -114,11 +114,11 @@ function updateRodInWorkspace()
     return nil
 end
 
-if connections then
-    for _, conn in pairs(connections) do
+if connect then
+    for _, conn in pairs(connect) do
         conn:Disconnect()
     end
-    connections = nil
+    connect = nil
 end
 
 local parts = {}
@@ -161,6 +161,7 @@ function fly()
 end
 
 local connections = {}
+
 connections[1] = RunService.Heartbeat:Connect(function()
     if flying then
         local originalCFrame = HumanoidRootPart.CFrame
@@ -174,6 +175,30 @@ connections[1] = RunService.Heartbeat:Connect(function()
         HumanoidRootPart.CFrame = originalCFrame
     end
 end)
+
+connections[2] = RunService.RenderStepped:Connect(function()
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
+        wait()
+        local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
+        if currentButton then
+            local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
+            local radius = ButtonSize.X / 2
+            local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
+            local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
+                
+            if ClickPositionX ~= 29 and config.AutoShake then
+                if not config.FastShake then
+                    task.wait(0.69)
+                end
+        
+                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
+            end
+        end
+    end
+end)
+
+connect = connections
 
 function toggleFly()
     flying = not flying
@@ -192,23 +217,7 @@ end
 
 --// Reel / Shake
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
-    if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
-        wait()
-
-        local ButtonPosition, ButtonSize = Descendant.AbsolutePosition, Descendant.AbsoluteSize
-        local radius = ButtonSize.X / 2
-        local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
-        local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
-
-        if ClickPositionX ~= 29 and config.AutoShake then
-            if not config.FastShake then
-                task.wait(0.69)
-            end
-
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
-        end
-    elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
+    if Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         local fish = Descendant.Parent:FindFirstChild("fish")
         local randomChance = math.random(1, 3)
         local Perfect = randomChance <= 1
