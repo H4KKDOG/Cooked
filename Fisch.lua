@@ -47,6 +47,7 @@ local horizontalSpeed = 250
 local verticalSpeed = 75
 local bodyVelocity
 local rodName
+local lastButtonInstance
 local MouseValue
 
 getgenv().config = getgenv().config
@@ -114,11 +115,11 @@ function updateRodInWorkspace()
     return nil
 end
 
-if connect then
-    for _, conn in pairs(connect) do
+if _G.con then
+    for _, conn in pairs(_G.con) do
         conn:Disconnect()
     end
-    connect = nil
+    _G.con = nil
 end
 
 local parts = {}
@@ -178,10 +179,10 @@ end)
 
 connections[2] = RunService.Heartbeat:Connect(function()
     if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
-        wait()
         local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
-        if currentButton then
-            local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
+        if shakeButton ~= lastButtonInstance then
+			lastButtonInstance = shakeButton
+            local ButtonPosition, ButtonSize = shakeButton.AbsolutePosition, shakeButton.AbsoluteSize
             local radius = ButtonSize.X / 2
             local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
             local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
@@ -198,7 +199,7 @@ connections[2] = RunService.Heartbeat:Connect(function()
     end
 end)
 
-connect = connections
+_G.con = connections
 
 function toggleFly()
     flying = not flying
