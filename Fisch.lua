@@ -164,8 +164,7 @@ end
 --// Reel / Shake
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
-        wait()
-            
+
         local ButtonPosition, ButtonSize = Descendant.AbsolutePosition, Descendant.AbsoluteSize
         local radius = ButtonSize.X / 2
         local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
