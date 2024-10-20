@@ -39,7 +39,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled
 local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
-local Progress = false
+local  = false
 local Reeling = false
 local WaitDelay = false
 local flyEnabled = false
@@ -208,9 +208,10 @@ end)
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
         rodName = nil
-        Progress = false
         WaitDelay = false
         Reeling = false
+        task.wait(0.75)
+        Progress = false
     end
 end)
 
@@ -223,12 +224,13 @@ end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     if Descendant.Name == 'reel' then
-        Progress = false
         WaitDelay = false
         Reeling = false
         if config.AutoSell then
             ReplicatedStorage.events.selleverything:InvokeServer()
         end
+        task.wait(0.75)
+         = false
     end
 end)
 
@@ -237,11 +239,10 @@ coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
 
-        if not Progress then
+        if not  then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
-                Progress = true
-                task.wait(2.5)
+                 = true
 
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                 task.wait(0.3)
@@ -268,7 +269,7 @@ coroutine.wrap(function()
         if tick() - lastCheck >= 30 then
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
-                Progress = false
+                 = false
             end
             lastCheck = tick()
         end
