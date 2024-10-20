@@ -43,7 +43,7 @@ local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flying = false
-local flySpeed = 500
+local flySpeed = 300
 local originalGravity = workspace.Gravity
 local rodName
 local MouseValue
@@ -138,9 +138,9 @@ function fly()
 
         local verticalMove = 0
         if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            verticalMove = 50
+            verticalMove = 100
         elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-            verticalMove = -50
+            verticalMove = -100
         end
 
         HumanoidRootPart.Velocity = MoveDirection * 0.5 + Vector3.new(0, verticalMove, 0)
@@ -152,8 +152,8 @@ end
 function toggleFly()
     flying = not flying
     if flying then
-        workspace.Gravity = 0 
-        fly() 
+        workspace.Gravity = 0
+        fly()
     else
         HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
         workspace.Gravity = originalGravity
