@@ -43,9 +43,7 @@ local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flying = false
-local flySpeed = 300
-local maxFlySpeed = 1000
-local speedIncrement = 1
+local flySpeed = 500
 local originalGravity = workspace.Gravity
 local rodName
 local MouseValue
@@ -133,18 +131,21 @@ function fly()
         MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.S) and cameraCFrame.LookVector or Vector3.new())
         MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.A) and cameraCFrame.RightVector or Vector3.new())
         MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.D) and cameraCFrame.RightVector or Vector3.new())
-        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.Space) and Vector3.new(0, 25, 0) or Vector3.new())
-        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and Vector3.new(0, 25, 0) or Vector3.new())
 
         if MoveDirection.Magnitude > 0 then
-            flySpeed = math.min(flySpeed + speedIncrement, maxFlySpeed) 
-            MoveDirection = MoveDirection.Unit * math.min(randomizeValue(flySpeed, 10), maxFlySpeed)
-            HumanoidRootPart.Velocity = MoveDirection * 0.5
-        else
-            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0) 
+            MoveDirection = MoveDirection.Unit * flySpeed
         end
 
-        RunService.RenderStepped:Wait() 
+        local verticalMove = 0
+        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+            verticalMove = 50
+        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+            verticalMove = -50
+        end
+
+        HumanoidRootPart.Velocity = MoveDirection * 0.5 + Vector3.new(0, verticalMove, 0)
+
+        RunService.RenderStepped:Wait()
     end
 end
 
@@ -154,7 +155,6 @@ function toggleFly()
         workspace.Gravity = 0 
         fly() 
     else
-        flySpeed = 150 
         HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
         workspace.Gravity = originalGravity
     end
