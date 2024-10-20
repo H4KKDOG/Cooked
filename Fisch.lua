@@ -43,7 +43,7 @@ local Reeling = false
 local WaitDelay = false
 local isActive = false
 local flying = false
-local horizontalSpeed = 150
+local horizontalSpeed = 250
 local verticalSpeed = 75
 local bodyVelocity
 local rodName
