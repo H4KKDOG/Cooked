@@ -128,18 +128,18 @@ function fly()
         bodyVelocity.Parent = HumanoidRootPart
 
         local function onRenderStep()
-            local moveDirection = Vector3.new(0, 0, 0)
+            local moveDirection = Vector3.new()
             if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + Vector3.new(0, 0, -horizontalSpeed)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection + Vector3.new(0, 0, horizontalSpeed)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection + Vector3.new(-horizontalSpeed, 0, 0)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + Vector3.new(horizontalSpeed, 0, 0)
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
                 moveDirection = moveDirection + Vector3.new(0, verticalSpeed, 0)
