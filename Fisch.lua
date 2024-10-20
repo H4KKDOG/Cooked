@@ -43,9 +43,10 @@ local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flying = false
-local horizontalSpeed = 150
-local verticalSpeed = 100
-local flyConnections = {}
+local flySpeed = 150
+local maxFlySpeed = 300
+local speedIncrement = 0.5
+local originalGravity = workspace.Gravity
 local rodName
 local MouseValue
 
@@ -119,60 +120,43 @@ function updateRodInWorkspace()
     return nil
 end
 
-function fly()
-    if not flying then
-        flying = true
-        local bodyVelocity = Instance.new("BodyVelocity")
-        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-        bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
-        bodyVelocity.Parent = HumanoidRootPart
-
-        local function onRenderStep()
-            local moveDirection = Vector3.new()
-            if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + Vector3.new(0, 0, horizontalSpeed)
-            end
-            if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection - Vector3.new(0, 0, horizontalSpeed)
-            end
-            if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection - Vector3.new(horizontalSpeed, 0, 0)
-            end
-            if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + Vector3.new(horizontalSpeed, 0, 0)
-            end
-            if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + Vector3.new(0, verticalSpeed, 0)
-            end
-            if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-                moveDirection = moveDirection - Vector3.new(0, verticalSpeed, 0)
-            end
-
-            bodyVelocity.Velocity = moveDirection
-        end
-
-        table.insert(flyConnections, RunService.RenderStepped:Connect(onRenderStep))
-    end
+function randomizeValue(value, range)
+    return value + (value * (math.random(-range, range) / 100))
 end
 
-local function stopFly()
-    flying = false
-    for _, v in pairs(HumanoidRootPart:GetChildren()) do
-        if v:IsA("BodyVelocity") then
-            v:Destroy()
+function fly()
+    while flying do
+        local MoveDirection = Vector3.new()
+        local cameraCFrame = workspace.CurrentCamera.CFrame
+
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.W) and cameraCFrame.LookVector or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.S) and cameraCFrame.LookVector or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.A) and cameraCFrame.RightVector or Vector3.new())
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.D) and cameraCFrame.RightVector or Vector3.new())
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.Space) and Vector3.new(0, 50, 0) or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and Vector3.new(0, 50, 0) or Vector3.new())
+
+        if MoveDirection.Magnitude > 0 then
+            flySpeed = math.min(flySpeed + speedIncrement, maxFlySpeed) 
+            MoveDirection = MoveDirection.Unit * math.min(randomizeValue(flySpeed, 10), maxFlySpeed)
+            HumanoidRootPart.Velocity = MoveDirection * 0.5
+        else
+            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0) 
         end
+
+        RunService.RenderStepped:Wait() 
     end
-    for _, connection in pairs(flyConnections) do
-        connection:Disconnect()
-    end
-    flyConnections = {}
 end
 
 function toggleFly()
+    flying = not flying
     if flying then
-        stopFly()
+        workspace.Gravity = 0 
+        fly() 
     else
-        fly()
+        flySpeed = 150 
+        HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+        workspace.Gravity = originalGravity
     end
 end
 
