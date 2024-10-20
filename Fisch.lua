@@ -42,10 +42,9 @@ local OnMobile = UserInputService.TouchEnabled and not UserInputService.Keyboard
 local Progress = false
 local Reeling = false
 local WaitDelay = false
-local flyEnabled = false
-local horizontalSpeed = 150
-local verticalSpeed = 75
-local bodyVelocity
+local flying = false
+local speed = 150
+local flyConnections = {}
 local rodName
 local MouseValue
 
@@ -120,45 +119,68 @@ function updateRodInWorkspace()
 end
 
 function fly()
-    bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-    bodyVelocity.MaxForce = Vector3.new(5000, 5000, 5000)
-    bodyVelocity.Parent = Character:WaitForChild("HumanoidRootPart")
+    if not flying then
+        flying = true
+        local bodyVelocity = Instance.new("BodyVelocity")
+        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+        bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+        bodyVelocity.Parent = HumanoidRootPart
 
-    while flyEnabled do
-        local moveDirection = Vector3.new(
-            (UserInputService:IsKeyDown(Enum.KeyCode.D) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.A) and 1 or 0),
-            0,
-            (UserInputService:IsKeyDown(Enum.KeyCode.S) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.W) and 1 or 0)
-        ).unit
+        local bodyGyro = Instance.new("BodyGyro")
+        bodyGyro.CFrame = HumanoidRootPart.CFrame
+        bodyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
+        bodyGyro.P = 3000
+        bodyGyro.Parent = HumanoidRootPart
 
-        local verticalVelocity = 0
-        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            verticalVelocity = verticalSpeed
-        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-            verticalVelocity = -verticalSpeed
+        local function onRenderStep()
+            local moveDirection = Vector3.new()
+            if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * speed)
+            end
+            if UserInputService:IsKeyDown(Enum.KeyCode.S) then
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.LookVector * speed)
+            end
+            if UserInputService:IsKeyDown(Enum.KeyCode.A) then
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.RightVector * speed)
+            end
+            if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * speed)
+            end
+            if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.UpVector * speed)
+            end
+            if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+                moveDirection = moveDirection - (workspace.CurrentCamera.CFrame.UpVector * speed)
+            end
+
+            bodyVelocity.Velocity = moveDirection
+            bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end
 
-        bodyVelocity.Velocity = Vector3.new(
-            moveDirection.X * horizontalSpeed,
-            verticalVelocity,
-            moveDirection.Z * horizontalSpeed
-        )
-
-        wait()
+        table.insert(flyConnections, RunService.RenderStepped:Connect(onRenderStep))
     end
+end
 
-    bodyVelocity:Destroy()
+local function stopFly()
+    flying = false
+    for _, v in pairs(HumanoidRootPart:GetChildren()) do
+        if v:IsA("BodyVelocity") or v:IsA("BodyGyro") then
+            v:Destroy()
+        end
+    end
+    for _, connection in pairs(flyConnections) do
+        connection:Disconnect()
+    end
+    flyConnections = {}
 end
 
 function toggleFly()
-    flyEnabled = not flyEnabled
-
-    if flyEnabled then
-        Library:Notify{ Title = "Fisch Notification", Content = "ON (Flight)", Duration = 2.5 }
-        fly()
+    if flying then
+        stopFly()
+        Library:Notify{ Title = "Fisch Notification", Content = "Flight OFF", Duration = 2.5 }
     else
-        Library:Notify{ Title = "Fisch Notification", Content = "OFF (Flight)", Duration = 2.5 }
+        fly()
+        Library:Notify{ Title = "Fisch Notification", Content = "Flight ON", Duration = 2.5 }
     end
 end
 
