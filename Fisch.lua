@@ -200,7 +200,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
         local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
 
-        if config.AutoShake then
+        if ClickPositionX ~= 29 and config.AutoShake then
             if not config.FastShake then
                 wait(0.75)
             end
