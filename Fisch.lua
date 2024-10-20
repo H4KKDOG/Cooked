@@ -241,7 +241,7 @@ coroutine.wrap(function()
             local nRod = updateRodInWorkspace()
             if nRod and not nRod:FindFirstChild("bobber") then
                 Progress = true
-                task.wait(3.0)
+                task.wait(2.5)
 
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                 task.wait(0.3)
