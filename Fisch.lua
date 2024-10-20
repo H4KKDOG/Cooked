@@ -122,7 +122,7 @@ end
 function fly()
     bodyVelocity = Instance.new("BodyVelocity")
     bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-    bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000)
+    bodyVelocity.MaxForce = Vector3.new(5000, 5000, 5000)
     bodyVelocity.Parent = Character:WaitForChild("HumanoidRootPart")
 
     while flyEnabled do
