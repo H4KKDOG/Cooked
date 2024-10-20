@@ -246,7 +246,7 @@ task.spawn(function()
                 task.wait(1.75)
 
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
-                task.wait(0.3)
+                task.wait(0.45)
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
 
                 wait()
