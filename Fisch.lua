@@ -130,15 +130,15 @@ function fly()
 
         local verticalVelocity = 0
         if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            verticalVelocity = verticalSpeed  -- Ascend speed
-        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-            verticalVelocity = -verticalSpeed  -- Descend speed
+            verticalVelocity = verticalSpeed
+        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+            verticalVelocity = -verticalSpeed
         end
 
         bodyVelocity.Velocity = Vector3.new(
-            moveDirection.X * horizontalSpeed,  -- Horizontal movement
-            verticalVelocity,                    -- Vertical movement
-            moveDirection.Z * horizontalSpeed   -- Horizontal movement
+            moveDirection.X * horizontalSpeed,
+            verticalVelocity,
+            moveDirection.Z * horizontalSpeed
         )
 
         wait()
