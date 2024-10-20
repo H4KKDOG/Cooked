@@ -216,6 +216,7 @@ end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
+        task.wait(0.5)
         Progress = false
     end
 end)
@@ -248,7 +249,7 @@ coroutine.wrap(function()
 
                 wait()
 
-                if nRod and nRod:FindFirstChild("events") then
+                if nRod and not nRod:FindFirstChild("bobber") and nRod:FindFirstChild("events") then
                     if rodName and rodName ~= "" then
                         Character:FindFirstChild(rodName).events.reset:FireServer()
                         Character:FindFirstChild(rodName).events.cast:FireServer(100)
