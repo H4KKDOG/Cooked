@@ -43,8 +43,8 @@ local Reeling = false
 local WaitDelay = false
 local isActive = false
 local flying = false
-local horizontalSpeed = 300
-local verticalSpeed = 100
+local horizontalSpeed = 150
+local verticalSpeed = 75
 local bodyVelocity
 local rodName
 local MouseValue
