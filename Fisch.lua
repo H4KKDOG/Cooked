@@ -154,7 +154,7 @@ function fly()
             moveDirection.Z * horizontalSpeed
         )
         
-        wait()
+        RunService.RenderStepped:Wait()
     end
 
     bodyVelocity:Destroy()
