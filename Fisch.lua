@@ -43,9 +43,9 @@ local Progress = false
 local Reeling = false
 local WaitDelay = false
 local flying = false
-local flySpeed = 150
-local maxFlySpeed = 300
-local speedIncrement = 0.5
+local flySpeed = 300
+local maxFlySpeed = 1000
+local speedIncrement = 1
 local originalGravity = workspace.Gravity
 local rodName
 local MouseValue
@@ -133,8 +133,8 @@ function fly()
         MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.S) and cameraCFrame.LookVector or Vector3.new())
         MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.A) and cameraCFrame.RightVector or Vector3.new())
         MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.D) and cameraCFrame.RightVector or Vector3.new())
-        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.Space) and Vector3.new(0, 50, 0) or Vector3.new())
-        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and Vector3.new(0, 50, 0) or Vector3.new())
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.Space) and Vector3.new(0, 25, 0) or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and Vector3.new(0, 25, 0) or Vector3.new())
 
         if MoveDirection.Magnitude > 0 then
             flySpeed = math.min(flySpeed + speedIncrement, maxFlySpeed) 
