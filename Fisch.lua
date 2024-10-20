@@ -298,9 +298,29 @@ local Tabs = {
 Tabs.Debug:CreateButton{
     Title = "Get Current Pos",
     Callback = function()
-        local position = HumanoidRootPart.Position
-        local clipboardContent = "{ \"LocationName\", Vector3.new(" .. position.X .. ", " .. position.Y .. ", " .. position.Z .. ") },"
-        setclipboard(clipboardContent)
+        Window:Dialog{
+            Title = "Clipboard Pos",
+            Content = "Select One",
+            Buttons = {
+                {
+                    Title = "onFoot",
+                    Callback = function()
+                        local position = HumanoidRootPart.Position
+                        local clipboardContent = "{ \"LocationName\", Vector3.new(" .. position.X .. ", " .. position.Y .. ", " .. position.Z .. ") },"
+                        setclipboard(clipboardContent)
+                    end
+                },
+                {
+                    Title = "onBoat",
+                    Callback = function()
+                        local position = HumanoidRootPart.Position
+                        local newPositionY = position.Y + 5
+                        local clipboardContent = "{ \"LocationName\", Vector3.new(" .. position.X .. ", " .. newPositionY .. ", " .. position.Z .. ") },"
+                        setclipboard(clipboardContent)                        
+                    end
+                }
+            }
+        }
     end
 }
 
