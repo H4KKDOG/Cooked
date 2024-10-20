@@ -1,5 +1,9 @@
 if game.PlaceId ~= 16732694052 then return end
 
+warn("")
+print("Fisch (Shiro)")
+warn("")
+
 repeat
     task.wait()
 until game:IsLoaded()
@@ -9,7 +13,7 @@ getgenv().Shiro = true
 
 local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/Library/Fluent.lua"))()
 local Window = Library:CreateWindow{
-    Title = "Fisch GUI",
+    Title = "Fisch GUI (PublicVer)",
     SubTitle = "@zxc.shiro",
     TabWidth = 135,
     Size = UDim2.fromOffset(650, 575),
@@ -39,7 +43,8 @@ local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnab
 local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
 local Progress = false
-local Finished = false
+local Reeling = false
+local WaitDelay = false
 local lastCheck = tick()
 local rodName
 local MouseValue
@@ -140,14 +145,28 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
         end
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
-        Finished = true
-
+        local fish = Descendant.Parent:FindFirstChild("fish")
         local randomChance = math.random(1, 3)
         local Perfect = randomChance <= 1
 
-        if Finished then
-            task.wait(6.9)
-            ReplicatedStorage.events.reelfinished:FireServer(100, Perfect)
+        WaitDelay = true
+        Reeling = true
+
+        while Reeling do
+            if fish and Descendant then
+                if not Perfect and WaitDelay then
+                    task.wait(3.0)
+                    WaitDelay = false
+                end
+
+                Descendant.Position = UDim2.new(
+                    fish.Position.X.Scale + math.random(0.75, 0.1) / 100,
+                    fish.Position.X.Offset,
+                    Descendant.Position.Y.Scale,
+                    Descendant.Position.Y.Offset
+                )
+            end
+            task.wait()
         end
     end
 end)
@@ -164,6 +183,8 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
         rodName = nil
         Progress = false
+        WaitDelay = false
+        Reeling = false
     end
 end)
 
@@ -175,8 +196,9 @@ end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     if Descendant.Name == 'reel' then
-        Finished = false
         Progress = false
+        WaitDelay = false
+        Reeling = false
         if config.AutoSell then
             ReplicatedStorage.events.selleverything:InvokeServer()
         end
@@ -194,17 +216,19 @@ coroutine.wrap(function()
                 Progress = true
                 task.wait(3.0)
 
-                VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, true, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                 task.wait(0.3)
-                VirtualInputManager:SendMouseButtonEvent(0, 0, MouseValue, false, game, 1)
+                VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
 
                 wait(0.01)
 
                 if nRod and nRod:FindFirstChild("events") then
-                    local RodRemote = Character:FindFirstChild(rodName)
-                    if RodRemote then
-                        RodRemote.events.reset:FireServer()
-                        RodRemote.events.cast:FireServer(100)
+                    if rodName and rodName ~= "" then
+                        local RodRemote = Character:FindFirstChild(rodName)
+                        if RodRemote then
+                            RodRemote.events.reset:FireServer()
+                            RodRemote.events.cast:FireServer(100)
+                        end
                     end
                 end
             end
@@ -284,7 +308,6 @@ local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
 
     Callback = function(click)
         ReplicatedStorage.events.selleverything:InvokeServer()
-        Library:Notify{ Title = "Fisch Notification", Content = "Sell Inventory", Duration = 2.5 }
     end,
 
     ChangedCallback = function(Key)
