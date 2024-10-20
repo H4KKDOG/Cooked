@@ -165,17 +165,18 @@ end
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
         task.wait()
+            
         local ButtonPosition, ButtonSize = Descendant.AbsolutePosition, Descendant.AbsoluteSize
-
         local radius = ButtonSize.X / 2
-
         local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
         local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
 
         if ClickPositionX ~= 29 and ClickPositionY ~= 29 and config.AutoShake then
+                
             if not config.FastShake then
                 task.wait(0.75)
             end
+            
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
         end
