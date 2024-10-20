@@ -34,24 +34,18 @@ local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
 local playerName = LocalPlayer.Name
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:FindFirstChildOfClass("Humanoid")
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local playerBobberWorkspace = workspace:FindFirstChild(playerName)
-local OnPc = not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled
-local OnMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
 local Progress = false
 local Reeling = false
 local WaitDelay = false
+local isActive = false
 local flying = false
 local flySpeed = 300
 local rodName
 local MouseValue
-
-if OnPc then
-    MouseValue = 0
-elseif OnMobile then
-    MouseValue = 1
-end
 
 getgenv().config = getgenv().config
 local isFirstTime = false
@@ -118,8 +112,18 @@ function updateRodInWorkspace()
     return nil
 end
 
-function randomizeValue(value, range)
-    return value + (value * (math.random(-range, range) / 100))
+if connections then
+    for _, conn in pairs(connections) do
+        conn:Disconnect()
+    end
+    connections = nil
+end
+
+local parts = {}
+for _, part in pairs(Character:GetDescendants()) do
+    if part:IsA("BasePart") and part.Transparency == 0 then
+        table.insert(parts, part)
+    end
 end
 
 function fly()
@@ -149,9 +153,30 @@ function fly()
     end
 end
 
+local connections = {}
+connections[1] = RunService.Heartbeat:Connect(function()
+    while flying do
+        local originalCFrame = HumanoidRootPart.CFrame
+        local offsetCFrame = originalCFrame * CFrame.new(0, -10000, 0)
+        Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
+        HumanoidRootPart.CFrame = offsetCFrame
+
+        RunService.RenderStepped:Wait()
+
+        Humanoid.CameraOffset = Vector3.new()
+        HumanoidRootPart.CFrame = originalCFrame
+    end
+end)
+
 function toggleFly()
     flying = not flying
+
+    for _, part in pairs(parts) do
+        part.Transparency = flying and 0.5 or 0
+    end
+
     if flying then
+        Invis()
         fly()
     else
         HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
@@ -172,7 +197,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
             if not config.FastShake then
                 wait(0.75)
             end
-            
+
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
         end
@@ -455,9 +480,11 @@ if UserInputService.KeyboardEnabled and not UserInputService.TouchEnabled then
         WindowAFK:Disconnect()
     end)
     Library:Notify{ Title = "Fisch Notification", Content = "Loaded!", Duration = 5 }
+    MouseValue = 0
 elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
     replaceAFKEvent()
     Library:Notify{ Title = "Fisch Notification", Content = "Loaded!", Duration = 5 }
+    MouseValue = 1
 end
 
 Window:SelectTab(1)
