@@ -43,7 +43,9 @@ local Reeling = false
 local WaitDelay = false
 local isActive = false
 local flying = false
-local flySpeed = 300
+local horizontalSpeed = 300
+local verticalSpeed = 100
+local bodyVelocity
 local rodName
 local MouseValue
 
@@ -127,30 +129,35 @@ for _, part in pairs(Character:GetDescendants()) do
 end
 
 function fly()
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.MaxForce = Vector3.new(5000, 5000, 5000)
+    bodyVelocity.Parent = Character:WaitForChild("HumanoidRootPart")
+
     while flying do
-        local MoveDirection = Vector3.new()
-        local cameraCFrame = workspace.CurrentCamera.CFrame
+        local moveDirection = Character.Humanoid.MoveDirection
 
-        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.W) and cameraCFrame.LookVector or Vector3.new())
-        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.S) and cameraCFrame.LookVector or Vector3.new())
-        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.A) and cameraCFrame.RightVector or Vector3.new())
-        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.D) and cameraCFrame.RightVector or Vector3.new())
-
-        if MoveDirection.Magnitude > 0 then
-            MoveDirection = MoveDirection.Unit * flySpeed
+        if moveDirection.Magnitude > 0 then
+            moveDirection = moveDirection.Unit
         end
 
-        local verticalMove = 0
+        local verticalVelocity = 0
         if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            verticalMove = 75
+            verticalVelocity = verticalSpeed
         elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-            verticalMove = -75
+            verticalVelocity = -verticalSpeed
         end
 
-        HumanoidRootPart.Velocity = MoveDirection * 0.5 + Vector3.new(0, verticalMove, 0)
-
-        RunService.RenderStepped:Wait()
+        bodyVelocity.Velocity = Vector3.new(
+            moveDirection.X * horizontalSpeed,
+            verticalVelocity,
+            moveDirection.Z * horizontalSpeed
+        )
+        
+        wait()
     end
+
+    bodyVelocity:Destroy()
 end
 
 local connections = {}
