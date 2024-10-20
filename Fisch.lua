@@ -202,7 +202,8 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
 
         if ClickPositionX ~= 29 and config.AutoShake then
             if not config.FastShake then
-                wait(0.75)
+                Descendant:GetPropertyChangedSignal("Position"):Wait()
+                task.wait(0.1)
             end
 
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
