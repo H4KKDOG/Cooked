@@ -249,7 +249,7 @@ task.spawn(function()
                 task.wait(0.75)
                 VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
 
-                wait(0.01)
+                wait(0.001)
 
                 if nRod and nRod:FindFirstChild("events") then
                     if rodName and rodName ~= "" then
