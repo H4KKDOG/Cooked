@@ -1,8 +1,5 @@
 if game.PlaceId ~= 16732694052 then return end
-
-warn("")
-print("Fisch (Shiro)")
-warn("")
+print("Fisch (Executed)")
 
 repeat
     task.wait()
