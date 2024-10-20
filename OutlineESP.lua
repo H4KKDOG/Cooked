@@ -24,7 +24,7 @@ local function createSeeThroughOutline(character)
             surfaceGui.Parent = part
 
             local outlineFrame = Instance.new("Frame")
-            outlineFrame.Size = UDim2.new(0.5, 0, 0.5, 0)
+            outlineFrame.Size = UDim2.new(1, 0, 0.5, 0)
             outlineFrame.BackgroundColor3 = Color3.new(1, 0, 0)
             outlineFrame.BorderSizePixel = 0
             outlineFrame.BackgroundTransparency = 0.75
@@ -51,7 +51,7 @@ local function createESP(player)
     billboardGui.Parent = head
 
     local nameLabel = Instance.new("TextLabel")
-    nameLabel.Size = UDim2.new(1, 0, 0.5, 0)
+    nameLabel.Size = UDim2.new(1, 0, 1, 0)
     nameLabel.BackgroundTransparency = 1
     nameLabel.Font = Enum.Font.SourceSansBold
     nameLabel.TextSize = 15
