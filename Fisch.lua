@@ -257,6 +257,7 @@ task.spawn(function()
                         Character:FindFirstChild(rodName).events.cast:FireServer(100)
                     end
                 end
+                task.wait(0.75)
             end
         end
     end
