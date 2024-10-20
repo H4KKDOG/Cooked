@@ -142,9 +142,9 @@ function fly()
 
         local verticalMove = 0
         if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            verticalMove = 100
+            verticalMove = 75
         elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-            verticalMove = -100
+            verticalMove = -75
         end
 
         HumanoidRootPart.Velocity = MoveDirection * 0.5 + Vector3.new(0, verticalMove, 0)
@@ -157,7 +157,7 @@ local connections = {}
 connections[1] = RunService.Heartbeat:Connect(function()
     if flying then
         local originalCFrame = HumanoidRootPart.CFrame
-        local offsetCFrame = originalCFrame * CFrame.new(0, -10000, 0)
+        local offsetCFrame = originalCFrame * CFrame.new(0, -5000, 0)
         Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
         HumanoidRootPart.CFrame = offsetCFrame
 
