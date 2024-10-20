@@ -49,8 +49,6 @@ local bodyVelocity
 local rodName
 local MouseValue
 
-local lastCheck = tick()
-
 if OnPc then
     MouseValue = 0
 elseif OnMobile then
@@ -60,7 +58,7 @@ end
 getgenv().config = getgenv().config
 local isFirstTime = false
 local configTemplate = {
-    Enabled = false,
+    Enabled = true,
     AutoSell = false,
     AutoShake = false,
     AutoReel = false,
@@ -236,48 +234,6 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     end
 end)
 
---// Cast
-coroutine.wrap(function()
-    while config.Enabled do
-        task.wait(0.25)
-
-        if not Progress then
-            local nRod = updateRodInWorkspace()
-            if nRod and not nRod:FindFirstChild("bobber") then
-                Progress = true
-                task.wait(1.75)
-
-                VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
-                task.wait(0.75)
-                VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
-
-                wait()
-                if nRod and nRod:FindFirstChild("events") then
-                    if rodName and rodName ~= "" then
-                        Character:FindFirstChild(rodName).events.reset:FireServer()
-                        Character:FindFirstChild(rodName).events.cast:FireServer(100)
-                    end
-                end
-                task.wait(0.75)
-            end
-        end
-    end
-end)()
-
-coroutine.wrap(function()
-    while config.Enabled do
-        task.wait(0.25)
-
-        if tick() - lastCheck >= 30 then
-            local nRod = updateRodInWorkspace()
-            if nRod and not nRod:FindFirstChild("bobber") then
-                Progress = false
-            end
-            lastCheck = tick()
-        end
-    end
-end)()
-
 --// GUI
 local Tabs = {
     Fishing = Window:CreateTab{
@@ -378,7 +334,49 @@ local CastToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", D
 CastToggle:OnChanged(function(value)
     config.Enabled = value
     updateConfig()
+
+    if not config.Enabled then
+        Progress = false
+        Library:Notify{ Title = "Fisch Notification", Content = "Auto Cast Off", Duration = 5 }
+    else
+        coroutine.wrap(function()
+            local lastCheck = tick()
+            while config.Enabled do
+                task.wait(0.25)
+
+                if not Progress then
+                    local nRod = updateRodInWorkspace()
+                    if nRod and not nRod:FindFirstChild("bobber") then
+                        Progress = true
+                        task.wait(1.75)
+
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
+                        task.wait(0.75)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
+
+                        task.wait()
+                        if nRod and nRod:FindFirstChild("events") then
+                            if rodName and rodName ~= "" then
+                                Character:FindFirstChild(rodName).events.reset:FireServer()
+                                Character:FindFirstChild(rodName).events.cast:FireServer(100)
+                            end
+                        end
+                        task.wait(0.75)
+                    end
+                end
+
+                if tick() - lastCheck >= 30 then
+                    local nRod = updateRodInWorkspace()
+                    if nRod and not nRod:FindFirstChild("bobber") then
+                        Progress = false
+                    end
+                    lastCheck = tick()
+                end
+            end
+        end)()
+    end
 end)
+
 
 local ShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Shake", Default = config.AutoShake })
 ShakeToggle:OnChanged(function(value)
