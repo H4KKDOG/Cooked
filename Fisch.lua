@@ -237,7 +237,7 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
 end)
 
 --// Cast
-task.spawn(function()
+coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
 
@@ -262,9 +262,9 @@ task.spawn(function()
             end
         end
     end
-end)
+end)()
 
-task.spawn(function()
+coroutine.wrap(function()
     while config.Enabled do
         task.wait(0.25)
 
@@ -276,7 +276,7 @@ task.spawn(function()
             lastCheck = tick()
         end
     end
-end)
+end)()
 
 --// GUI
 local Tabs = {
@@ -405,7 +405,7 @@ local locations = {
     { "Keepers Altar", Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875) },
     { "Harvester Spike", Vector3.new(-1254.696044921875, 137.56063842773438, 1554.47119140625) },
     { "Mushgrove Swamp", Vector3.new(2441.1611328125, 130.904052734375, -683.6802368164062) },
-    { "Vertigo", Vector3.new(-95.83425903320312, -513.2993774414062, 1116.5545654296875) }
+    { "Vertigo", Vector3.new(-95.83425903320312, -513.2993774414062, 1116.5545654296875) },
 }
 
 for _, location in ipairs(locations) do
