@@ -44,7 +44,6 @@ local Reeling = false
 local WaitDelay = false
 local flying = false
 local flySpeed = 300
-local originalGravity = workspace.Gravity
 local rodName
 local MouseValue
 
@@ -153,11 +152,9 @@ end
 function toggleFly()
     flying = not flying
     if flying then
-        workspace.Gravity = 0
         fly()
     else
         HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-        workspace.Gravity = originalGravity
     end
 end
 
