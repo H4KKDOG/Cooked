@@ -126,12 +126,16 @@ function fly()
     bodyVelocity.Parent = Character:WaitForChild("HumanoidRootPart")
 
     while flyEnabled do
-        local moveDirection = Character.Humanoid.MoveDirection
+        local moveDirection = Vector3.new(
+            (UserInputService:IsKeyDown(Enum.KeyCode.D) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.A) and 1 or 0),
+            0,
+            (UserInputService:IsKeyDown(Enum.KeyCode.S) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.W) and 1 or 0)
+        ).unit
 
         local verticalVelocity = 0
         if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
             verticalVelocity = verticalSpeed
-        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
             verticalVelocity = -verticalSpeed
         end
 
@@ -149,8 +153,12 @@ end
 
 function toggleFly()
     flyEnabled = not flyEnabled
+
     if flyEnabled then
+        Library:Notify{ Title = "Fisch Notification", Content = "ON (Flight)", Duration = 2.5 }
         fly()
+    else
+        Library:Notify{ Title = "Fisch Notification", Content = "OFF (Flight)", Duration = 2.5 }
     end
 end
 
