@@ -95,7 +95,7 @@ loadConfig()
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK and UserInputService.WindowFocused then
-        task.wait(0.75)
+        wait(0.75)
         local FakeAFK = Instance.new("RemoteEvent")
         FakeAFK.Name = "afk"
         FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
@@ -170,7 +170,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
 
         if ClickPositionX ~= 29 and config.AutoShake then
             if not config.FastShake then
-                task.wait(0.75)
+                wait(0.75)
             end
             
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
@@ -187,7 +187,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         while Reeling and config.AutoReel do
             if fish and Descendant then
                 if not Perfect and WaitDelay then
-                    task.wait(3.0)
+                    wait(3.0)
                     WaitDelay = false
                 end
 
@@ -216,14 +216,14 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
         rodName = nil
         WaitDelay = false
         Reeling = false
-        task.wait(0.75)
+        wait(0.75)
         Progress = false
     end
 end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
-        task.wait(0.75)
+        wait(0.75)
         Progress = false
     end
 end)
@@ -235,7 +235,7 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
         if config.AutoSell then
             ReplicatedStorage.events.selleverything:InvokeServer()
         end
-        task.wait(0.75)
+        wait(0.75)
         Progress = false
     end
 end)
@@ -353,7 +353,7 @@ CastToggle:OnChanged(function(value)
                     local nRod = updateRodInWorkspace()
                     if nRod and not nRod:FindFirstChild("bobber") then
                         Progress = true
-                        task.wait(1.75)
+                        wait(1.75)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
                         task.wait(0.75)
@@ -366,7 +366,7 @@ CastToggle:OnChanged(function(value)
                                 Character:FindFirstChild(rodName).events.cast:FireServer(100)
                             end
                         end
-                        task.wait(0.75)
+                        wait(0.75)
                     end
                 end
 
