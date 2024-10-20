@@ -235,7 +235,7 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
 end)
 
 --// Cast
-coroutine.wrap(function()
+task.spawn(function()
     while config.Enabled do
         task.wait(0.25)
 
@@ -260,9 +260,9 @@ coroutine.wrap(function()
             end
         end
     end
-end)()
+end)
 
-coroutine.wrap(function()
+task.spawn(function()
     while config.Enabled do
         task.wait(0.25)
 
@@ -274,7 +274,7 @@ coroutine.wrap(function()
             lastCheck = tick()
         end
     end
-end)()
+end)
 
 --// GUI
 local Tabs = {
