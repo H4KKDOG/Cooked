@@ -62,6 +62,8 @@ local isFirstTime = false
 local configTemplate = {
     Enabled = false,
     AutoSell = false,
+    AutoShake = false,
+    AutoReel = false,
     SellBind = "F",
     FlyBind = "X"
 }
@@ -165,7 +167,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
         local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
 
-        if ClickPositionX ~= 29 and ClickPositionY ~= 29 then
+        if ClickPositionX ~= 29 and ClickPositionY ~= 29 and config.AutoShake then
             task.wait(0.75)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
             VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
@@ -178,7 +180,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         WaitDelay = true
         Reeling = true
 
-        while Reeling do
+        while Reeling and config.AutoReel do
             if fish and Descendant then
                 if not Perfect and WaitDelay then
                     task.wait(3.0)
@@ -358,6 +360,18 @@ CastToggle:OnChanged(function(value)
     updateConfig()
 end)
 
+local ShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Shake", Default = config.AutoShake })
+ShakeToggle:OnChanged(function(value)
+    config.AutoShake = value
+    updateConfig()
+end)
+
+local ReelToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Reel", Default = config.AutoReel })
+ReelToggle:OnChanged(function(value)
+    config.AutoReel = value
+    updateConfig()
+end)
+
 local SellToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Sell", Default = config.AutoSell })
 SellToggle:OnChanged(function(value)
     config.AutoSell = value
@@ -367,10 +381,6 @@ end)
 Tabs.Fishing:CreateParagraph("Paragraph", { Title = "", Content = "" })
 
 local fishingSpots = {
-    { "Sunstone (Common Crate)", Vector3.new(-1149.08508, 134.49998, -1055.80151) },
-    { "Vertigo (Small Stone)", Vector3.new(-107.99476623535156, -731.946533203125, 1207.8134765625) },
-    { "Moosewood (Small Island)", Vector3.new(229.60299682617188, 139.34976196289062, 43.50540542602539) },
-    { "Snowcap (Cave)", Vector3.new(2805.062744140625, 131.85032653808594, 2712.624267578125) },
     { "Deep Ocean (Boat)", Vector3.new(1447.85071, 139.649994, -7649.64502) },
 }
 
