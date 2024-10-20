@@ -182,6 +182,7 @@ connections[2] = RunService.Heartbeat:Connect(function()
         local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
         if shakeButton ~= lastButtonInstance then
             lastButtonInstance = shakeButton
+
             local ButtonPosition, ButtonSize = shakeButton.AbsolutePosition, shakeButton.AbsoluteSize
             local radius = ButtonSize.X / 2
             local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
