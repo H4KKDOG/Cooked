@@ -130,22 +130,22 @@ function fly()
         local function onRenderStep()
             local moveDirection = Vector3.new()
             if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
+                moveDirection = moveDirection + horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.LookVector * horizontalSpeed)
+                moveDirection = moveDirection - horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
+                moveDirection = moveDirection - horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-                moveDirection = moveDirection + (workspace.CurrentCamera.CFrame.RightVector * horizontalSpeed)
+                moveDirection = moveDirection + horizontalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-                moveDirection = moveDirection + Vector3.new(0, verticalSpeed, 0)
+                moveDirection = moveDirection + verticalSpeed
             end
             if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
-                moveDirection = moveDirection + Vector3.new(0, -verticalSpeed, 0)
+                moveDirection = moveDirection - verticalSpeed
             end
 
             bodyVelocity.Velocity = moveDirection
