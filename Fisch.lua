@@ -225,7 +225,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
                 end
 
                 Descendant.Position = UDim2.new(
-                    fish.Position.X.Scale + math.random(0.75, 0.1) / 100,
+                    fish.Position.X.Scale,
                     fish.Position.X.Offset,
                     Descendant.Position.Y.Scale,
                     Descendant.Position.Y.Offset
