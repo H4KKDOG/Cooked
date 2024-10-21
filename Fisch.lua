@@ -64,6 +64,7 @@ function ToggleFarm()
         Progress = false
         ShowNotification(`AutoFarm`, `{Enabled}`)
     else
+	GuiService.SelectedObject = nil
         ShowNotification(`AutoFarm`, `{Enabled}`)
     end
 end
