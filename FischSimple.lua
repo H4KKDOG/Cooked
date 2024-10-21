@@ -170,9 +170,13 @@ end
 local function handleShakeUI()
     if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
         local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
-        GuiService.SelectedObject = shakeButton
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+        if shakeButton then
+            GuiService.SelectedObject = shakeButton
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+        else
+            GuiService.SelectedObject = nil
+        end
     end
 end
 
