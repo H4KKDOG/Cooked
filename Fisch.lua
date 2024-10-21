@@ -200,7 +200,7 @@ end
 connections[1] = RunService.Heartbeat:Connect(function()
     if flying then
         local originalCFrame = HumanoidRootPart.CFrame
-        local offsetCFrame = originalCFrame * CFrame.new(0, -1000, 0)
+        local offsetCFrame = originalCFrame * CFrame.new(0, -500, 0)
         Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
         HumanoidRootPart.CFrame = offsetCFrame
 
@@ -232,6 +232,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
 
         WaitDelay = true
         Reeling = true
+        GuiService.SelectedObject = nil
 
         while Reeling and config.AutoReel do
             if fish and Descendant then
