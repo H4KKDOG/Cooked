@@ -24,7 +24,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 
 local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
-local rodName, lastButtonInstance, bodyVelocity, GuiService.SelectedObject
+local rodName, lastButtonInstance, bodyVelocity
 local Enabled = true
 
 local FarmKeybind, SellKeybind, FlyKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X
@@ -70,18 +70,18 @@ local function farmAction()
     if nRod then
         Progress = true
         wait(1.75)
-        
+
         VirtualInputManager:SendMouseButtonEvent(1, 1, 0, true, game, 1)
         task.wait(0.75)
         VirtualInputManager:SendMouseButtonEvent(1, 1, 0, false, game, 1)
-        
+
         if nRod and nRod:FindFirstChild("events") then
             if rodName and rodName ~= "" then
                 Character:FindFirstChild(rodName).events.reset:FireServer()
                 Character:FindFirstChild(rodName).events.cast:FireServer(100)
             end
         end
-        
+
         wait(1.75)
     end
 end
@@ -148,6 +148,7 @@ local function handleReelUI(Descendant)
 
     WaitDelay = true
     Reeling = true
+    GuiService.SelectedObject = nil
 
     while Reeling do
         if fish and Descendant then
@@ -167,18 +168,12 @@ local function handleReelUI(Descendant)
     end
 end
 
-local function handleShakeUI()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
-        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
-        if shakeButton then
-            GuiService.SelectedObject = shakeButton
-            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        end
-    else
-        GuiService.SelectedObject = nil
-    end
+local function handleShakeUI(Descendant)
+    GuiService.SelectedObject = Descendant
+    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
 end
+
 
 local function Invi()
     if flying then
@@ -219,6 +214,7 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
         WaitDelay = false
         Reeling = false
         Progress = false
+        GuiService.SelectedObject = nil
     end
 end)
 
@@ -226,17 +222,19 @@ playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
         wait(0.75)
         Progress = false
+        GuiService.SelectedObject = nil
     end
 end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         handleReelUI(Descendant)
+    elseif Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
+        handleShakeUI(Descendant)
     end
 end)
 
 RunService.Heartbeat:Connect(function()
-    handleShakeUI()
     Invi()
 
     if Enabled and not Progress then
