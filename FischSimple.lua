@@ -96,6 +96,9 @@ local function AutoShake(_, State)
     if State == Enum.UserInputState.Begin then
         AShake = not AShake
         ShowNotification("Auto Shake: " .. tostring(AShake))
+        if not AShake then
+            GuiService.SelectedObject = nil
+        end
     end
 end
 
