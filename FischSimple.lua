@@ -35,7 +35,6 @@ for _, part in pairs(Character:GetDescendants()) do
     end
 end
 
--- Utility Functions
 local function ShowNotification(String)
     CoreGui:SetCore('SendNotification', {
         Title = 'Notification',
@@ -84,7 +83,6 @@ local function farmAction()
     end
 end
 
--- Action Handlers
 local function ToggleFarm(_, State)
     if State == Enum.UserInputState.Begin then
         Enabled = not Enabled
@@ -199,7 +197,6 @@ local function Invi()
     end
 end
 
--- Event Handlers
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
     if Child:IsA('Tool') and Child.Name:lower():find('rod') then
         rodName = Child.Name
@@ -224,7 +221,6 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     end
 end)
 
--- Efficient Main Loop
 RunService.Heartbeat:Connect(function()
     handleShakeUI()
     Invi()
@@ -234,7 +230,6 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
--- Bind Actions
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
