@@ -174,9 +174,9 @@ local function handleShakeUI()
             GuiService.SelectedObject = shakeButton
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
             VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        else
-            GuiService.SelectedObject = nil
         end
+    else
+        GuiService.SelectedObject = nil
     end
 end
 
