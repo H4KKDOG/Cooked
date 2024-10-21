@@ -112,7 +112,6 @@ end
 local function togglePlatform(_, State)
     if State == Enum.UserInputState.Begin then
         createPlatform()
-        ShowNotification("Platform Created")
     end
 end
 
@@ -130,7 +129,6 @@ local function teleportToLocation(_, State)
     if State == Enum.UserInputState.Begin then
         if HumanoidRootPart then
             HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
-            ShowNotification("Teleported to location")
         end
     end
 end
@@ -301,6 +299,7 @@ ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
 ContextActionService:BindAction('AutoShake', AutoShake, false, ShakeKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
+ContextActionService:BindAction('teleportToLocation', teleportToLocation, false, teleportKeybind)
 ContextActionService:BindAction('createPlatform', togglePlatform, false, platformKeybind)
 
 ShowNotification("Fisch Script Executed")
