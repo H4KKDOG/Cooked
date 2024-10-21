@@ -75,7 +75,7 @@ function ToggleFly()
     end
 
     if Flying then
-		ShowNotification(`Invi Fly`,  `{Flying}`)
+	ShowNotification(`Invi Fly`,  `{Flying}`)
         fly()
     else
         ShowNotification(`Invi Fly`,  `{Flying}`)
