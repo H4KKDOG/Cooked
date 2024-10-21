@@ -191,9 +191,7 @@ function replaceAFKEvent()
         FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
 
         AFK:Destroy()
-
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
-        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Invite:Destroy()
     end
 end
 
@@ -215,6 +213,7 @@ end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
+	task.wait()
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
