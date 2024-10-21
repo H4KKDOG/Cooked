@@ -204,6 +204,8 @@ connections[2] = RunService.Heartbeat:Connect(function()
             GuiService.SelectedObject = shakeButton
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
             VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+        else
+            GuiService.SelectedObject = nil
         end
     end
 end)
