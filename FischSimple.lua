@@ -264,7 +264,7 @@ elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled th
 end
 
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
-ContextActionService:BindAction('AShake', AShake, false, ShakeKeybind)
+ContextActionService:BindAction('AutoShake', AutoShake, false, ShakeKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
 
