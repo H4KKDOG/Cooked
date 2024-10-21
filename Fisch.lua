@@ -25,6 +25,7 @@ local Rod = false
 local Casted = false
 local Progress = false
 local Flying = false
+local IsTransparent = false 
 
 local horizontalSpeed = 200
 local verticalSpeed = 75
@@ -113,6 +114,7 @@ function onCharacterAdded(newCharacter)
     HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
     
     visibleParts = {}
+
     for _, part in pairs(Character:GetDescendants()) do 
         if part:IsA("BasePart") and part.Transparency == 0 then 
             table.insert(visibleParts, part)
@@ -129,6 +131,8 @@ function disableAFK()
         replaceAFKEvent()
         ShowNotification(`AntiAFK`, `Enabled`)
         antiAFK = 1
+    else
+	print("Already Disabled (AntiAFK)")
     end
 end
 
