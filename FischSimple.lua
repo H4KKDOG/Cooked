@@ -24,6 +24,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 
 local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
+local teleportState = 0
 local rodName, lastButtonInstance, bodyVelocity, currentPlatform
 local Enabled = true
 local AShake = true
@@ -134,7 +135,13 @@ end
 local function teleportToLocation(_, State)
     if State == Enum.UserInputState.Begin then
         if HumanoidRootPart then
-            HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+            if teleportState == 0 then
+                HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+                teleportState = 1
+            else
+                HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
+                teleportState = 0
+            end
         end
     end
 end
