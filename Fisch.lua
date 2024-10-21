@@ -59,7 +59,6 @@ end
 function ToggleFarm()
     if Flying then return end
     Enabled = not Enabled
-    LocalPlayer.Character.HumanoidRootPart.Anchored = Enabled
         
     if not Enabled then
         Progress = false
