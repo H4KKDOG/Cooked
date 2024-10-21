@@ -51,7 +51,6 @@ local verticalSpeed = 75
 local bodyVelocity
 local rodName
 local currentPlatform
-local lastshakebutton
 
 local connections = {}
 local parts = {}
@@ -211,10 +210,9 @@ connections[1] = RunService.Heartbeat:Connect(function()
 end)
 
 connections[2] = RunService.Heartbeat:Connect(function()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone.button then
-        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone.button
-        if shakeButton ~= lastshakebutton and config.AutoShake then
-            lastshakebutton = shakeButton
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
+        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
+        if shakeButton and config.AutoShake then
             GuiService.SelectedObject = shakeButton
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
             VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
