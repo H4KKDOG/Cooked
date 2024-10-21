@@ -211,7 +211,7 @@ end)
 
 connections[2] = RunService.Heartbeat:Connect(function()
     if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
-        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
+        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:WaitForChild("button")
         if shakeButton and config.AutoShake then
             GuiService.SelectedObject = shakeButton
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
