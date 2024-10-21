@@ -1,5 +1,5 @@
 if game.PlaceId ~= 16732694052 then return end
-print("Fisch (Executed)")
+print("FischSimple (Executed)")
 
 repeat task.wait() until game:IsLoaded()
 
