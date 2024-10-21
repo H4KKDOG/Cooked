@@ -43,12 +43,17 @@ local Reeling = false
 local WaitDelay = false
 local isActive = false
 local flying = false
+
 local horizontalSpeed = 250
 local verticalSpeed = 75
+
 local bodyVelocity
 local rodName
 local lastButtonInstance
 local MouseValue
+
+local connections = {}
+local parts = {}
 
 getgenv().config = getgenv().config
 local isFirstTime = false
@@ -89,6 +94,19 @@ end
 
 loadConfig()
 
+if getgenv().con then
+    for _, conn in pairs(getgenv().con) do
+        conn:Disconnect()
+    end
+    getgenv().con = nil
+end
+
+for _, part in pairs(Character:GetDescendants()) do
+    if part:IsA("BasePart") and part.Transparency == 0 then
+        table.insert(parts, part)
+    end
+end
+
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK then
@@ -99,6 +117,10 @@ function replaceAFKEvent()
 
         Library:Notify{ Title = "Fisch Notification", Content = "AntiAFK Enabled.", Duration = 5 }
         AFK:Destroy()
+
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Invite:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Camera:Destroy()
     end
 end
 
@@ -113,20 +135,6 @@ function updateRodInWorkspace()
         end
     end
     return nil
-end
-
-if _G.con then
-    for _, conn in pairs(_G.con) do
-        conn:Disconnect()
-    end
-    _G.con = nil
-end
-
-local parts = {}
-for _, part in pairs(Character:GetDescendants()) do
-    if part:IsA("BasePart") and part.Transparency == 0 then
-        table.insert(parts, part)
-    end
 end
 
 function fly()
@@ -161,7 +169,20 @@ function fly()
     bodyVelocity:Destroy()
 end
 
-local connections = {}
+function toggleFly()
+    flying = not flying
+
+    for _, part in pairs(parts) do
+        part.Transparency = flying and 0.5 or 0
+    end
+
+    if flying then
+        fly()
+        Invis()
+    else
+        HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+    end
+end
 
 connections[1] = RunService.Heartbeat:Connect(function()
     if flying then
@@ -178,46 +199,16 @@ connections[1] = RunService.Heartbeat:Connect(function()
 end)
 
 connections[2] = RunService.Heartbeat:Connect(function()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
-        local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
-        if shakeButton ~= lastButtonInstance then
-            lastButtonInstance = shakeButton
-
-            local ButtonPosition, ButtonSize = shakeButton.AbsolutePosition, shakeButton.AbsoluteSize
-            local radius = ButtonSize.X / 2
-            local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
-            local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
-
-            if ClickPositionX ~= 29 and config.AutoShake then
-                if not config.FastShake then
-                    task.wait(0.69)
-                end
-
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, true, game, 1)
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, MouseValue, false, game, 1)
-            end
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.FindFirstChild("shakeui").safezone.button then
+        local shakeButton = LocalPlayer.PlayerGui.FindFirstChild("shakeui").safezone.button
+        if shakeButton and config.AutoShake then
+            GuiService.SelectedObject = shakeButton
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
         end
     end
 end)
 
-_G.con = connections
-
-function toggleFly()
-    flying = not flying
-
-    for _, part in pairs(parts) do
-        part.Transparency = flying and 0.5 or 0
-    end
-
-    if flying then
-        fly()
-        Invis()
-    else
-        HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-    end
-end
-
---// Reel / Shake
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         local fish = Descendant.Parent:FindFirstChild("fish")
@@ -247,7 +238,6 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     end
 end)
 
-
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
     if Child:IsA('Tool') and Child.Name:lower():find('rod') then
         rodName = Child.Name
@@ -260,8 +250,8 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
         rodName = nil
         WaitDelay = false
         Reeling = false
-        wait(0.75)
         Progress = false
+        GuiService.SelectedObject = nil
     end
 end)
 
@@ -269,6 +259,7 @@ playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
         wait(0.75)
         Progress = false
+        GuiService.SelectedObject = nil
     end
 end)
 
@@ -355,14 +346,6 @@ Tabs.Debug:CreateButton{
     end
 }
 
-Tabs.Debug:CreateButton{
-    Title = "Server Hop",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/H4KKDOG/MiscScripts/refs/heads/main/ServerHop"))()
-    end
-}
-
-
 --// Fishing
 local SellInv = Tabs.Fishing:CreateKeybind("Keybind", {
     Title = "Sell Inventory",
@@ -390,8 +373,9 @@ CastToggle:OnChanged(function(value)
     else
         coroutine.wrap(function()
             local lastCheck = tick()
+
             while config.Enabled do
-                task.wait(0.25)
+                task.wait()
 
                 if not Progress then
                     local nRod = updateRodInWorkspace()
@@ -430,12 +414,6 @@ end)
 local ShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Shake", Default = config.AutoShake })
 ShakeToggle:OnChanged(function(value)
     config.AutoShake = value
-    updateConfig()
-end)
-
-local FastShakeToggle = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Fast Shake (Settings)", Default = config.FastShake })
-FastShakeToggle:OnChanged(function(value)
-    config.FastShake = value
     updateConfig()
 end)
 
@@ -490,6 +468,8 @@ for _, location in ipairs(locations) do
     }
 end
 
+getgenv().con = connections
+
 -- // Extra Func
 if UserInputService.KeyboardEnabled and not UserInputService.TouchEnabled then
 
@@ -499,11 +479,9 @@ if UserInputService.KeyboardEnabled and not UserInputService.TouchEnabled then
         WindowAFK:Disconnect()
     end)
     Library:Notify{ Title = "Fisch Notification", Content = "Loaded!", Duration = 5 }
-    MouseValue = 0
 elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
     replaceAFKEvent()
     Library:Notify{ Title = "Fisch Notification", Content = "Loaded!", Duration = 5 }
-    MouseValue = 1
 end
 
 Window:SelectTab(1)
