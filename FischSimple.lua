@@ -100,7 +100,7 @@ local function farmAction()
         VirtualInputManager:SendMouseButtonEvent(1, 1, 0, false, game, 1)
 
         wait()
-        if rodName and rodName ~= "" then
+        if rodName ~= "" then
             Character:FindFirstChild(rodName).events.reset:FireServer()
             Character:FindFirstChild(rodName).events.cast:FireServer(100)
         end
@@ -256,6 +256,7 @@ local function replaceAFKEvent()
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Invite:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Camera:Destroy()
     end
 end
 
