@@ -120,7 +120,6 @@ function replaceAFKEvent()
 
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Invite:Destroy()
-        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Camera:Destroy()
     end
 end
 
