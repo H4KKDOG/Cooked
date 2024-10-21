@@ -304,4 +304,4 @@ ContextActionService:BindAction('createPlatform', togglePlatform, false, platfor
 
 ShowNotification("Fisch Script Executed")
 ShowNotification("Farm Status: " .. tostring(Enabled))
-ShowNotification("Auto Shake: " .. tostring(NaviMode))
+ShowNotification("Auto Shake: " .. tostring(AShake))
