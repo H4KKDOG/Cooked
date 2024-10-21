@@ -72,7 +72,7 @@ local function createPlatform()
     end
 
     currentPlatform = Instance.new("Part")
-    currentPlatform.Size = Vector3.new(5, 1, 5)
+    currentPlatform.Size = Vector3.new(5, 0.5, 5)
     currentPlatform.Anchored = true
     currentPlatform.Transparency = 0.5
     currentPlatform.CanCollide = true
