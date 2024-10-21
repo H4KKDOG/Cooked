@@ -1,47 +1,87 @@
-if Invi then 
-    for _,b in pairs(Invi) do 
-        b:Disconnect() 
+if _G.connections then 
+    for _, connection in pairs(_G.connections) do 
+        connection:Disconnect() 
     end 
-    Invi = nil 
+    _G.connections = nil 
 end
 
-local player
+local Player
 repeat task.wait() until game.Players.LocalPlayer 
-player = game.Players.LocalPlayer
+Player = game.Players.LocalPlayer
 
-local mouse, character, humanoid, humanoidRootPart = player:GetMouse(), player.Character or player.CharacterAdded:Wait(), nil, nil
-repeat humanoid = character:FindFirstChildOfClass("Humanoid") until humanoid
-repeat humanoidRootPart = character:FindFirstChild("HumanoidRootPart") until humanoidRootPart
+local Mouse
+local Character
+local Humanoid
+local HumanoidRootPart
 
-local isActive = false
-local visibleParts = {}
+Mouse = Player:GetMouse()
+Character = Player.Character or Player.CharacterAdded:Wait()
 
-for _, part in pairs(character:GetDescendants()) do 
+repeat 
+    Humanoid = Character:FindFirstChildOfClass("Humanoid") 
+until Humanoid
+
+repeat 
+    HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart") 
+until HumanoidRootPart
+
+local IsTransparent = false
+local CharacterParts = {}
+
+for _, part in pairs(Character:GetDescendants()) do 
     if part:IsA("BasePart") and part.Transparency == 0 then 
-        table.insert(visibleParts, part)
+        CharacterParts[#CharacterParts + 1] = part 
+    end 
+end
+
+local function onPlayerDied()
+    IsTransparent = false 
+    for _, part in pairs(CharacterParts) do 
+        part.Transparency = 0 
     end
 end
 
-local connections = {}
+Humanoid.Died:Connect(onPlayerDied)
 
-connections[1] = mouse.KeyDown:Connect(function(key)
-    if key == "G" then
-        isActive = not isActive
-        for _, part in pairs(visibleParts) do 
-            part.Transparency = part.Transparency == 0 and 0.5 or 0
+local KeyConnections = {nil, nil}
+
+KeyConnections[1] = Mouse.KeyDown:Connect(function(key)
+    if key == "g" then
+        IsTransparent = not IsTransparent
+        for _, part in pairs(CharacterParts) do 
+            part.Transparency = part.Transparency == 0 and 0.5 or 0 
         end
     end
 end)
 
-connections[2] = game:GetService("RunService").Heartbeat:Connect(function()
-    if isActive then
-        local currentCFrame, originalCameraOffset = humanoidRootPart.CFrame, humanoid.CameraOffset
-        local newCFrame = currentCFrame * CFrame.new(0, -10000, 0)
-      
-        humanoid.CameraOffset, humanoidRootPart.CFrame = newCFrame:ToObjectSpace(CFrame.new(currentCFrame.Position)).Position, newCFrame
+KeyConnections[2] = game:GetService("RunService").Heartbeat:Connect(function()
+    if IsTransparent then
+        local originalCFrame = HumanoidRootPart.CFrame
+        local originalCameraOffset = Humanoid.CameraOffset
+        local newCFrame = originalCFrame * CFrame.new(0, -2000000, 0)
+        Humanoid.CameraOffset = newCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
+        HumanoidRootPart.CFrame = newCFrame
         game:GetService("RunService").RenderStepped:Wait()
-        humanoid.CameraOffset, humanoidRootPart.CFrame = originalCameraOffset, currentCFrame
+        Humanoid.CameraOffset = originalCameraOffset
+        HumanoidRootPart.CFrame = originalCFrame
     end
 end)
 
-Invi = connections
+_G.connections = KeyConnections
+
+local function onCharacterAdded(newCharacter)
+    Character = newCharacter
+    Humanoid = newCharacter:WaitForChild("Humanoid")
+    HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
+    
+    CharacterParts = {}
+    for _, part in pairs(newCharacter:GetDescendants()) do 
+        if part:IsA("BasePart") and part.Transparency == 0 then 
+            CharacterParts[#CharacterParts + 1] = part 
+        end 
+    end
+
+    Humanoid.Died:Connect(onPlayerDied)
+end
+
+Player.CharacterAdded:Connect(onCharacterAdded)
