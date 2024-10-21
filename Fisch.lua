@@ -33,7 +33,6 @@ local teleportState = 0
 local antiAFK = 0
 
 local bodyVelocity
-local freezeBlock
 local visibleParts = {}
 
 if _G.connections then 
@@ -153,25 +152,19 @@ function updateRodInWorkspace()
 end
 
 function freezePlayer()
-    freezeBlock = Instance.new("Part")
-    freezeBlock.Size = Vector3.new(5, 5, 5)
-    freezeBlock.Color = Color3.new(0, 0, 1)
-    freezeBlock.Transparency = 0.5
-    freezeBlock.Anchored = true
-    freezeBlock.CanCollide = false
-    freezeBlock.CFrame = Character:WaitForChild("HumanoidRootPart").CFrame
-    freezeBlock.Parent = workspace
-
-    local weld = Instance.new("WeldConstraint")
-    weld.Part0 = freezeBlock
-    weld.Part1 = HumanoidRootPart
-    weld.Parent = freezeBlock
+    if not HumanoidRootPart:FindFirstChild("FreezeBodyPosition") then
+        local bodyPosition = Instance.new("BodyPosition")
+        bodyPosition.Name = "FreezeBodyPosition"
+        bodyPosition.MaxForce = Vector3.new(100000, 100000, 100000)
+        bodyPosition.Position = HumanoidRootPart.Position
+        bodyPosition.Parent = HumanoidRootPart
+    end
 end
 
 function unfreezePlayer()
-    if freezeBlock then
-        freezeBlock:Destroy()
-        freezeBlock = nil
+    local bodyPosition = HumanoidRootPart:FindFirstChild("FreezeBodyPosition")
+    if bodyPosition then
+        bodyPosition:Destroy()
     end
 end
 
