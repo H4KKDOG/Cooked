@@ -57,6 +57,7 @@ function ShowNotification(Title, Content)
 end
 
 function ToggleFarm()
+    if Flying then return end
     Enabled = not Enabled
     LocalPlayer.Character.HumanoidRootPart.Anchored = Enabled
         
@@ -64,12 +65,12 @@ function ToggleFarm()
         Progress = false
         ShowNotification(`AutoFarm`, `{Enabled}`)
     else
-	GuiService.SelectedObject = nil
         ShowNotification(`AutoFarm`, `{Enabled}`)
     end
 end
 
 function ToggleFly()
+    if Enabled then return end
     Flying = not Flying
 
     for _, part in pairs(visibleParts) do 
@@ -89,6 +90,7 @@ function ToggleSell()
 end
 
 function ToggleTP()
+    if Enabled then return end
     if HumanoidRootPart then
         if teleportState == 0 then
             HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
@@ -97,6 +99,16 @@ function ToggleTP()
             HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
             teleportState = 0
         end
+    end
+end
+
+function disableAFK()
+    if antiAFK == 0 then
+        replaceAFKEvent()
+        ShowNotification(`AntiAFK`, `Enabled`)
+        antiAFK = 1
+    else
+	print("Already Disabled (AntiAFK)")
     end
 end
 
@@ -126,16 +138,6 @@ function onCharacterAdded(newCharacter)
 end
 
 LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
-
-function disableAFK()
-    if antiAFK == 0 then
-        replaceAFKEvent()
-        ShowNotification(`AntiAFK`, `Enabled`)
-        antiAFK = 1
-    else
-	print("Already Disabled (AntiAFK)")
-    end
-end
 
 function updateRodInWorkspace()
     if playerBobberWorkspace then
