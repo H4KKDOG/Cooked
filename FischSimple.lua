@@ -24,7 +24,7 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 
 local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
-local rodName, lastButtonInstance, bodyVelocity
+local rodName, lastButtonInstance, bodyVelocity, GuiService.SelectedObject
 local Enabled = true
 
 local FarmKeybind, SellKeybind, FlyKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X
