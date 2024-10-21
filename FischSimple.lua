@@ -99,13 +99,13 @@ local function farmAction()
         task.wait(0.75)
         VirtualInputManager:SendMouseButtonEvent(1, 1, 0, false, game, 1)
 
-        wait(0.01)
+        wait()
         if rodName and rodName ~= "" then
             Character:FindFirstChild(rodName).events.reset:FireServer()
             Character:FindFirstChild(rodName).events.cast:FireServer(100)
         end
 
-        wait(1.75)
+        task.wait(1.75)
     end
 end
 
