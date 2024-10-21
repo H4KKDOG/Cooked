@@ -50,7 +50,7 @@ local verticalSpeed = 75
 
 local bodyVelocity
 local rodName
-local lastButtonInstance
+local currentPlatform
 
 local connections = {}
 local parts = {}
@@ -65,6 +65,7 @@ local configTemplate = {
     AutoReel = false,
     SellBind = "F",
     FlyBind = "X",
+    Platform = "P",
 }
 
 if not isfolder("FischConfig") then
@@ -135,6 +136,18 @@ function updateRodInWorkspace()
         end
     end
     return nil
+end
+
+function createPlatform()
+    if currentPlatform then currentPlatform:Destroy() end
+    currentPlatform = Instance.new("Part")
+    currentPlatform.Size = Vector3.new(5, 0.25, 5)
+    currentPlatform.Anchored = true
+    currentPlatform.Transparency = 0.5
+    currentPlatform.CanCollide = true
+    currentPlatform.Color = Color3.fromRGB(255, 255, 255)
+    currentPlatform.Position = HumanoidRootPart.Position - Vector3.new(0, HumanoidRootPart.Size.Y / 2 + 2.5, 0)
+    currentPlatform.Parent = workspace
 end
 
 function fly()
@@ -334,6 +347,22 @@ local Fly = Tabs.Debug:CreateKeybind("Keybind", {
 
     ChangedCallback = function(Key)
         config.FlyBind = tostring(Key.Name)
+        updateConfig()
+        Library:Notify{ Title = "Fisch Notification", Content = "Set Keybind : "..tostring(Key.Name), Duration = 5 }
+    end
+})
+
+local Fly = Tabs.Debug:CreateKeybind("Keybind", {
+    Title = "Create Platform",
+    Mode = "Toggle",
+    Default = config.Platform,
+
+    Callback = function(click)
+        createPlatform()
+    end,
+
+    ChangedCallback = function(Key)
+        config.Platform = tostring(Key.Name)
         updateConfig()
         Library:Notify{ Title = "Fisch Notification", Content = "Set Keybind : "..tostring(Key.Name), Duration = 5 }
     end
