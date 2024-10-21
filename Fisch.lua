@@ -222,7 +222,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         GuiService.SelectedObject = nil
 			
 	local Random = math.random(1, 3)
-	local isPerfect = randomChance <= 1
+	local isPerfect = Random <= 1
 	local fish = Descendant.Parent:FindFirstChild("fish")
 			
 	while Reeling do
