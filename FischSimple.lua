@@ -93,7 +93,7 @@ local function farmAction()
     local nRod = checkBobber()
     if nRod then
         Progress = true
-        wait(1.75)
+        task.wait(1.75)
 
         VirtualInputManager:SendMouseButtonEvent(1, 1, 0, true, game, 1)
         task.wait(0.75)
