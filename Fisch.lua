@@ -122,7 +122,7 @@ function onCharacterAdded(newCharacter)
     Humanoid.Died:Connect(onPlayerDied)
 end
 
-Player.CharacterAdded:Connect(onCharacterAdded)
+LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
 function disableAFK()
     if antiAFK == 0 then
