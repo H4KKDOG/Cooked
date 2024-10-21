@@ -168,8 +168,8 @@ local function handleReelUI(Descendant)
 end
 
 local function handleShakeUI()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
-        local shakeButton = LocalPlayer.PlayerGui.shakeui.safezone.button
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
+        local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
         if shakeButton ~= lastButtonInstance then
             lastButtonInstance = shakeButton
 
