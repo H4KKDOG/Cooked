@@ -28,7 +28,13 @@ local rodName, lastButtonInstance, bodyVelocity, currentPlatform
 local Enabled = true
 local AShake = true
 
-local FarmKeybind, SellKeybind, FlyKeybind, ShakeKeybind, platformKeybind, teleportKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X, Enum.KeyCode.N, Enum.KeyCode.P, Enum.KeyCode.KeypadMinus
+local FarmKeybind = Enum.KeyCode.T
+local SellKeybind = Enum.KeyCode.F
+local FlyKeybind = Enum.KeyCode.X
+local ShakeKeybind = Enum.KeyCode.N
+local platformKeybind = Enum.KeyCode.P
+local teleportKeybind = Enum.KeyCode.KeypadMinus
+
 local parts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
