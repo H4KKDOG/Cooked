@@ -1,5 +1,5 @@
 if game.PlaceId ~= 16732694052 then return end
-print("Exploiter NIGGA")
+print("Exploiter")
 
 repeat
     task.wait()
@@ -75,10 +75,10 @@ function ToggleFly()
     end
 
     if Flying then
+		ShowNotification(`Invi Fly`,  `{Flying}`)
         fly()
-        ShowNotification(`Fly`,  `{Flying}`)
     else
-        ShowNotification(`Fly`,  `{Flying}`)
+        ShowNotification(`Invi Fly`,  `{Flying}`)
     end
 end
 
