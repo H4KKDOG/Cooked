@@ -255,6 +255,7 @@ local function replaceAFKEvent()
         ShowNotification("AntiAFK")
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Right.Invite:Destroy()
     end
 end
 
