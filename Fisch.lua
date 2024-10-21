@@ -33,6 +33,7 @@ local teleportState = 0
 local antiAFK = 0
 
 local bodyVelocity
+local freezeBlock
 local visibleParts = {}
 
 if _G.connections then 
@@ -62,8 +63,10 @@ function ToggleFarm()
         
     if not Enabled then
         Progress = false
+	unfreezePlayer()
         ShowNotification(`AutoFarm`, `{Enabled}`)
     else
+	freezePlayer()
         ShowNotification(`AutoFarm`, `{Enabled}`)
     end
 end
@@ -147,6 +150,29 @@ function updateRodInWorkspace()
         end
     end
     return nil
+end
+
+function freezePlayer()
+    freezeBlock = Instance.new("Part")
+    freezeBlock.Size = Vector3.new(5, 5, 5)
+    freezeBlock.Color = Color3.new(0, 0, 1)
+    freezeBlock.Transparency = 0.5
+    freezeBlock.Anchored = true
+    freezeBlock.CanCollide = false
+    freezeBlock.CFrame = Character:WaitForChild("HumanoidRootPart").CFrame
+    freezeBlock.Parent = workspace
+
+    local weld = Instance.new("WeldConstraint")
+    weld.Part0 = freezeBlock
+    weld.Part1 = HumanoidRootPart
+    weld.Parent = freezeBlock
+end
+
+function unfreezePlayer()
+    if freezeBlock then
+        freezeBlock:Destroy()
+        freezeBlock = nil
+    end
 end
 
 function fly()
