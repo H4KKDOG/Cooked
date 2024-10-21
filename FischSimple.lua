@@ -221,12 +221,16 @@ end)
 
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child.Name == rodName then
-        rodName, WaitDelay, Reeling, Progress = nil, false, false, false
+        rodName = nil
+        WaitDelay = false
+        Reeling = false
+        Progress = false
     end
 end)
 
 playerBobberWorkspace.DescendantRemoving:Connect(function(BobChild)
     if BobChild.Name == "bobber" then
+        wait(0.75)
         Progress = false
     end
 end)
