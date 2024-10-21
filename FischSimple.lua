@@ -28,7 +28,7 @@ local rodName, lastButtonInstance, bodyVelocity
 local Enabled = true
 local NaviMode = true
 
-local FarmKeybind, SellKeybind, FlyKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X
+local FarmKeybind, SellKeybind, FlyKeybind, ShakeKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X, Enum.KeyCode.N
 local parts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
@@ -91,6 +91,13 @@ local function ToggleFarm(_, State)
     if State == Enum.UserInputState.Begin then
         Enabled = not Enabled
         ShowNotification("Farm Status: " .. tostring(Enabled))
+    end
+end
+
+local function ClickMode(_, State)
+    if State == Enum.UserInputState.Begin then
+        NaviMode = not NaviMode
+        ShowNotification("Navigation Shake: " .. tostring(NaviMode))
     end
 end
 
@@ -267,6 +274,7 @@ elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled th
 end
 
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
+ContextActionService:BindAction('ClickMode', ClickMode, false, ShakeKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
 
