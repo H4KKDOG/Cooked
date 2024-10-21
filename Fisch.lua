@@ -50,7 +50,6 @@ local verticalSpeed = 75
 local bodyVelocity
 local rodName
 local lastButtonInstance
-local MouseValue
 
 local connections = {}
 local parts = {}
@@ -383,9 +382,9 @@ CastToggle:OnChanged(function(value)
                         Progress = true
                         wait(1.75)
 
-                        VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, true, game, 1)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, 0, true, game, 1)
                         task.wait(0.75)
-                        VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, 0, false, game, 1)
 
                         wait()
                         if nRod and nRod:FindFirstChild("events") then
