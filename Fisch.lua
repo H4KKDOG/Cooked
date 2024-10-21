@@ -403,7 +403,7 @@ CastToggle:OnChanged(function(value)
                         task.wait(0.75)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, MouseValue, false, game, 1)
 
-                        task.wait()
+                        wait()
                         if nRod and nRod:FindFirstChild("events") then
                             if rodName and rodName ~= "" then
                                 Character:FindFirstChild(rodName).events.reset:FireServer()
