@@ -197,6 +197,19 @@ local function Invi()
     end
 end
 
+local function replaceAFKEvent()
+    local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
+    if AFK then
+        wait(0.75)
+        local FakeAFK = Instance.new("RemoteEvent")
+        FakeAFK.Name = "afk"
+        FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
+
+        ShowNotification("AntiAFK")
+        AFK:Destroy()
+    end
+end
+
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
     if Child:IsA('Tool') and Child.Name:lower():find('rod') then
         rodName = Child.Name
@@ -229,6 +242,16 @@ RunService.Heartbeat:Connect(function()
         farmAction()
     end
 end)
+
+if UserInputService.KeyboardEnabled and not UserInputService.TouchEnabled then
+    local WindowAFK
+    WindowAFK = UserInputService.WindowFocused:Connect(function()
+        replaceAFKEvent()
+        WindowAFK:Disconnect()
+    end)
+elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
+    replaceAFKEvent()
+end
 
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
