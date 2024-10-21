@@ -238,8 +238,10 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
                     fish.Position.X.Offset,
                     Descendant.Position.Y.Scale,
                     Descendant.Position.Y.Offset
-                )
+		)
             end
+				
+	    task.wait()
 	end
     end
 end)
