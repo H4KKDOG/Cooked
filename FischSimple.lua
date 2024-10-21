@@ -171,16 +171,9 @@ local function handleShakeUI()
         local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button")
         if shakeButton ~= lastButtonInstance then
             lastButtonInstance = shakeButton
-
-            local ButtonPosition, ButtonSize = shakeButton.AbsolutePosition, shakeButton.AbsoluteSize
-            local radius = ButtonSize.X / 2
-            local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
-            local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
-
-            if ClickPositionX ~= 29 then
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, true, game, 1)
-                VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, false, game, 1)
-            end
+            GuiService.SelectedObject = shakeButton
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
         end
     end
 end
