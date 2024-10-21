@@ -293,7 +293,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     end
 end)
 
-RunService.Heartbeat:Connect(function()
+RunService.RenderStepped:Connect(function()
     Invi()
 
     if Enabled and not Progress then
