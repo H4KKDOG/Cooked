@@ -178,7 +178,7 @@ local function handleReelUI(Descendant)
 end
 
 local function handleShakeUI(Descendant)
-    if AShake then
+    if AShake and Descendant then
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
