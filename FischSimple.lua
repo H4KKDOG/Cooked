@@ -13,6 +13,7 @@ local ContextActionService = game:GetService('ContextActionService')
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local VirtualInputManager = game:GetService('VirtualInputManager')
+local GuiService = game:GetService('GuiService')
 
 local LocalPlayer = Players.LocalPlayer
 local playerName = LocalPlayer.Name
