@@ -295,12 +295,23 @@ elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled th
     replaceAFKEvent()
 end
 
-ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
-ContextActionService:BindAction('AutoShake', AutoShake, false, ShakeKeybind)
-ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
-ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
-ContextActionService:BindAction('teleportToLocation', teleportToLocation, false, teleportKeybind)
-ContextActionService:BindAction('createPlatform', togglePlatform, false, platformKeybind)
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+
+    if input.KeyCode == FarmKeybind then
+        ToggleFarm(nil, Enum.UserInputState.Begin)
+    elseif input.KeyCode == ShakeKeybind then
+        AutoShake(nil, Enum.UserInputState.Begin)
+    elseif input.KeyCode == FlyKeybind then
+        toggleFly(nil, Enum.UserInputState.Begin)
+    elseif input.KeyCode == SellKeybind then
+        SellFish(nil, Enum.UserInputState.Begin)
+    elseif input.KeyCode == teleportKeybind then
+        teleportToLocation(nil, Enum.UserInputState.Begin)
+    elseif input.KeyCode == platformKeybind then
+        togglePlatform(nil, Enum.UserInputState.Begin)
+    end
+end)
 
 ShowNotification("Fisch Script Executed")
 ShowNotification("Farm Status: " .. tostring(Enabled))
