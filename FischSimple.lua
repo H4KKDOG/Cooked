@@ -24,11 +24,11 @@ local playerBobberWorkspace = workspace:FindFirstChild(playerName)
 
 local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
-local rodName, lastButtonInstance, bodyVelocity
+local rodName, lastButtonInstance, bodyVelocity, currentPlatform
 local Enabled = true
 local AShake = true
 
-local FarmKeybind, SellKeybind, FlyKeybind, ShakeKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X, Enum.KeyCode.N
+local FarmKeybind, SellKeybind, FlyKeybind, ShakeKeybind, platformKeybind, teleportKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X, Enum.KeyCode.N, Enum.KeyCode.P, Enum.KeyCode.KeypadMinus
 local parts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
@@ -56,6 +56,22 @@ local function updateRodInWorkspace()
         end
     end
     return nil
+end
+
+local function createPlatform()
+    if currentPlatform then
+        currentPlatform:Destroy()
+        currentPlatform = nil
+    end
+
+    currentPlatform = Instance.new("Part")
+    currentPlatform.Size = Vector3.new(5, 1, 5)
+    currentPlatform.Anchored = true
+    currentPlatform.Transparency = 0.5
+    currentPlatform.CanCollide = true
+    currentPlatform.Color = Color3.fromRGB(255, 255, 255)
+    currentPlatform.Position = HumanoidRootPart.Position - Vector3.new(0, HumanoidRootPart.Size.Y / 2 + 1, 0)
+    currentPlatform.Parent = workspace
 end
 
 local function checkBobber()
@@ -93,12 +109,28 @@ local function ToggleFarm(_, State)
     end
 end
 
+local function togglePlatform(_, State)
+    if State == Enum.UserInputState.Begin then
+        createPlatform()
+        ShowNotification("Platform Created")
+    end
+end
+
 local function AutoShake(_, State)
     if State == Enum.UserInputState.Begin then
         AShake = not AShake
         ShowNotification("Auto Shake: " .. tostring(AShake))
         if not AShake then
             GuiService.SelectedObject = nil
+        end
+    end
+end
+
+local function teleportToLocation(_, State)
+    if State == Enum.UserInputState.Begin then
+        if HumanoidRootPart then
+            HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+            ShowNotification("Teleported to location")
         end
     end
 end
@@ -269,6 +301,7 @@ ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
 ContextActionService:BindAction('AutoShake', AutoShake, false, ShakeKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
+ContextActionService:BindAction('createPlatform', togglePlatform, false, platformKeybind)
 
 ShowNotification("Fisch Script Executed")
 ShowNotification("Farm Status: " .. tostring(Enabled))
