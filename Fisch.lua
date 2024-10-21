@@ -155,7 +155,7 @@ function freezePlayer()
     if not HumanoidRootPart:FindFirstChild("FreezeBodyPosition") then
         local bodyPosition = Instance.new("BodyPosition")
         bodyPosition.Name = "FreezeBodyPosition"
-        bodyPosition.MaxForce = Vector3.new(999999, 999999, 999999)
+        bodyPosition.MaxForce = Vector3.new(5000, 5000, 5000)
         bodyPosition.Position = HumanoidRootPart.Position
         bodyPosition.Parent = HumanoidRootPart
     end
