@@ -77,7 +77,7 @@ local function createPlatform()
     currentPlatform.Transparency = 0.5
     currentPlatform.CanCollide = true
     currentPlatform.Color = Color3.fromRGB(255, 255, 255)
-    currentPlatform.Position = HumanoidRootPart.Position - Vector3.new(0, HumanoidRootPart.Size.Y / 2 + 1, 0)
+    currentPlatform.Position = HumanoidRootPart.Position - Vector3.new(0, HumanoidRootPart.Size.Y / 2 + 2, 0)
     currentPlatform.Parent = workspace
 end
 
