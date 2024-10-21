@@ -210,7 +210,7 @@ connections[1] = RunService.Heartbeat:Connect(function()
 end)
 
 connections[2] = RunService.Heartbeat:Connect(function()
-    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:FindFirstChild("button") then
+    if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone.button then
         local shakeButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:WaitForChild("button")
         if shakeButton and config.AutoShake then
             GuiService.SelectedObject = shakeButton
