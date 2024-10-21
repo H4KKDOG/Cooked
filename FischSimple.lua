@@ -26,6 +26,7 @@ local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
 local rodName, lastButtonInstance, bodyVelocity
 local Enabled = true
+local NaviMode = true
 
 local FarmKeybind, SellKeybind, FlyKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X
 local parts = {}
@@ -169,9 +170,21 @@ local function handleReelUI(Descendant)
 end
 
 local function handleShakeUI(Descendant)
-    GuiService.SelectedObject = Descendant
-    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+    if NaviMode then
+        GuiService.SelectedObject = Descendant
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+    else
+        local ButtonPosition, ButtonSize = Descendant.AbsolutePosition, Descendant.AbsoluteSize
+        local Radius = ButtonSize.X / 2
+        local ClickPositionX = ButtonPosition.X + ButtonSize.X - Radius * 0.55
+        local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - Radius * 0.55
+
+        if ClickPositionX ~= 29 then
+            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, true, game, 1)
+            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, false, game, 1)
+        end
+    end
 end
 
 
@@ -199,6 +212,7 @@ local function replaceAFKEvent()
 
         ShowNotification("AntiAFK")
         AFK:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
     end
 end
 
@@ -258,3 +272,4 @@ ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
 
 ShowNotification("Fisch Script Executed")
 ShowNotification("Farm Status: " .. tostring(Enabled))
+ShowNotification("Navigation Shake: " .. tostring(NaviMode))
