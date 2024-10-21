@@ -61,7 +61,6 @@ local configTemplate = {
     Enabled = false,
     AutoSell = false,
     AutoShake = false,
-    FastShake = false,
     AutoReel = false,
     SellBind = "F",
     FlyBind = "X",
