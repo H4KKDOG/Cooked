@@ -205,6 +205,7 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child == Rod then
         Enabled = false
         Progress = false
+	Reeling = false
         Rod = nil
         GuiService.SelectedObject = nil
     end
@@ -216,16 +217,37 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
-        Finished = true
+        Reeling = true
+	WaitDelay = true
         GuiService.SelectedObject = nil
-        Descendant:GetPropertyChangedSignal('Position'):Wait()
-        ReplicatedStorage.events.reelfinished:FireServer(100, math.random(1, 3) <= 1 and true or false)
+			
+	local Random = math.random(1, 3)
+	local isPerfect = randomChance <= 1
+	local fish = Descendant.Parent:FindFirstChild("fish")
+			
+	while Reeling do
+            if fish and Descendant then
+                if not isPerfect and WaitDelay then
+                    Descendant:GetPropertyChangedSignal("Position"):Wait()
+                    task.wait(0.5)
+                    WaitDelay = false
+                end
+
+                Descendant.Position = UDim2.new(
+                    fish.Position.X.Scale,
+                    fish.Position.X.Offset,
+                    Descendant.Position.Y.Scale,
+                    Descendant.Position.Y.Offset
+                )
+            end
+	end
     end
 end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     if Descendant.Name == 'reel' then
         Progress = false
+	Reeling = false
     end
 end)
 
