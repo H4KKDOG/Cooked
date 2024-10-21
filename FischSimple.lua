@@ -26,7 +26,7 @@ local Progress, Reeling, WaitDelay, flying = false, false, false, false
 local horizontalSpeed, verticalSpeed = 175, 75
 local rodName, lastButtonInstance, bodyVelocity
 local Enabled = true
-local NaviMode = true
+local AShake = true
 
 local FarmKeybind, SellKeybind, FlyKeybind, ShakeKeybind = Enum.KeyCode.T, Enum.KeyCode.F, Enum.KeyCode.X, Enum.KeyCode.N
 local parts = {}
@@ -94,10 +94,10 @@ local function ToggleFarm(_, State)
     end
 end
 
-local function ClickMode(_, State)
+local function AutoShake(_, State)
     if State == Enum.UserInputState.Begin then
-        NaviMode = not NaviMode
-        ShowNotification("Navigation Shake: " .. tostring(NaviMode))
+        AShake = not AShake
+        ShowNotification("Auto Shake: " .. tostring(AShake))
     end
 end
 
@@ -177,20 +177,10 @@ local function handleReelUI(Descendant)
 end
 
 local function handleShakeUI(Descendant)
-    if NaviMode then
+    if AShake then
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-    else
-        local ButtonPosition, ButtonSize = Descendant.AbsolutePosition, Descendant.AbsoluteSize
-        local Radius = ButtonSize.X / 2
-        local ClickPositionX = ButtonPosition.X + ButtonSize.X - Radius * 0.55
-        local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - Radius * 0.55
-
-        if ClickPositionX ~= 29 then
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, true, game, 1)
-            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, 0, false, game, 1)
-        end
     end
 end
 
@@ -274,10 +264,10 @@ elseif UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled th
 end
 
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, FarmKeybind)
-ContextActionService:BindAction('ClickMode', ClickMode, false, ShakeKeybind)
+ContextActionService:BindAction('AShake', AShake, false, ShakeKeybind)
 ContextActionService:BindAction('toggleFly', toggleFly, false, FlyKeybind)
 ContextActionService:BindAction('SellFish', SellFish, false, SellKeybind)
 
 ShowNotification("Fisch Script Executed")
 ShowNotification("Farm Status: " .. tostring(Enabled))
-ShowNotification("Navigation Shake: " .. tostring(NaviMode))
+ShowNotification("Auto Shake: " .. tostring(NaviMode))
