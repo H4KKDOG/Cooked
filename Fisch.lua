@@ -52,51 +52,59 @@ function ShowNotification(Title, Content)
     })
 end
 
-function ToggleFarm()
-    if Flying then return end
-    Enabled = not Enabled
-
-    if not Enabled then
-        Progress = false
-        unfreezePlayer()
-        ShowNotification("AutoFarm", "OFF")
-    else
-        freezePlayer()
-        ShowNotification("AutoFarm", "ON")
-    end
-end
-
-function ToggleFly()
-    if Enabled then return end
-    Flying = not Flying
-
-    for _, part in pairs(visibleParts) do
-        part.Transparency = part.Transparency == 0 and 0.5 or 0
-    end
-
-    if Flying then
-        ShowNotification("Invi Fly", "ON")
-        Invis()
-        fly()
-    else
-        unInvis()
-        ShowNotification("Invi Fly", "OFF")
-    end
-end
-
-function ToggleSell()
-    ReplicatedStorage.events.selleverything:InvokeServer()
-end
-
-function ToggleTP()
-    if Enabled then return end
-    if HumanoidRootPart then
-        if teleportState == 0 then
-            HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
-            teleportState = 1
+function ToggleFarm(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Flying then return end
+        Enabled = not Enabled
+    
+        if not Enabled then
+            Progress = false
+            unfreezePlayer()
+            ShowNotification("AutoFarm", "OFF")
         else
-            HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
-            teleportState = 0
+            freezePlayer()
+            ShowNotification("AutoFarm", "ON")
+        end
+    end
+end
+
+function ToggleFly(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled then return end
+        Flying = not Flying
+    
+        for _, part in pairs(visibleParts) do
+            part.Transparency = part.Transparency == 0 and 0.5 or 0
+        end
+    
+        if Flying then
+            ShowNotification("Invi Fly", "ON")
+            Invis()
+            fly()
+        else
+            unInvis()
+            ShowNotification("Invi Fly", "OFF")
+        end
+    end
+end
+
+function ToggleSell(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        ReplicatedStorage.events.selleverything:InvokeServer()
+    end
+end
+
+function ToggleTP(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled then return end
+        if HumanoidRootPart then
+            if teleportState == 0 then
+                HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+                teleportState = 1
+            else
+                HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
+                teleportState = 0
+            end
         end
     end
 end
@@ -328,26 +336,20 @@ coroutine.wrap(function()
     end
 end)()
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-
-    if input.KeyCode == Enum.KeyCode.T then
-        ToggleFarm()
-    elseif input.KeyCode == Enum.KeyCode.X then
-        ToggleFly()
-    elseif input.KeyCode == Enum.KeyCode.F then
-        ToggleSell()
-    elseif input.KeyCode == Enum.KeyCode.KeypadPlus then
-        ToggleTP()
-    end
-end)
+if not UserInputService.KeyboardEnabled then
+    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Keybind, Enum.UserInputType.Touch)
+    ContextActionService:SetTitle('ToggleFarm', 'Toggle Farm')
+    ContextActionService:SetPosition('ToggleFarm', UDim2.new(0.9, -50, 0.9, -150))
+else
+    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
+    ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
+    ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
+    ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadPlus)
+end
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
     Text = "Fisch Loaded!",
     Duration = math.huge,
     Button1 = "@zxc.shiro",
-    Callback = function()
-        disableAFK()
-    end
 })
