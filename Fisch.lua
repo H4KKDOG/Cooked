@@ -337,8 +337,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         ToggleSell()
     elseif input.KeyCode == Enum.KeyCode.KeypadPlus then
         ToggleTP()
-    elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
-        disableAFK()
     end
 end)
 
@@ -347,4 +345,5 @@ CoreGui:SetCore('SendNotification', {
     Text = "Fisch Loaded!",
     Duration = math.huge,
     Button1 = "@zxc.shiro",
+    Callback = disableAFK()
 })
