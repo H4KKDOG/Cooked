@@ -224,10 +224,6 @@ end
 
 function AutoShake(Shake)
     local shakeConnection
-    if shakeConnection then
-        shakeConnection:Disconnect()
-        shakeConnection = nil
-    end
 
     if Shake then
         shakeConnection = RunService.RenderStepped:Connect(function()
@@ -246,15 +242,16 @@ function AutoShake(Shake)
                 
             task.wait()
         end)
+    else
+        if shakeConnection then
+            shakeConnection:Disconnect()
+            shakeConnection = nil
+        end
     end
 end
 
 function AutoCast(Cast)
     local castConnection
-    if castConnection then
-        castConnection:Disconnect()
-        castConnection = nil
-    end
 
     if Cast then
         castConnection = RunService.RenderStepped:Connect(function()
@@ -278,6 +275,11 @@ function AutoCast(Cast)
     
             task.wait()
         end)
+    else
+        if castConnection then
+            castConnection:Disconnect()
+            castConnection = nil
+        end
     end
 end
 
