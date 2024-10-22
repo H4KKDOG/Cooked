@@ -37,6 +37,7 @@ local originalCFrame
 local InvisCon
 local castConnection
 local shakeConnection
+local lastButtonInstance
 local visibleParts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
@@ -228,7 +229,7 @@ end
 function AutoShake(Shake)
     if Shake then
         if shakeConnection then return end
-        shakeConnection = RunService.RenderStepped:Connect(function()
+        shakeConnection = RunService.Heartbeat:Connect(function()
             if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
                 GuiService.SelectedObject = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
                 VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
