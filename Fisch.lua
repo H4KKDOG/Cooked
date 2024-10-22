@@ -196,7 +196,7 @@ function fly()
             moveDirection.Z * horizontalSpeed
         )
 
-        RunService.RenderStepped:Wait()
+        wait()
     end
 
     bodyVelocity:Destroy()
@@ -212,7 +212,7 @@ function Invis()
             Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
             HumanoidRootPart.CFrame = offsetCFrame
 
-            RunService.RenderStepped:Wait()
+            wait()
 
             Humanoid.CameraOffset = Vector3.new()
             HumanoidRootPart.CFrame = originalCFrame
