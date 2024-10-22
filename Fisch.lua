@@ -35,6 +35,8 @@ local antiAFK = 0
 local bodyVelocity
 local originalCFrame
 local InvisCon
+local castConnection
+local shakeConnection
 local visibleParts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
@@ -222,10 +224,9 @@ function replaceAFKEvent()
     end
 end
 
-function AutoShake(Shake : boolean)
-    local shakeConnection
-
+function AutoShake(Shake)
     if Shake then
+        if shakeConnection then return end
         shakeConnection = RunService.RenderStepped:Connect(function()
             if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
                 local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
@@ -239,7 +240,6 @@ function AutoShake(Shake : boolean)
                 lastButtonInstance = nil
                 GuiService.SelectedObject = nil
             end
-                
             task.wait()
         end)
     else
@@ -250,10 +250,9 @@ function AutoShake(Shake : boolean)
     end
 end
 
-function AutoCast(Cast : boolean)
-    local castConnection
-
+function AutoCast(Cast)
     if Cast then
+        if castConnection then return end
         castConnection = RunService.RenderStepped:Connect(function()
             if not Progress then
                 local workRod = updateRodInWorkspace()
@@ -272,7 +271,6 @@ function AutoCast(Cast : boolean)
                     end
                 end
             end
-    
             task.wait()
         end)
     else
