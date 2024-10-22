@@ -345,5 +345,7 @@ CoreGui:SetCore('SendNotification', {
     Text = "Fisch Loaded!",
     Duration = math.huge,
     Button1 = "@zxc.shiro",
-    Callback = disableAFK()
+    Callback = function()
+        disableAFK()
+    end
 })
