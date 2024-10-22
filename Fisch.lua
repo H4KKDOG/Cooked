@@ -62,6 +62,7 @@ function ToggleFarm(Name, State, Input)
             originalCFrame = nil
             AutoCast(false)
             AutoShake(false)
+            GuiService.SelectedObject = nil
             ShowNotification("Fishing", "OFF")
         else
             originalCFrame = HumanoidRootPart.CFrame
