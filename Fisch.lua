@@ -159,12 +159,23 @@ function freezePlayer()
         bodyPosition.Position = HumanoidRootPart.Position
         bodyPosition.Parent = HumanoidRootPart
     end
+    if not HumanoidRootPart:FindFirstChild("FreezeBodyGyro") then
+        local bodyGyro = Instance.new("BodyGyro")
+        bodyGyro.Name = "FreezeBodyGyro"
+        bodyGyro.MaxTorque = Vector3.new(5000, 5000, 5000)
+        bodyGyro.CFrame = HumanoidRootPart.CFrame
+        bodyGyro.Parent = HumanoidRootPart
+    end
 end
 
 function unfreezePlayer()
     local bodyPosition = HumanoidRootPart:FindFirstChild("FreezeBodyPosition")
     if bodyPosition then
         bodyPosition:Destroy()
+    end
+    local bodyGyro = HumanoidRootPart:FindFirstChild("FreezeBodyGyro")
+    if bodyGyro then
+        bodyGyro:Destroy()
     end
 end
 
