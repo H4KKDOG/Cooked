@@ -26,7 +26,7 @@ local Rod = false
 local Casted = false
 local Progress = false
 local Flying = false
-local IsTransparent = false 
+local IsTransparent = false
 
 local horizontalSpeed = 200
 local verticalSpeed = 75
@@ -34,17 +34,12 @@ local teleportState = 0
 local antiAFK = 0
 
 local bodyVelocity
+local FreezeCon
+local InvisCon
 local visibleParts = {}
 
-if _G.connections then 
-    for _, connection in pairs(_G.connections) do 
-        connection:Disconnect() 
-    end 
-    _G.connections = nil 
-end
-
-for _, part in pairs(Character:GetDescendants()) do 
-    if part:IsA("BasePart") and part.Transparency == 0 then 
+for _, part in pairs(Character:GetDescendants()) do
+    if part:IsA("BasePart") and part.Transparency == 0 then
         table.insert(visibleParts, part)
     end
 end
@@ -60,14 +55,14 @@ end
 function ToggleFarm()
     if Flying then return end
     Enabled = not Enabled
-        
+
     if not Enabled then
         Progress = false
-	unfreezePlayer()
-        ShowNotification(`AutoFarm`, `{Enabled}`)
+        unfreezePlayer()
+        ShowNotification("AutoFarm", "ON")
     else
-	freezePlayer()
-        ShowNotification(`AutoFarm`, `{Enabled}`)
+        freezePlayer()
+        ShowNotification("AutoFarm", "OFF")
     end
 end
 
@@ -75,15 +70,17 @@ function ToggleFly()
     if Enabled then return end
     Flying = not Flying
 
-    for _, part in pairs(visibleParts) do 
+    for _, part in pairs(visibleParts) do
         part.Transparency = part.Transparency == 0 and 0.5 or 0
     end
 
     if Flying then
-	ShowNotification(`Invi Fly`,  `{Flying}`)
+        ShowNotification("Invi Fly", "ON")
+        Invis()
         fly()
     else
-        ShowNotification(`Invi Fly`,  `{Flying}`)
+        unInvis()
+        ShowNotification("Invi Fly", "OFF")
     end
 end
 
@@ -107,17 +104,17 @@ end
 function disableAFK()
     if antiAFK == 0 then
         replaceAFKEvent()
-        ShowNotification(`AntiAFK`, `Enabled`)
+        ShowNotification("AntiAFK", "Enabled")
         antiAFK = 1
     else
-	print("Already Disabled (AntiAFK)")
+        print("Already Disabled (AntiAFK)")
     end
 end
 
 function onPlayerDied()
-    IsTransparent = false 
-    for _, part in pairs(CharacterParts) do 
-        part.Transparency = 0 
+    IsTransparent = false
+    for _, part in pairs(CharacterParts) do
+        part.Transparency = 0
     end
 end
 
@@ -127,11 +124,11 @@ function onCharacterAdded(newCharacter)
     Character = newCharacter
     Humanoid = newCharacter:WaitForChild("Humanoid")
     HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
-    
+
     visibleParts = {}
 
-    for _, part in pairs(Character:GetDescendants()) do 
-        if part:IsA("BasePart") and part.Transparency == 0 then 
+    for _, part in pairs(Character:GetDescendants()) do
+        if part:IsA("BasePart") and part.Transparency == 0 then
             table.insert(visibleParts, part)
         end
     end
@@ -156,10 +153,10 @@ function freezePlayer()
     originalCFrame = HumanoidRootPart.CFrame
     isFrozen = true
 
-    RunService.RenderStepped:Connect(function()
+    FreezeCon = RunService.RenderStepped:Connect(function()
         if isFrozen then
             HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-            
+
             local currentRotation = HumanoidRootPart.Rotation
             HumanoidRootPart.CFrame = originalCFrame
         end
@@ -167,7 +164,12 @@ function freezePlayer()
 end
 
 function unfreezePlayer()
-    isFrozen = false 
+    isFrozen = false
+
+    if FreezeCon then
+        FreezeCon:Disconnect()
+        FreezeCon = nil
+    end
 end
 
 function fly()
@@ -202,6 +204,33 @@ function fly()
     bodyVelocity:Destroy()
 end
 
+function Invis()
+    Invis = true
+
+    InvisCon = RunService.Heartbeat:Connect(function()
+        if Invis then
+            local originalCFrame = HumanoidRootPart.CFrame
+            local offsetCFrame = originalCFrame * CFrame.new(0, -100, 0)
+            Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
+            HumanoidRootPart.CFrame = offsetCFrame
+
+            RunService.RenderStepped:Wait()
+
+            Humanoid.CameraOffset = Vector3.new()
+            HumanoidRootPart.CFrame = originalCFrame
+        end
+    end)
+end
+
+function unInvis()
+    Invis = false
+
+    if InvisCon then
+        InvisCon:Disconnect()
+        InvisCon = nil
+    end
+end
+
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK then
@@ -225,7 +254,7 @@ LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child == Rod then
         Enabled = false
         Progress = false
-	Reeling = false
+        Reeling = false
         Rod = nil
         GuiService.SelectedObject = nil
     end
@@ -233,20 +262,20 @@ end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
-	task.wait()
+        task.wait()
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Reeling = true
-	WaitDelay = true
+        WaitDelay = true
         GuiService.SelectedObject = nil
-			
-	local Random = math.random(1, 3)
-	local isPerfect = Random <= 1
-	local fish = Descendant.Parent:FindFirstChild("fish")
-			
-	while Reeling do
+
+        local Random = math.random(1, 3)
+        local isPerfect = Random <= 1
+        local fish = Descendant.Parent:FindFirstChild("fish")
+
+        while Reeling do
             if fish and Descendant then
                 if not isPerfect and WaitDelay then
                     Descendant:GetPropertyChangedSignal("Position"):Wait()
@@ -259,37 +288,20 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
                     fish.Position.X.Offset,
                     Descendant.Position.Y.Scale,
                     Descendant.Position.Y.Offset
-		)
+                )
             end
-				
-	    task.wait()
-	end
+
+            task.wait()
+        end
     end
 end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     if Descendant.Name == 'reel' then
         Progress = false
-	Reeling = false
+        Reeling = false
     end
 end)
-
-local KeyConnections = {nil}
-KeyConnections[1] = RunService.Heartbeat:Connect(function()
-    if Flying then
-        local originalCFrame = HumanoidRootPart.CFrame
-        local offsetCFrame = originalCFrame * CFrame.new(0, -100, 0)
-        Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
-        HumanoidRootPart.CFrame = offsetCFrame
-
-        RunService.RenderStepped:Wait()
-
-        Humanoid.CameraOffset = Vector3.new()
-        HumanoidRootPart.CFrame = originalCFrame
-    end
-end)
-
-_G.connections = KeyConnections
 
 coroutine.wrap(function()
     while true do
@@ -309,7 +321,7 @@ coroutine.wrap(function()
                 end
             end
         end
-    
+
         task.wait()
     end
 end)()
@@ -330,4 +342,4 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     end
 end)
 
-ShowNotification(`Fisch`, `Script Loaded!`)
+ShowNotification("Fisch", "Script Loaded!")
