@@ -161,7 +161,7 @@ function freezePlayer()
             HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
             
             local currentRotation = HumanoidRootPart.Rotation
-            HumanoidRootPart.CFrame = CFrame.new(originalCFrame.Position) * CFrame.Angles(math.rad(currentRotation.X), math.rad(currentRotation.Y), math.rad(currentRotation.Z))
+            HumanoidRootPart.CFrame = originalCFrame
         end
     end)
 end
