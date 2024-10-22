@@ -108,7 +108,7 @@ function isMobile()
         if mobileNotification then
             CoreGui:SetCore('SendNotification', {
                 Title = "AutoFarm",
-                Text = "Toggle AutoFarm: " .. (isAutoFarmEnabled and "Enabled" or "Disabled"),
+                Text = "Status: " .. (isAutoFarmEnabled and "Enabled" or "Disabled"),
                 Button1 = "Toggle",
                 Callback = function()
                     ToggleFarm()
