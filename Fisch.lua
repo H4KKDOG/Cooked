@@ -262,11 +262,11 @@ end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
-        wait()
+        task.wait()
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        task.wait(0.05)
+        task.wait(0.01)
         GuiService.SelectedObject = nil
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Reeling = true
