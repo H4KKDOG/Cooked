@@ -101,31 +101,6 @@ function ToggleTP()
     end
 end
 
-function isMobile()
-    function updateNotification()
-        if mobileNotification then
-            CoreGui:SetCore('SendNotification', {
-                Title = "AutoFarm",
-                Text = "Status: " .. (isAutoFarmEnabled and "Enabled" or "Disabled"),
-                Duration = math.huge,
-                Button1 = "Toggle",
-                Callback = function()
-                    ToggleFarm()
-                    updateNotification()
-                end
-            })
-        end
-    end
-
-    mobileNotification = true
-    updateNotification()
-
-    while mobileNotification do
-        task.wait(0.5)
-        updateNotification()
-    end
-end
-
 function disableAFK()
     if antiAFK == 0 then
         replaceAFKEvent()
@@ -368,17 +343,8 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 end)
 
 CoreGui:SetCore('SendNotification', {
-    Title = "Platform",
-    Text = "Select One",
+    Title = "Notification",
+    Text = "Fisch Loaded!",
     Duration = math.huge,
-    Button1 = "PC",
-    Button2 = "Mobile",
-    Callback = function(buttonClicked)
-        if buttonClicked == "PC" then
-            print("PC")
-        elseif buttonClicked == "Mobile" then
-            print("Mobile")
-            isMobile()
-        end
-    end
+    Button1 = "@zxc.shiro",
 })
