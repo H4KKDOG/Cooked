@@ -329,7 +329,6 @@ end)
 local WindowAFK
 WindowAFK = UserInputService.WindowFocused:Connect(function()
     replaceAFKEvent()
-    AutoShake()
     WindowAFK:Disconnect()
 end)
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
