@@ -58,10 +58,14 @@ function ToggleFarm(Name, State, Input)
 
         if not Enabled then
             originalCFrame = nil
-            ShowNotification("SavedPos", "Set to nil")
+            AutoCast(false)
+            AutoShake(false)
+            ShowNotification("Fishing", "OFF")
         else
             originalCFrame = HumanoidRootPart.CFrame
-            ShowNotification("SavedPos", "Set to Current Pos")
+            AutoCast(true)
+            AutoShake(true)
+            ShowNotification("Fishing", "ON")
         end
     end
 end
@@ -225,52 +229,56 @@ function AutoShake()
         shakeConnection = nil
     end
 
-    shakeConnection = RunService.RenderStepped:Connect(function()
-        if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
-            local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
-            if currentButton ~= lastButtonInstance then
-                lastButtonInstance = currentButton
-                local pos = currentButton.AbsolutePosition
-                local size = currentButton.AbsoluteSize
-                VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, true, playerGui, 1)
-                VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, false, playerGui, 1)
+    if Shake then
+        shakeConnection = RunService.RenderStepped:Connect(function()
+            if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
+                local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
+                if currentButton ~= lastButtonInstance then
+                    lastButtonInstance = currentButton
+                    local pos = currentButton.AbsolutePosition
+                    local size = currentButton.AbsoluteSize
+                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, true, playerGui, 1)
+                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, false, playerGui, 1)
+                end
+            else
+                lastButtonInstance = nil
             end
-        else
-            lastButtonInstance = nil
-        end
-            
-        task.wait()
-    end)
+                
+            task.wait()
+        end)
+    end
 end
 
-function AutoCast()
+function AutoCast(Cast)
     local castConnection
     if castConnection then
         castConnection:Disconnect()
         castConnection = nil
     end
 
-    castConnection = RunService.RenderStepped:Connect(function()
-        if not Progress then
-            local workRod = updateRodInWorkspace()
-            if workRod and not workRod:FindFirstChild("bobber") then
-                if Rod then
-                    Progress = true
-                    task.wait(1.25)
-                    VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                    task.wait(0.5)
-                    VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
-                    Rod.events.reset:FireServer()
-                    Rod.events.cast:FireServer(100.5)
-                    task.wait(1.75)
-                    HumanoidRootPart.CFrame = originalCFrame
-                    Progress = false
+    if Cast then
+        castConnection = RunService.RenderStepped:Connect(function()
+            if not Progress then
+                local workRod = updateRodInWorkspace()
+                if workRod and not workRod:FindFirstChild("bobber") then
+                    if Rod then
+                        Progress = true
+                        task.wait(1.25)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                        task.wait(0.5)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                        Rod.events.reset:FireServer()
+                        Rod.events.cast:FireServer(100.5)
+                        task.wait(1.75)
+                        HumanoidRootPart.CFrame = originalCFrame
+                        Progress = false
+                    end
                 end
             end
-        end
-
-        task.wait()
-    end)
+    
+            task.wait()
+        end)
+    end
 end
 
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
@@ -322,7 +330,6 @@ local WindowAFK
 WindowAFK = UserInputService.WindowFocused:Connect(function()
     replaceAFKEvent()
     AutoShake()
-    AutoCast()
     WindowAFK:Disconnect()
 end)
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
