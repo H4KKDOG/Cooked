@@ -19,7 +19,6 @@ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:FindFirstChildOfClass("Humanoid")
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local playerBobberWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
-local originalCFrame = HumanoidRootPart.CFrame
 
 local Enabled = false
 local Rod = false
@@ -35,6 +34,7 @@ local antiAFK = 0
 
 local bodyVelocity
 local FreezeCon
+local originalCFrame
 local InvisCon
 local visibleParts = {}
 
@@ -58,12 +58,11 @@ function ToggleFarm(Name, State, Input)
         Enabled = not Enabled
 
         if not Enabled then
-            Progress = false
-            unfreezePlayer()
-            ShowNotification("Anchor", "OFF")
+            originalCFrame = nil
+            ShowNotification("SavedPos", "Set to nil")
         else
-            freezePlayer()
-            ShowNotification("Anchor", "ON")
+            originalCFrame = HumanoidRootPart.CFrame
+            ShowNotification("SavedPos", "Set to Current Pos")
         end
     end
 end
