@@ -262,7 +262,7 @@ function auto_cast(toggle)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                         Rod.events.reset:FireServer()
                         Rod.events.cast:FireServer(100.5)
-                        task.wait(1.25)
+                        task.wait(1.75)
                         HumanoidRootPart.CFrame = originalCFrame
                         Progress = false
                     end
