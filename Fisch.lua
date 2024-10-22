@@ -107,6 +107,7 @@ function isMobile()
             CoreGui:SetCore('SendNotification', {
                 Title = "AutoFarm",
                 Text = "Status: " .. (isAutoFarmEnabled and "Enabled" or "Disabled"),
+                Duration = math.huge,
                 Button1 = "Toggle",
                 Callback = function()
                     ToggleFarm()
@@ -369,14 +370,14 @@ end)
 CoreGui:SetCore('SendNotification', {
     Title = "Platform",
     Text = "Select One",
+    Duration = math.huge,
     Button1 = "PC",
+    Callback = function()
+        print("PC")
+    end
     Button2 = "Mobile",
-    Callback = function(buttonClicked)
-        if buttonClicked == "Mobile" then
-            print("Mobile")
-            isMobile()
-        else
-            print("PC")
-        end
+    Callback = function()
+        print("Mobile")
+        isMobile()
     end
 })
