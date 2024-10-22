@@ -67,7 +67,7 @@ function ToggleFarm(Name, State, Input)
             originalCFrame = HumanoidRootPart.CFrame
             AutoCast(true)
             AutoShake(true)
-            ShowNotification("Fishing", "ON", math.huge)
+            ShowNotification("Fishing", "ON")
         end
     end
 end
