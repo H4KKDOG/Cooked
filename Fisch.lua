@@ -1,5 +1,5 @@
 if game.PlaceId ~= 16732694052 then return end
-print("Exploiter")
+print("Executed : "..game:GetService('Players').LocalPlayer.Name)
 
 repeat
     task.wait()
