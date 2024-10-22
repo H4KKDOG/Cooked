@@ -212,7 +212,7 @@ function Invis()
             Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
             HumanoidRootPart.CFrame = offsetCFrame
 
-            wait()
+            RunService.RenderStepped:Wait()
 
             Humanoid.CameraOffset = Vector3.new()
             HumanoidRootPart.CFrame = originalCFrame
