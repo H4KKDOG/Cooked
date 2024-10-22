@@ -238,7 +238,6 @@ function replaceAFKEvent()
         FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
 
         AFK:Destroy()
-        LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
         ShowNotification("AntiAFK", "Enabled")
     end
 end
@@ -261,10 +260,11 @@ end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
+        wait()
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        task.wait(0.1)
+        task.wait(0.01)
         GuiService.SelectedObject = nil
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Reeling = true
