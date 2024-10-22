@@ -102,9 +102,7 @@ function ToggleTP()
 end
 
 function isMobile()
-    local mobileNotification = nil
-
-    local function updateNotification()
+    function updateNotification()
         if mobileNotification then
             CoreGui:SetCore('SendNotification', {
                 Title = "AutoFarm",
