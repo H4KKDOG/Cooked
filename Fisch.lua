@@ -196,7 +196,7 @@ function fly()
             moveDirection.Z * horizontalSpeed
         )
 
-        wait()
+        RunService.RenderStepped:Wait()
     end
 
     bodyVelocity:Destroy()
@@ -242,6 +242,62 @@ function replaceAFKEvent()
     end
 end
 
+function auto_shake(toggle)
+    local shakeConnection
+    if shakeConnection then
+        shakeConnection:Disconnect()
+        shakeConnection = nil
+    end
+
+    if toggle then
+        shakeConnection = RunService.RenderStepped:Connect(function()
+            if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
+                local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
+                if currentButton ~= lastButtonInstance then
+                    lastButtonInstance = currentButton
+                    local pos = currentButton.AbsolutePosition
+                    local size = currentButton.AbsoluteSize
+                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, true, playerGui, 1)
+                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, false, playerGui, 1)
+                end
+            else
+                lastButtonInstance = nil
+            end
+        end)
+    end
+end
+
+function auto_cast(toggle)
+    local castConnection
+    if castConnection then
+        castConnection:Disconnect()
+        castConnection = nil
+    end
+
+    if toggle then
+        castConnection = RunService.RenderStepped:Connect(function()
+            if not Progress then
+                local workRod = updateRodInWorkspace()
+                if workRod and not workRod:FindFirstChild("bobber") then
+                    if Rod then
+                        Progress = true
+                        task.wait(1.25)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                        task.wait(0.5)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                        Rod.events.reset:FireServer()
+                        Rod.events.cast:FireServer(100.5)
+                        task.wait(1.25)
+                        Progress = false
+                    end
+                end
+            end
+
+            task.wait()
+        end)
+    end
+end
+
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
     if Child:IsA('Tool') and Child.Name:lower():find('rod') then
         Rod = Child
@@ -250,26 +306,16 @@ end)
 
 LocalPlayer.Character.ChildRemoved:Connect(function(Child)
     if Child == Rod then
-        Enabled = false
         Progress = false
         Reeling = false
         Rod = nil
-        GuiService.SelectedObject = nil
     end
 end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
-    if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
-        wait()
-        GuiService.SelectedObject = Descendant
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        task.wait(0.1)
-        GuiService.SelectedObject = nil
-    elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
+    if Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Reeling = true
         WaitDelay = true
-        GuiService.SelectedObject = nil
 
         local Random = math.random(1, 3)
         local isPerfect = Random <= 1
@@ -303,48 +349,22 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     end
 end)
 
-coroutine.wrap(function()
-    while true do
-        if not Progress then
-            local workRod = updateRodInWorkspace()
-            if workRod and not workRod:FindFirstChild("bobber") then
-                if Rod then
-                    Progress = true
-                    task.wait(1.25)
-                    VirtualInputManager:SendMouseButtonEvent(1, 1, 0, true, game, 1)
-                    task.wait(0.5)
-                    VirtualInputManager:SendMouseButtonEvent(1, 1, 0, false, game, 1)
-                    Rod.events.reset:FireServer()
-                    Rod.events.cast:FireServer(100.5)
-                    task.wait(1.25)
-                    Progress = false
-                end
-            end
-        end
+local WindowAFK
+WindowAFK = UserInputService.WindowFocused:Connect(function()
+    replaceAFKEvent()
+    WindowAFK:Disconnect()
+end)
+ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
+ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
+ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
+ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadPlus)
 
-        task.wait()
-    end
-end)()
-
-if not UserInputService.KeyboardEnabled then
-    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T, Enum.UserInputType.Touch)
-    ContextActionService:SetTitle('ToggleFarm', 'Anchor')
-    ContextActionService:SetPosition('ToggleFarm', UDim2.new(0.9, -50, 0.9, -150))
-else
-    local WindowAFK
-    WindowAFK = UserInputService.WindowFocused:Connect(function()
-        replaceAFKEvent()
-        WindowAFK:Disconnect()
-    end)
-    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
-    ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
-    ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
-    ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadPlus)
-end
+auto_shake(true)
+auto_cast(true)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
     Text = "Fisch Loaded!",
-    Duration = math.huge,
+    Duration = 30,
     Button1 = "@zxc.shiro",
 })
