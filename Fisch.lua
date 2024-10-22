@@ -265,7 +265,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
         GuiService.SelectedObject = Descendant
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-        task.wait(0.01)
+        task.wait()
         GuiService.SelectedObject = nil
     elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
         Reeling = true
