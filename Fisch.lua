@@ -33,7 +33,6 @@ local teleportState = 0
 local antiAFK = 0
 
 local bodyVelocity
-local FreezeCon
 local originalCFrame
 local InvisCon
 local visibleParts = {}
@@ -144,29 +143,6 @@ function updateRodInWorkspace()
         end
     end
     return nil
-end
-
-function freezePlayer()
-    originalCFrame = HumanoidRootPart.CFrame
-    isFrozen = true
-
-    FreezeCon = RunService.RenderStepped:Connect(function()
-        if isFrozen then
-            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
-
-            local currentRotation = HumanoidRootPart.Rotation
-            HumanoidRootPart.CFrame = originalCFrame
-        end
-    end)
-end
-
-function unfreezePlayer()
-    isFrozen = false
-
-    if FreezeCon then
-        FreezeCon:Disconnect()
-        FreezeCon = nil
-    end
 end
 
 function fly()
