@@ -56,7 +56,7 @@ function ToggleFarm(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Flying then return end
         Enabled = not Enabled
-    
+
         if not Enabled then
             Progress = false
             unfreezePlayer()
@@ -72,11 +72,11 @@ function ToggleFly(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled then return end
         Flying = not Flying
-    
+
         for _, part in pairs(visibleParts) do
             part.Transparency = part.Transparency == 0 and 0.5 or 0
         end
-    
+
         if Flying then
             ShowNotification("Invi Fly", "ON")
             Invis()
@@ -106,16 +106,6 @@ function ToggleTP(Name, State, Input)
                 teleportState = 0
             end
         end
-    end
-end
-
-function disableAFK()
-    if antiAFK == 0 then
-        replaceAFKEvent()
-        ShowNotification("AntiAFK", "Enabled")
-        antiAFK = 1
-    else
-        print("Already Disabled (AntiAFK)")
     end
 end
 
@@ -249,6 +239,7 @@ function replaceAFKEvent()
 
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest:Destroy()
+        ShowNotification("AntiAFK", "Enabled")
     end
 end
 
@@ -338,9 +329,15 @@ end)()
 
 if not UserInputService.KeyboardEnabled then
     ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Keybind, Enum.UserInputType.Touch)
-    ContextActionService:SetTitle('ToggleFarm', 'Toggle Farm')
+    ContextActionService:SetTitle('ToggleFarm', 'Farm')
     ContextActionService:SetPosition('ToggleFarm', UDim2.new(0.9, -50, 0.9, -150))
+    replaceAFKEvent()
 else
+    local WindowAFK
+    WindowAFK = UserInputService.WindowFocused:Connect(function()
+        replaceAFKEvent()
+        WindowAFK:Disconnect()
+    end)
     ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
     ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
     ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
