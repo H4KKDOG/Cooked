@@ -263,6 +263,7 @@ function auto_cast(toggle)
                         Rod.events.reset:FireServer()
                         Rod.events.cast:FireServer(100.5)
                         task.wait(1.25)
+                        HumanoidRootPart.CFrame = originalCFrame
                         Progress = false
                     end
                 end
