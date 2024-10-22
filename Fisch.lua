@@ -152,30 +152,16 @@ function updateRodInWorkspace()
 end
 
 function freezePlayer()
-    if not HumanoidRootPart:FindFirstChild("FreezeBodyPosition") then
-        local bodyPosition = Instance.new("BodyPosition")
-        bodyPosition.Name = "FreezeBodyPosition"
-        bodyPosition.MaxForce = Vector3.new(5000, 5000, 5000)
-        bodyPosition.Position = HumanoidRootPart.Position
-        bodyPosition.Parent = HumanoidRootPart
-    end
-    if not HumanoidRootPart:FindFirstChild("FreezeBodyGyro") then
-        local bodyGyro = Instance.new("BodyGyro")
-        bodyGyro.Name = "FreezeBodyGyro"
-        bodyGyro.MaxTorque = Vector3.new(5000, 5000, 5000)
-        bodyGyro.CFrame = HumanoidRootPart.CFrame
-        bodyGyro.Parent = HumanoidRootPart
-    end
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.MaxForce = Vector3.new(999999, 999999, 999999)
+    bodyVelocity.Parent = HumanoidRootPart
 end
 
 function unfreezePlayer()
-    local bodyPosition = HumanoidRootPart:FindFirstChild("FreezeBodyPosition")
-    if bodyPosition then
-        bodyPosition:Destroy()
-    end
-    local bodyGyro = HumanoidRootPart:FindFirstChild("FreezeBodyGyro")
-    if bodyGyro then
-        bodyGyro:Destroy()
+    if bodyVelocity then
+        bodyVelocity:Destroy()
+        bodyVelocity = nil
     end
 end
 
