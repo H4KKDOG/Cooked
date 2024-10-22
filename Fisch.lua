@@ -327,10 +327,9 @@ coroutine.wrap(function()
 end)()
 
 if not UserInputService.KeyboardEnabled then
-    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Keybind, Enum.UserInputType.Touch)
+    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T, Enum.UserInputType.Touch)
     ContextActionService:SetTitle('ToggleFarm', 'Anchor')
     ContextActionService:SetPosition('ToggleFarm', UDim2.new(0.9, -50, 0.9, -150))
-    replaceAFKEvent()
 else
     local WindowAFK
     WindowAFK = UserInputService.WindowFocused:Connect(function()
