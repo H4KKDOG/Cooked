@@ -59,10 +59,10 @@ function ToggleFarm()
     if not Enabled then
         Progress = false
         unfreezePlayer()
-        ShowNotification("AutoFarm", "ON")
+        ShowNotification("AutoFarm", "OFF")
     else
         freezePlayer()
-        ShowNotification("AutoFarm", "OFF")
+        ShowNotification("AutoFarm", "ON")
     end
 end
 
