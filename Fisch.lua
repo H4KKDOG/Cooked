@@ -222,7 +222,7 @@ function replaceAFKEvent()
     end
 end
 
-function AutoShake(Shake)
+function AutoShake(Shake : boolean)
     local shakeConnection
 
     if Shake then
@@ -250,7 +250,7 @@ function AutoShake(Shake)
     end
 end
 
-function AutoCast(Cast)
+function AutoCast(Cast : boolean)
     local castConnection
 
     if Cast then
