@@ -19,6 +19,7 @@ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:FindFirstChildOfClass("Humanoid")
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local playerBobberWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
+local originalCFrame = HumanoidRootPart.CFrame
 
 local Enabled = false
 local Rod = false
@@ -152,17 +153,21 @@ function updateRodInWorkspace()
 end
 
 function freezePlayer()
-    bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-    bodyVelocity.MaxForce = Vector3.new(999999, 999999, 999999)
-    bodyVelocity.Parent = HumanoidRootPart
+    originalCFrame = HumanoidRootPart.CFrame
+    isFrozen = true
+
+    RunService.RenderStepped:Connect(function()
+        if isFrozen then
+            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+            
+            local currentRotation = HumanoidRootPart.Rotation
+            HumanoidRootPart.CFrame = CFrame.new(originalCFrame.Position) * CFrame.Angles(math.rad(currentRotation.X), math.rad(currentRotation.Y), math.rad(currentRotation.Z))
+        end
+    end)
 end
 
 function unfreezePlayer()
-    if bodyVelocity then
-        bodyVelocity:Destroy()
-        bodyVelocity = nil
-    end
+    isFrozen = false 
 end
 
 function fly()
