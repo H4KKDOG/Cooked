@@ -45,11 +45,11 @@ for _, part in pairs(Character:GetDescendants()) do
     end
 end
 
-function ShowNotification(Title, Content)
+function ShowNotification(Title, Content, Time)
     CoreGui:SetCore('SendNotification', {
         Title = Title,
         Text = Content,
-        Duration = 2.5
+        Duration = Time or 2.5
     })
 end
 
@@ -67,7 +67,7 @@ function ToggleFarm(Name, State, Input)
             originalCFrame = HumanoidRootPart.CFrame
             AutoCast(true)
             AutoShake(true)
-            ShowNotification("Fishing", "ON")
+            ShowNotification("Fishing", "ON", math.huge)
         end
     end
 end
@@ -340,6 +340,6 @@ ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.Keypad
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
     Text = "Fisch Loaded!",
-    Duration = 30,
+    Duration = math.huge,
     Button1 = "@zxc.shiro",
 })
