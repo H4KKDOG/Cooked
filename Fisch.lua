@@ -226,7 +226,7 @@ function auto_shake(toggle)
 
     if toggle then
         shakeConnection = RunService.RenderStepped:Connect(function()
-            if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone.button then
+            if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
                 local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
                 if currentButton ~= lastButtonInstance then
                     lastButtonInstance = currentButton
@@ -304,13 +304,7 @@ LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
                     task.wait(0.5)
                     WaitDelay = false
                 end
-
-                Descendant.Position = UDim2.new(
-                    fish.Position.X.Scale,
-                    fish.Position.X.Offset,
-                    Descendant.Position.Y.Scale,
-                    Descendant.Position.Y.Offset
-                )
+                Descendant.Position = fish.Position
             end
 
             task.wait()
