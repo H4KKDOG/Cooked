@@ -59,9 +59,9 @@ function ToggleFarm(Name, State, Input)
         Enabled = not Enabled
 
         if not Enabled then
-            originalCFrame = nil
             AutoCast(false)
             AutoShake(false)
+            originalCFrame = nil
             GuiService.SelectedObject = nil
             ShowNotification("Fishing", "OFF")
         else
