@@ -372,12 +372,13 @@ CoreGui:SetCore('SendNotification', {
     Text = "Select One",
     Duration = math.huge,
     Button1 = "PC",
-    Callback = function()
-        print("PC")
-    end
     Button2 = "Mobile",
-    Callback = function()
-        print("Mobile")
-        isMobile()
+    Callback = function(buttonClicked)
+        if buttonClicked == "PC" then
+            print("PC")
+        elseif buttonClicked == "Mobile" then
+            print("Mobile")
+            isMobile()
+        end
     end
 })
