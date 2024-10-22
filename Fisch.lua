@@ -231,13 +231,13 @@ function AutoShake(Shake)
                 local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
                 if currentButton ~= lastButtonInstance then
                     lastButtonInstance = currentButton
-                    local pos = currentButton.AbsolutePosition
-                    local size = currentButton.AbsoluteSize
-                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, true, playerGui, 1)
-                    VirtualInputManager:SendMouseButtonEvent(pos.X + (size.X / 2), pos.Y + (size.Y / 2), Enum.UserInputType.MouseButton1.Value, false, playerGui, 1)
+                    GuiService.SelectedObject = currentButton
+                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
                 end
             else
                 lastButtonInstance = nil
+                GuiService.SelectedObject = nil
             end
                 
             task.wait()
