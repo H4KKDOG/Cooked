@@ -205,10 +205,10 @@ function fly()
 end
 
 function Invis()
-    Invis = true
+    isInvisible = true
 
     InvisCon = RunService.Heartbeat:Connect(function()
-        if Invis then
+        if isInvisible then
             local originalCFrame = HumanoidRootPart.CFrame
             local offsetCFrame = originalCFrame * CFrame.new(0, -100, 0)
             Humanoid.CameraOffset = offsetCFrame:ToObjectSpace(CFrame.new(originalCFrame.Position)).Position
@@ -223,7 +223,7 @@ function Invis()
 end
 
 function unInvis()
-    Invis = false
+    isInvisible = false
 
     if InvisCon then
         InvisCon:Disconnect()
