@@ -222,7 +222,7 @@ function replaceAFKEvent()
     end
 end
 
-function AutoShake()
+function AutoShake(Shake)
     local shakeConnection
     if shakeConnection then
         shakeConnection:Disconnect()
