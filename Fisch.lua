@@ -409,7 +409,6 @@ function onInputBegan(input, gameProcessedEvent)
     end
 end
 
--- Connect the function to the input event
 UserInputService.InputBegan:Connect(onInputBegan)
 
 CoreGui:SetCore('SendNotification', {
