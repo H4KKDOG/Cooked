@@ -289,7 +289,7 @@ function replaceAFKEvent()
 
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
-        playerBobberWorkspace:FindFirstChild("client"):FindFirstChild("oxygen")
+        playerBobberWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Enabled = false
         ShowNotification("AntiAFK", "Enabled")
     end
 end
