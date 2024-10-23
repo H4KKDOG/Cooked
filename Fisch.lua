@@ -149,20 +149,14 @@ function findAbundancePart()
     local mediumStoneGrey = Color3.fromRGB(163, 162, 165)
 
     for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
-        if part:IsA("Part") then
+        if part:IsA("Part") and part.Name ~= "FischFright24" then
             if part.Material == Enum.Material.Plastic then
                 if part.Color ~= mediumStoneGrey then
                     teleportToPart(part)
                     abundancePartFound = true
-                    print("Found Event Part (Plastic with Event):", part.Name, "Color:", part.Color)
+                    print("Abundance :", part.Name, "Color :", part.Color)
                     break
-                else
-                    print("Normal Part (Plastic, Medium Stone Grey):", part.Name)
                 end
-            elseif part.Material == Enum.Material.Slate then
-                print("Normal Part (Slate):", part.Name)
-            else
-                print("Other Material Part:", part.Name, "Material:", part.Material.Name)
             end
         end
     end
