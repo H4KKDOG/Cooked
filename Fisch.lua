@@ -69,7 +69,7 @@ function ToggleFarm()
         AutoCast(true)
         AutoShake(true)
         freezePlayer()
-        ShowNotification("Fishing", "ON")
+        createStatusLabel("Fishing")
     end
 end
 
@@ -140,6 +140,30 @@ function teleportToPart(part)
     else
         ShowNotification("OnBoat", "Missing")
     end
+end
+
+local function createStatusLabel(text)
+    if statusLabel then
+        statusLabel:Destroy()
+    end
+
+    statusLabel = Instance.new("BillboardGui")
+    statusLabel.Adornee = HumanoidRootPart
+    statusLabel.Size = UDim2.new(0, 100, 0, 50)
+    statusLabel.StudsOffsetFromWorldOffset = Vector3.new(0, 3.5, 0)
+    statusLabel.AlwaysOnTop = true
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.new(0, 0, 1)
+    textLabel.TextStrokeTransparency = 0.5
+    textLabel.TextSize = 50
+    textLabel.Font = Enum.Font.SourceSans
+    textLabel.Text = text
+    textLabel.Parent = statusLabel
+
+    statusLabel.Parent = HumanoidRootPart
 end
 
 function findAbundancePart()
