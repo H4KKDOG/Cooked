@@ -113,6 +113,13 @@ function ToggleTP(Name, State, Input)
     end
 end
 
+function ToggleTPBoat(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled or Flying then return end
+        teleportBoatToPlayer()
+    end
+end
+
 function updateRodInWorkspace()
     if playerBobberWorkspace then
         for _, item in pairs(playerBobberWorkspace:GetChildren()) do
@@ -122,6 +129,23 @@ function updateRodInWorkspace()
         end
     end
     return nil
+end
+
+function teleportBoatToPlayer()
+    local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
+    if not boatFolder then
+        ShowNotification("Missing", "Boat")
+        return
+    end
+
+    local boat = boatFolder:FindFirstChildOfClass("Model")
+    if boat then
+        local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
+
+        if basePart then
+            basePart.CFrame = HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+        end
+    end
 end
 
 function fly()
@@ -172,7 +196,7 @@ function Invis()
             Humanoid.CameraOffset = Vector3.new()
             HumanoidRootPart.CFrame = originalCFrame
         end
-        
+
         task.wait()
     end)
 end
