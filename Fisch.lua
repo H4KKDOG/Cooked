@@ -139,7 +139,7 @@ function TPEvent(Name, State, Input)
 end
 
 function teleportToPart(part)
-    local offset = Vector3.new(50, 0, 0)
+    local offset = Vector3.new(100, 0, 0)
     local newPosition = part.Position + offset
 
     HumanoidRootPart.CFrame = CFrame.new(newPosition)
