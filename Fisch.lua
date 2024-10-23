@@ -368,6 +368,7 @@ WindowAFK = UserInputService.WindowFocused:Connect(function()
     replaceAFKEvent()
     WindowAFK:Disconnect()
 end)
+
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
 ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
 ContextActionService:BindAction('ToggleVFly', ToggleVFly, false, Enum.KeyCode.V)
