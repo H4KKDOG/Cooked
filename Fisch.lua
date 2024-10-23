@@ -187,12 +187,14 @@ function createStatusLabel(text)
     if statusLabel then
         statusLabel:Destroy()
     end
-
+    
     statusLabel = Instance.new("BillboardGui")
     statusLabel.Adornee = HumanoidRootPart
     statusLabel.Size = UDim2.new(0, 100, 0, 50)
     statusLabel.StudsOffset = Vector3.new(0, 5, 0)
     statusLabel.AlwaysOnTop = true
+    statusLabel.LightInfluence = 0
+    statusLabel.Active = false
 
     local textLabel = Instance.new("TextLabel")
     textLabel.Size = UDim2.new(1, 0, 1, 0)
@@ -203,7 +205,7 @@ function createStatusLabel(text)
     textLabel.Font = Enum.Font.SourceSans
     textLabel.Text = text
     textLabel.Parent = statusLabel
-    
+
     statusLabel.Parent = HumanoidRootPart
 end
 
