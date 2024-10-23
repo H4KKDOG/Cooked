@@ -95,7 +95,7 @@ function Library:Window(title)
     Minimize.ImageRectOffset = Vector2.new(764, 244)
     Minimize.ImageRectSize = Vector2.new(36, 36)
 
-    local function UZVNGAL_fake_script() -- Minimize.Script
+    local function UZVNGAL_fake_script()
         local script = Instance.new('Script', Minimize)
 
         script.Parent.MouseButton1Click:Connect(function()
@@ -171,7 +171,7 @@ function Library:Window(title)
         ButtonName.TextSize = 14.000
         ButtonName.TextWrapped = true
 
-        local function ZNVYM_fake_script() -- Button.Script
+        local function ZNVYM_fake_script()
             local script = Instance.new('Script', Button)
 
             script.Parent.MouseButton1Click:Connect(function()
@@ -256,7 +256,7 @@ function Library:Window(title)
         On.ImageRectOffset = Vector2.new(312, 4)
         On.ImageRectSize = Vector2.new(24, 24)
 
-        local function XLZZDX_fake_script() -- Toggle.Script
+        local function XLZZDX_fake_script()
             local script = Instance.new('Script', Toggle)
 
             script.Parent.MouseButton1Click:Connect(function()
@@ -283,13 +283,13 @@ function Library:Window(title)
         local KeybindName = Instance.new("TextLabel")
         local KeybindButton = Instance.new("TextButton")
         local UICorner = Instance.new("UICorner")
-
+        
         KeybindContainer.Name = "KeybindContainer"
         KeybindContainer.Parent = Container
         KeybindContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
         KeybindContainer.BorderSizePixel = 0
         KeybindContainer.Size = UDim2.new(0, 204, 0, 30)
-
+    
         KeybindName.Name = "KeybindName"
         KeybindName.Parent = KeybindContainer
         KeybindName.BackgroundTransparency = 1.000
@@ -301,39 +301,47 @@ function Library:Window(title)
         KeybindName.TextScaled = true
         KeybindName.TextWrapped = true
         KeybindName.TextXAlignment = Enum.TextXAlignment.Left
-
+    
         KeybindButton.Name = "KeybindButton"
         KeybindButton.Parent = KeybindContainer
         KeybindButton.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
         KeybindButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
         KeybindButton.Position = UDim2.new(0.852941215, 0, 0.0666666627, 0)
         KeybindButton.Size = UDim2.new(0, 75, 0, 23)
-        KeybindButton.Text = defaultKey.Name
+        KeybindButton.Text = defaultKey.Name:sub(1, 1)
         KeybindButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         KeybindButton.Font = Enum.Font.SourceSans
-
+    
         UICorner.CornerRadius = UDim.new(0, 3)
         UICorner.Parent = KeybindButton
-
-
+    
+        local currentKey = defaultKey
+    
         local function updateKeybind(newKey)
-            KeybindButton.Text = newKey.Name
+            currentKey = newKey
+            KeybindButton.Text = currentKey.Name:sub(1, 1)
             callback(newKey)
         end
-
+    
         KeybindButton.MouseButton1Click:Connect(function()
             KeybindButton.Text = "..."
             local inputConnection
-
+    
             inputConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
                 if not gameProcessed and input.UserInputType == Enum.UserInputType.Keyboard then
                     updateKeybind(input.KeyCode)
                     inputConnection:Disconnect()
+                    KeybindButton.Text = currentKey.Name:sub(1, 1)
                 end
             end)
         end)
+    
+        game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+            if not gameProcessed and input.KeyCode == currentKey then
+                callback(currentKey)
+            end
+        end)
     end
-
 
     return Lib
 
