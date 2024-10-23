@@ -144,7 +144,7 @@ function teleportToPart(part)
     end
 end
 
-local function createStatusLabel(text)
+function createStatusLabel(text)
     if statusLabel then
         statusLabel:Destroy()
     end
