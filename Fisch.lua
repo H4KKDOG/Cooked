@@ -193,9 +193,9 @@ function createStatusLabel(text)
     end
 
     statusLabel = Instance.new("BillboardGui")
-    statusLabel.Adornee = LocalPlayer.Character:WaitForChild("Head")
+    statusLabel.Adornee = HumanoidRootPart
     statusLabel.Size = UDim2.new(0, 100, 0, 50)
-    statusLabel.StudsOffset = Vector3.new(0, 2, 0)
+    statusLabel.StudsOffset = Vector3.new(0, 5, 0)
     statusLabel.AlwaysOnTop = true
 
     local textLabel = Instance.new("TextLabel")
@@ -203,12 +203,12 @@ function createStatusLabel(text)
     textLabel.BackgroundTransparency = 1
     textLabel.TextColor3 = Color3.new(0, 0, 1)
     textLabel.TextStrokeTransparency = 0.5
-    textLabel.TextSize = 30
+    textLabel.TextSize = 50
     textLabel.Font = Enum.Font.SourceSans
     textLabel.Text = text
     textLabel.Parent = statusLabel
     
-    statusLabel.Parent = LocalPlayer.Character.Head
+    statusLabel.Parent = HumanoidRootPart
 end
 
 function fly()
