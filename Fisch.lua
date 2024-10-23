@@ -138,10 +138,14 @@ function TPEvent()
 end
 
 function teleportToPart(part)
-    local offset = Vector3.new(100, 0, 0)
-    local newPosition = part.Position + offset
+    if Humanoid and Humanoid.Sit then
+        local offset = Vector3.new(100, 0, 0)
+        local newPosition = part.Position + offset
 
-    HumanoidRootPart.CFrame = CFrame.new(newPosition)
+        humanoidRootPart.CFrame = CFrame.new(newPosition)
+    else
+        ShowNotification("OnBoat", "Missing")
+    end
 end
 
 function findAbundancePart()
