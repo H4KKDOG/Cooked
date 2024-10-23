@@ -126,33 +126,6 @@ function ToggleTP(Name, State, Input)
     end
 end
 
-function onPlayerDied()
-    IsTransparent = false
-    for _, part in pairs(CharacterParts) do
-        part.Transparency = 0
-    end
-end
-
-Humanoid.Died:Connect(onPlayerDied)
-
-function onCharacterAdded(newCharacter)
-    Character = newCharacter
-    Humanoid = newCharacter:WaitForChild("Humanoid")
-    HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
-
-    visibleParts = {}
-
-    for _, part in pairs(Character:GetDescendants()) do
-        if part:IsA("BasePart") and part.Transparency == 0 then
-            table.insert(visibleParts, part)
-        end
-    end
-
-    Humanoid.Died:Connect(onPlayerDied)
-end
-
-LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
-
 function updateRodInWorkspace()
     if playerBobberWorkspace then
         for _, item in pairs(playerBobberWorkspace:GetChildren()) do
