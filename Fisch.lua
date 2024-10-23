@@ -126,6 +126,18 @@ function TPWhirlpool(Name, State, Input)
     end
 end
 
+function TPWhirlpool(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled or Flying then return end
+        local part = workspace.zones.fishing:FindFirstChild("FischFright24")
+        if part and part:IsA("BasePart") then
+            teleportToPart(part)
+        else
+            ShowNotification("Event", "Invalid")
+        end
+    end
+end
+
 function getNearestSafeWhirlpool()
     local nearestPart = nil
     local shortestDistance = math.huge
@@ -375,6 +387,7 @@ ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
 ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
 ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadMinus)
 ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadPlus)
+ContextActionService:BindAction('TPEvent', TPEvent, false, Enum.KeyCode.KeypadMultiply)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
