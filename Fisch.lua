@@ -36,6 +36,7 @@ local antiAFK = 0
 
 local bodyVelocity
 local InvisCon
+local lastshake
 local castConnection
 local shakeConnection
 local visibleParts = {}
@@ -224,7 +225,9 @@ function AutoShake(Shake)
             local shakeUI = LocalPlayer.PlayerGui:FindFirstChild("shakeui")
             if shakeUI and shakeUI:FindFirstChild("safezone") then
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
-                if currentButton then
+                if currentButton ~= lastshake then
+                    lastshake = currentButton
+
                     local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
                     local radius = ButtonSize.X / 2
                     local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
@@ -234,9 +237,11 @@ function AutoShake(Shake)
                         VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
                         VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                     end
+
                     task.wait()
                 end
             end
+
             task.wait()
         end)
     else
@@ -267,6 +272,7 @@ function AutoCast(Cast)
                     end
                 end
             end
+                
             task.wait()
         end)
     else
