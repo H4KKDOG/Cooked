@@ -148,7 +148,7 @@ function findAbundancePart()
     local abundancePartFound = false
 
     for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
-        if part:IsA("BasePart") then
+        if part:IsA("Part") then
             local hasAbundance = false
             local otherChildrenExist = false
 
