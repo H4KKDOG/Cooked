@@ -74,8 +74,7 @@ function ToggleFarm()
         AutoCast(true)
         AutoShake(true)
         freezePlayer()
-        ShowNotification("Fishing", "ON")
-        createStatusLabel("FISHING")
+        createStatusLabel("Fishing")
     end
 end
 
@@ -142,7 +141,7 @@ function teleportToPart(part)
         local offset = Vector3.new(100, 0, 0)
         local newPosition = part.Position + offset
 
-        humanoidRootPart.CFrame = CFrame.new(newPosition)
+        HumanoidRootPart.CFrame = CFrame.new(newPosition)
     else
         ShowNotification("OnBoat", "Missing")
     end
