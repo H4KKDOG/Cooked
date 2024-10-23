@@ -231,7 +231,7 @@ function AutoShake(Shake)
         if shakeConnection then return end
         shakeConnection = RunService.RenderStepped:Connect(function()
             if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
-                local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
+                local currentButton = LocalPlayer.PlayerGui:FindFirstChild("shakeui").safezone:WaitForChild("button")
                 if currentButton ~= lastButtonInstance then
                     GuiService.SelectedObject = currentButton
                     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
