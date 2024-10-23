@@ -152,7 +152,7 @@ function createStatusLabel(text)
     statusLabel = Instance.new("BillboardGui")
     statusLabel.Adornee = HumanoidRootPart
     statusLabel.Size = UDim2.new(0, 100, 0, 50)
-    statusLabel.StudsOffsetFromWorldOffset = Vector3.new(0, 3.5, 0)
+    statusLabel.StudsOffsetWorldSpace = Vector3.new(0, 3.75, 0)
     statusLabel.AlwaysOnTop = true
 
     local textLabel = Instance.new("TextLabel")
