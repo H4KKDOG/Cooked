@@ -35,11 +35,9 @@ local teleportState = 0
 local antiAFK = 0
 
 local bodyVelocity
-local originalCFrame
 local InvisCon
 local castConnection
 local shakeConnection
-local lastButtonInstance
 local visibleParts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
@@ -64,13 +62,13 @@ function ToggleFarm(Name, State, Input)
         if not Enabled then
             AutoCast(false)
             AutoShake(false)
-            originalCFrame = nil
+            unfreezePlayer()
             GuiService.SelectedObject = nil
             ShowNotification("Fishing", "OFF")
         else
-            originalCFrame = HumanoidRootPart.CFrame
             AutoCast(true)
             AutoShake(true)
+            freezePlayer()
             ShowNotification("Fishing", "ON")
         end
     end
@@ -188,6 +186,23 @@ function unInvis()
     end
 end
 
+function freezePlayer()
+    if not HumanoidRootPart:FindFirstChild("FreezeBodyPosition") then
+        local bodyPosition = Instance.new("BodyPosition")
+        bodyPosition.Name = "FreezeBodyPosition"
+        bodyPosition.MaxForce = Vector3.new(100000, 100000, 100000)
+        bodyPosition.Position = HumanoidRootPart.Position
+        bodyPosition.Parent = HumanoidRootPart
+    end
+end
+
+function unfreezePlayer()
+    local bodyPosition = HumanoidRootPart:FindFirstChild("FreezeBodyPosition")
+    if bodyPosition then
+        bodyPosition:Destroy()
+    end
+end
+
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK then
@@ -205,7 +220,7 @@ end
 function AutoShake(Shake)
     if Shake then
         if shakeConnection then return end
-        shakeConnection = RunService.RenderStepped:Connect(function()
+        shakeConnection = RunService.Heartbeat:Connect(function()
             local shakeUI = LocalPlayer.PlayerGui:FindFirstChild("shakeui")
             if shakeUI and shakeUI:FindFirstChild("safezone") then
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
@@ -246,7 +261,6 @@ function AutoCast(Cast)
                         Rod.events.reset:FireServer()
                         Rod.events.cast:FireServer(100.5)
                         task.wait(1.75)
-                        HumanoidRootPart.CFrame = originalCFrame
                         Progress = false
                     end
                 end
