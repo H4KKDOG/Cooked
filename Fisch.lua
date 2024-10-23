@@ -233,10 +233,10 @@ function AutoShake(Shake)
             if LocalPlayer.PlayerGui:FindFirstChild("shakeui") and LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button") then
                 local currentButton = LocalPlayer.PlayerGui.shakeui.safezone:WaitForChild("button")
                 if currentButton ~= lastButtonInstance then
-                    lastButtonInstance = currentButton
                     GuiService.SelectedObject = currentButton
                     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
                     VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                    lastButtonInstance = currentButton
                 end
             else
                 GuiService.SelectedObject = nil
