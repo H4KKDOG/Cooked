@@ -55,93 +55,79 @@ function ShowNotification(Title, Content, Time)
     })
 end
 
-function ToggleFarm(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Flying then return end
-        Enabled = not Enabled
+function ToggleFarm()
+    if Flying then return end
+    Enabled = not Enabled
 
-        if not Enabled then
-            AutoCast(false)
-            AutoShake(false)
-            unfreezePlayer()
-            GuiService.SelectedObject = nil
-            ShowNotification("Fishing", "OFF")
+    if not Enabled then
+        AutoCast(false)
+        AutoShake(false)
+        unfreezePlayer()
+        GuiService.SelectedObject = nil
+        ShowNotification("Fishing", "OFF")
+    else
+        AutoCast(true)
+        AutoShake(true)
+        freezePlayer()
+        ShowNotification("Fishing", "ON")
+    end
+end
+
+function ToggleFly()
+    if Enabled then return end
+    Flying = not Flying
+
+    for _, part in pairs(visibleParts) do
+        part.Transparency = part.Transparency == 0 and 0.5 or 0
+    end
+
+    if Flying then
+        Invis()
+        fly()
+    else
+        unInvis()
+    end
+end
+
+function ToggleSell()
+    ReplicatedStorage.events.selleverything:InvokeServer()
+end
+
+function TPAltar()
+    if Enabled or Flying then return end
+    if HumanoidRootPart then
+        if teleportState == 0 then
+            HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+            teleportState = 1
         else
-            AutoCast(true)
-            AutoShake(true)
-            freezePlayer()
-            ShowNotification("Fishing", "ON")
+            HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
+            teleportState = 0
         end
     end
 end
 
-function ToggleFly(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Enabled then return end
-        Flying = not Flying
-
-        for _, part in pairs(visibleParts) do
-            part.Transparency = part.Transparency == 0 and 0.5 or 0
-        end
-
-        if Flying then
-            Invis()
-            fly()
-        else
-            unInvis()
-        end
+function TPWhirlpool()
+    if Enabled or Flying then return end
+    local whirlpool = workspace.zones:FindFirstChild("Safe Whirlpool")
+    if whirlpool then
+        teleportToPart(whirlpool)
+    else
+        ShowNotification("Whirlpool", "Invalid")
     end
 end
 
-function ToggleSell(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        ReplicatedStorage.events.selleverything:InvokeServer()
-    end
+function TPAbundance()
+    if Enabled or Flying then return end
+    findAbundancePart()
 end
 
-function TPAltar(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Enabled or Flying then return end
-        if HumanoidRootPart then
-            if teleportState == 0 then
-                HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
-                teleportState = 1
-            else
-                HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
-                teleportState = 0
-            end
-        end
-    end
-end
-
-function TPWhirlpool(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Enabled or Flying then return end
-        local whirlpool = workspace.zones:FindFirstChild("Safe Whirlpool")
-        if whirlpool then
-            teleportToPart(whirlpool)
-        else
-            ShowNotification("Whirlpool", "Invalid")
-        end
-    end
-end
-
-function TPAbundance(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Enabled or Flying then return end
-        findAbundancePart()
-    end
-end
-
-function TPEvent(Name, State, Input)
-    if State == Enum.UserInputState.Begin then
-        if Enabled or Flying then return end
-        local event = workspace.zones.fishing:FindFirstChild("FischFright24")
-        if event and event:IsA("BasePart") then
-            teleportToPart(event)
-        else
-            ShowNotification("Event", "Invalid")
-        end
+function TPEvent()
+    if Enabled or Flying then return end
+    local event = workspace.zones.fishing:FindFirstChild("FischFright24")
+    if event and event:IsA("BasePart") then
+        teleportToPart(event)
+    else
+        ShowNotification("Event", "Invalid")
     end
 end
 
@@ -401,13 +387,30 @@ WindowAFK = UserInputService.WindowFocused:Connect(function()
     WindowAFK:Disconnect()
 end)
 
-ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
-ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
-ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
-ContextActionService:BindAction('TPAltar', TPAltar, false, Enum.KeyCode.Slash)
-ContextActionService:BindAction('TPAbundance', TPAbundance, false, Enum.KeyCode.KeypadMultiply)
-ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadMinus)
-ContextActionService:BindAction('TPEvent', TPEvent, false, Enum.KeyCode.KeypadPlus)
+function onInputBegan(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        if input.KeyCode == Enum.KeyCode.T then
+            ToggleFarm()
+        elseif input.KeyCode == Enum.KeyCode.X then
+            ToggleFly()
+        elseif input.KeyCode == Enum.KeyCode.F then
+            ToggleSell()
+        elseif input.KeyCode == Enum.KeyCode.Slash then
+            TPAltar()
+        elseif input.KeyCode == Enum.KeyCode.KeypadMultiply then
+            TPAbundance()
+        elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
+            TPWhirlpool()
+        elseif input.KeyCode == Enum.KeyCode.KeypadPlus then
+            TPEvent()
+        end
+    end
+end
+
+-- Connect the function to the input event
+UserInputService.InputBegan:Connect(onInputBegan)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
