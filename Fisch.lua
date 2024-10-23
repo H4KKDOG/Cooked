@@ -154,7 +154,7 @@ end
 
 function findAbundancePart()
     local abundancePartFound = false
-    
+
     for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
         if part:IsA("BasePart") then
             local hasAbundance = false
@@ -339,7 +339,7 @@ function AutoCast(Cast)
                     end
                 end
             end
-                
+
             task.wait()
         end)
     else
