@@ -144,7 +144,7 @@ function getNearestSafeWhirlpool()
 end
 
 function teleportToPart(part)
-    local offset = Vector3.new(20, 10, 0)
+    local offset = Vector3.new(30, 10, 0)
     local newPosition = part.Position + offset
 
     HumanoidRootPart.CFrame = CFrame.new(newPosition)
