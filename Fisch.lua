@@ -197,6 +197,7 @@ function replaceAFKEvent()
         FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
 
         AFK:Destroy()
+        LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
         ShowNotification("AntiAFK", "Enabled")
     end
 end
@@ -210,10 +211,9 @@ function AutoShake(Shake)
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
                 if currentButton then
                     GuiService.SelectedObject = currentButton
-
-                    task.wait()
                     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
                     VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                    wait(0.25)
                 else
                     GuiService.SelectedObject = nil
                 end
