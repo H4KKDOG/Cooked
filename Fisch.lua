@@ -399,9 +399,9 @@ function onInputBegan(input, gameProcessedEvent)
             ToggleSell()
         elseif input.KeyCode == Enum.KeyCode.Slash then
             TPAltar()
-        elseif input.KeyCode == Enum.KeyCode.KeypadMultiply then
-            TPAbundance()
         elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
+            TPAbundance()
+        elseif input.KeyCode == Enum.KeyCode.KeypadMultiply then
             TPWhirlpool()
         elseif input.KeyCode == Enum.KeyCode.KeypadPlus then
             TPEvent()
