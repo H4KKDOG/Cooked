@@ -149,24 +149,15 @@ function findAbundancePart()
 
     for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
         if part:IsA("Part") then
-            local hasAbundance = false
-            local hasOtherChildren = false
-
-            for _, child in ipairs(part:GetChildren()) do
-                if child:IsA("StringValue") and child.Name == "Abundance" then
-                    hasAbundance = true
-                else
-                    hasOtherChildren = true
-                end
-            end
-
-            if hasAbundance and not hasOtherChildren then
+            if part.Material == Enum.Material.Plastic then
                 teleportToPart(part)
                 abundancePartFound = true
-                print("Found Abundance Part:", part.Name)
+                print("Found Event Part (Plastic):", part.Name)
                 break
+            elseif part.Material == Enum.Material.Slate then
+                print("Normal Part (Slate):", part.Name)
             else
-                print("Part:", part.Name, "has Abundance:", hasAbundance, "other children:", hasOtherChildren)
+                print("Other Material Part:", part.Name, "Material:", part.Material.Name)
             end
         end
     end
