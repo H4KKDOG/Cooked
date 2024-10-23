@@ -131,6 +131,26 @@ function TPEvent()
     end
 end
 
+function TPlayerToBoat()
+    if Enabled or Flying then return end
+    local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
+    if not boatFolder then
+        ShowNotification("Missing", "Boat")
+        return
+    end
+
+    local boat = boatFolder:FindFirstChildOfClass("Model")
+    if boat then
+        local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
+
+        if basePart then
+            if HumanoidRootPart then
+                HumanoidRootPart.CFrame = basePart.CFrame + Vector3.new(0, 3, 0)
+            end
+        end
+    end
+end
+
 function teleportToPart(part)
     if Humanoid and Humanoid.Sit then
         local offset = Vector3.new(100, 0, 0)
@@ -403,6 +423,8 @@ function onInputBegan(input, gameProcessedEvent)
             TPWhirlpool()
         elseif input.KeyCode == Enum.KeyCode.KeypadPlus then
             TPEvent()
+        elseif input.KeyCode == Enum.KeyCode.B then
+            TPlayerToBoat()
         end
     end
 end
