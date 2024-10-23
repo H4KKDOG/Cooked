@@ -194,9 +194,9 @@ function createStatusLabel(text)
     local textLabel = Instance.new("TextLabel")
     textLabel.Size = UDim2.new(1, 0, 1, 0)
     textLabel.BackgroundTransparency = 1
-    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextColor3 = Color3.new(0, 1, 0)
     textLabel.TextStrokeTransparency = 0.5
-    textLabel.TextSize = 15
+    textLabel.TextSize = 30
     textLabel.Font = Enum.Font.SourceSans
     textLabel.Text = text
     textLabel.Parent = statusLabel
