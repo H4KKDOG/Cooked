@@ -192,9 +192,10 @@ function createStatusLabel(text)
         statusLabel:Destroy()
     end
 
-    statusLabel = Instance.new("SurfaceGui")
+    statusLabel = Instance.new("BillboardGui")
     statusLabel.Adornee = LocalPlayer.Character:WaitForChild("Head")
-    statusLabel.Face = Enum.NormalId.Top
+    statusLabel.Size = UDim2.new(0, 100, 0, 50)
+    statusLabel.StudsOffset = Vector3.new(0, 2, 0)
     statusLabel.AlwaysOnTop = true
 
     local textLabel = Instance.new("TextLabel")
@@ -206,7 +207,7 @@ function createStatusLabel(text)
     textLabel.Font = Enum.Font.SourceSans
     textLabel.Text = text
     textLabel.Parent = statusLabel
-
+    
     statusLabel.Parent = LocalPlayer.Character.Head
 end
 
