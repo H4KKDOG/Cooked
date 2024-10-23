@@ -129,9 +129,9 @@ end
 function TPEvent(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled or Flying then return end
-        local part = workspace.zones.fishing:FindFirstChild("FischFright24")
-        if part and part:IsA("BasePart") then
-            teleportToPart(part)
+        local event = workspace.zones.fishing:FindFirstChild("FischFright24")
+        if event and event:IsA("BasePart") then
+            teleportToPart(event)
         else
             ShowNotification("Event", "Invalid")
         end
