@@ -99,7 +99,7 @@ function ToggleSell(Name, State, Input)
     end
 end
 
-function ToggleTP(Name, State, Input)
+function TPAltar(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled or Flying then return end
         if HumanoidRootPart then
@@ -126,6 +126,13 @@ function TPWhirlpool(Name, State, Input)
     end
 end
 
+function TPAbundance(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled or Flying then return end
+        findAbundancePart()
+    end
+end
+
 function TPEvent(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled or Flying then return end
@@ -143,6 +150,35 @@ function teleportToPart(part)
     local newPosition = part.Position + offset
 
     HumanoidRootPart.CFrame = CFrame.new(newPosition)
+end
+
+function findAbundancePart()
+    local abundancePartFound = false
+    
+    for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
+        if part:IsA("BasePart") then
+            local hasAbundance = false
+            local otherChildrenExist = false
+
+            for _, child in ipairs(part:GetChildren()) do
+                if child:IsA("StringValue") and child.Name == "Abundance" then
+                    hasAbundance = true
+                else
+                    otherChildrenExist = true
+                end
+            end
+
+            if hasAbundance and not otherChildrenExist then
+                teleportToPart(part)
+                abundancePartFound = true
+                break
+            end
+        end
+    end
+
+    if not abundancePartFound then
+        ShowNotification("Abundance", "Invalid")
+    end
 end
 
 function updateRodInWorkspace()
@@ -368,7 +404,8 @@ end)
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
 ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
 ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
-ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadMultiply)
+ContextActionService:BindAction('TPAltar', TPAltar, false, Enum.KeyCode.Slash)
+ContextActionService:BindAction('TPAbundance', TPAbundance, false, Enum.KeyCode.KeypadMultiply)
 ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadMinus)
 ContextActionService:BindAction('TPEvent', TPEvent, false, Enum.KeyCode.KeypadPlus)
 
