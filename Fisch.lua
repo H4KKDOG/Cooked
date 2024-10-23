@@ -101,7 +101,7 @@ end
 
 function ToggleTP(Name, State, Input)
     if State == Enum.UserInputState.Begin then
-        if Enabled then return end
+        if Enabled or Flying then return end
         if HumanoidRootPart then
             if teleportState == 0 then
                 HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
@@ -112,6 +112,42 @@ function ToggleTP(Name, State, Input)
             end
         end
     end
+end
+
+function TPWhirlpool(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled or Flying then return end
+        local nearestWhirlpool = getNearestSafeWhirlpool()
+        if nearestWhirlpool then
+            teleportToPart(nearestWhirlpool)
+        else
+            ShowNotification("Whirlpool", "Invalid")
+        end
+    end
+end
+
+function getNearestSafeWhirlpool()
+    local nearestPart = nil
+    local shortestDistance = math.huge
+
+    for _, part in ipairs(workspace.active:GetChildren()) do
+        if part.Name == "Safe Whirlpool" and part:IsA("Part") then
+            local distance = (part.Position - HumanoidRootPart.Position).Magnitude
+            if distance < shortestDistance then
+                shortestDistance = distance
+                nearestPart = part
+            end
+        end
+    end
+
+    return nearestPart
+end
+
+function teleportToPart(part)
+    local offset = Vector3.new(20, 10, 0)
+    local newPosition = part.Position + offset
+
+    HumanoidRootPart.CFrame = CFrame.new(newPosition)
 end
 
 function updateRodInWorkspace()
@@ -338,6 +374,7 @@ ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
 ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
 ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
 ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadMinus)
+ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadPlus)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
