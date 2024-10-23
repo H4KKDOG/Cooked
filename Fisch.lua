@@ -415,7 +415,7 @@ function onInputBegan(input, gameProcessedEvent)
             ToggleFly()
         elseif input.KeyCode == Enum.KeyCode.F then
             ToggleSell()
-        elseif input.KeyCode == Enum.KeyCode.Slash then
+        elseif input.KeyCode == Enum.KeyCode.KeypadPeriod then
             TPAltar()
         elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
             TPAbundance()
