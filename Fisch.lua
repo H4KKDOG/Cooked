@@ -150,20 +150,23 @@ function findAbundancePart()
     for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
         if part:IsA("Part") then
             local hasAbundance = false
-            local otherChildrenExist = false
+            local hasOtherChildren = false
 
             for _, child in ipairs(part:GetChildren()) do
                 if child:IsA("StringValue") and child.Name == "Abundance" then
                     hasAbundance = true
                 else
-                    otherChildrenExist = true
+                    hasOtherChildren = true
                 end
             end
 
-            if hasAbundance and not otherChildrenExist then
+            if hasAbundance and not hasOtherChildren then
                 teleportToPart(part)
                 abundancePartFound = true
+                print("Found Abundance Part:", part.Name)
                 break
+            else
+                print("Part:", part.Name, "has Abundance:", hasAbundance, "other children:", hasOtherChildren)
             end
         end
     end
@@ -185,21 +188,25 @@ function updateRodInWorkspace()
 end
 
 function createStatusLabel(text)
-    statusLabel = Instance.new("BillboardGui")
+    if statusLabel then
+        statusLabel:Destroy()
+    end
+
+    statusLabel = Instance.new("SurfaceGui")
     statusLabel.Adornee = LocalPlayer.Character:WaitForChild("Head")
-    statusLabel.Size = UDim2.new(0, 100, 0, 50)
-    statusLabel.StudsOffset = Vector3.new(0, 2, 0)
+    statusLabel.Face = Enum.NormalId.Top
     statusLabel.AlwaysOnTop = true
 
     local textLabel = Instance.new("TextLabel")
     textLabel.Size = UDim2.new(1, 0, 1, 0)
     textLabel.BackgroundTransparency = 1
-    textLabel.TextColor3 = Color3.new(0, 1, 0)
+    textLabel.TextColor3 = Color3.new(0, 0, 1)
     textLabel.TextStrokeTransparency = 0.5
     textLabel.TextSize = 30
     textLabel.Font = Enum.Font.SourceSans
     textLabel.Text = text
     textLabel.Parent = statusLabel
+
     statusLabel.Parent = LocalPlayer.Character.Head
 end
 
