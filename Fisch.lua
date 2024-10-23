@@ -248,7 +248,7 @@ end
 function AutoCast(Cast)
     if Cast then
         if castConnection then return end
-        castConnection = RunService.RenderStepped:Connect(function()
+        castConnection = RunService.Heartbeat:Connect(function()
             if not Progress then
                 local workRod = updateRodInWorkspace()
                 if workRod and not workRod:FindFirstChild("bobber") then
