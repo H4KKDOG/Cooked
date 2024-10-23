@@ -282,13 +282,14 @@ end
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK then
-        wait(0.75)
+        wait(0.5)
         local FakeAFK = Instance.new("RemoteEvent")
         FakeAFK.Name = "afk"
         FakeAFK.Parent = ReplicatedStorage:FindFirstChild("events")
 
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
+        playerBobberWorkspace:FindFirstChild("client"):FindFirstChild("oxygen")
         ShowNotification("AntiAFK", "Enabled")
     end
 end
