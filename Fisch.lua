@@ -36,6 +36,7 @@ local antiAFK = 0
 
 local bodyVelocity
 local InvisCon
+local statusLabel
 local lastshake
 local castConnection
 local shakeConnection
