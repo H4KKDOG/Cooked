@@ -126,7 +126,7 @@ function TPWhirlpool(Name, State, Input)
     end
 end
 
-function TPWhirlpool(Name, State, Input)
+function TPEvent(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled or Flying then return end
         local part = workspace.zones.fishing:FindFirstChild("FischFright24")
