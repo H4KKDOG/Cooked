@@ -213,7 +213,7 @@ function AutoShake(Shake)
                     GuiService.SelectedObject = currentButton
                     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
                     VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                    wait(0.25)
+                    task.wait(0.25)
                 else
                     GuiService.SelectedObject = nil
                 end
