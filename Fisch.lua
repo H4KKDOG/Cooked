@@ -185,9 +185,9 @@ function createStatusLabel(text)
     end
 
     statusLabel = Instance.new("BillboardGui")
-    statusLabel.Adornee = HumanoidRootPart
+    statusLabel.Adornee = Head
     statusLabel.Size = UDim2.new(0, 100, 0, 50)
-    statusLabel.StudsOffset = Vector3.new(0, 5, 0)
+    statusLabel.StudsOffset = Vector3.new(0, 2, 0)
     statusLabel.AlwaysOnTop = true
     statusLabel.LightInfluence = 0
     statusLabel.Active = false
@@ -202,7 +202,7 @@ function createStatusLabel(text)
     textLabel.Text = text
     textLabel.Parent = statusLabel
 
-    statusLabel.Parent = HumanoidRootPart
+    statusLabel.Parent = Head
 end
 
 function fly()
