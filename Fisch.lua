@@ -117,9 +117,9 @@ end
 function TPWhirlpool(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         if Enabled or Flying then return end
-        local nearestWhirlpool = getNearestSafeWhirlpool()
-        if nearestWhirlpool then
-            teleportToPart(nearestWhirlpool)
+        local whirlpool = workspace.zones:FindFirstChild("Safe Whirlpool")
+        if whirlpool then
+            teleportToPart(whirlpool)
         else
             ShowNotification("Whirlpool", "Invalid")
         end
@@ -136,23 +136,6 @@ function TPEvent(Name, State, Input)
             ShowNotification("Event", "Invalid")
         end
     end
-end
-
-function getNearestSafeWhirlpool()
-    local nearestPart = nil
-    local shortestDistance = math.huge
-
-    for _, part in ipairs(workspace.active:GetChildren()) do
-        if part.Name == "Safe Whirlpool" and part:IsA("Part") then
-            local distance = (part.Position - HumanoidRootPart.Position).Magnitude
-            if distance < shortestDistance then
-                shortestDistance = distance
-                nearestPart = part
-            end
-        end
-    end
-
-    return nearestPart
 end
 
 function teleportToPart(part)
