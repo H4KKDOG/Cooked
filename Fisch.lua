@@ -29,7 +29,7 @@ local Progress = false
 local Flying = false
 local IsTransparent = false
 
-local horizontalSpeed = 200
+local horizontalSpeed = 150
 local verticalSpeed = 75
 local teleportState = 0
 local antiAFK = 0
