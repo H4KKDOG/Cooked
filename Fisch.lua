@@ -1,5 +1,6 @@
 if game.PlaceId ~= 16732694052 then return end
-print("Executed : "..game:GetService('Players').LocalPlayer.Name)
+if getgenv().Cooked then return end
+getgenv().Cooked = true
 
 repeat
     task.wait()
