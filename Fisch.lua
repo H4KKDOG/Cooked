@@ -225,15 +225,16 @@ function AutoShake(Shake)
             if shakeUI and shakeUI:FindFirstChild("safezone") then
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
                 if currentButton then
-                    GuiService.SelectedObject = currentButton
-                    task.wait()
-                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                else
-                    GuiService.SelectedObject = nil
+                    local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
+                    local radius = ButtonSize.X / 2
+                    local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
+                    local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
+
+                    if ClickPositionX ~= 29 then
+                        VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                        VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                    end
                 end
-            else
-                GuiService.SelectedObject = nil
             end
             task.wait()
         end)
