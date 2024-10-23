@@ -18,6 +18,7 @@ local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:FindFirstChildOfClass("Humanoid")
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+local Head = LocalPlayer.Character:FindFirstChild("Head")
 local playerBobberWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
 
 local Enabled = false
@@ -143,7 +144,7 @@ function teleportBoatToPlayer()
         local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
 
         if basePart then
-            basePart.CFrame = HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
+            basePart.CFrame = Head.CFrame + Vector3.new(0, 1, 0)
         end
     end
 end
