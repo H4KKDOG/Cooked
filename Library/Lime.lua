@@ -176,7 +176,7 @@ function Library:Window(title)
 
             script.Parent.MouseButton1Click:Connect(function()
                 script.Parent.ButtonAni:TweenSize(UDim2.new(0, 194,0, 24), 'InOut', "Sine", 0.3, true)
-                wait(0.45)
+                wait(0.3)
                 script.Parent.ButtonAni:TweenSize(UDim2.new(0, 0, 0, 0), "InOut", "Sine", 0.3, true)
             end)
         end
@@ -292,7 +292,6 @@ function Library:Window(title)
 
         KeybindName.Name = "KeybindName"
         KeybindName.Parent = KeybindContainer
-        KeybindName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         KeybindName.BackgroundTransparency = 1.000
         KeybindName.Position = UDim2.new(0.024, 0, 0.142857105, 0)
         KeybindName.Size = UDim2.new(0, 169, 0, 20)
@@ -300,7 +299,6 @@ function Library:Window(title)
         KeybindName.Text = name
         KeybindName.TextColor3 = Color3.fromRGB(255, 255, 255)
         KeybindName.TextScaled = true
-        KeybindName.TextSize = 14.000
         KeybindName.TextWrapped = true
         KeybindName.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -317,22 +315,25 @@ function Library:Window(title)
         UICorner.CornerRadius = UDim.new(0, 3)
         UICorner.Parent = KeybindButton
 
+
         local function updateKeybind(newKey)
             KeybindButton.Text = newKey.Name
             callback(newKey)
         end
 
-        local function onInputBegan(input, gameProcessed)
-            if not gameProcessed then
-                if input.UserInputType == Enum.UserInputType.Keyboard then
-                    updateKeybind(input.KeyCode)
-                    return Enum.KeyCode[input.KeyCode]
-                end
-            end
-        end
+        KeybindButton.MouseButton1Click:Connect(function()
+            KeybindButton.Text = "..."
+            local inputConnection
 
-        game:GetService("UserInputService").InputBegan:Connect(onInputBegan)
+            inputConnection = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+                if not gameProcessed and input.UserInputType == Enum.UserInputType.Keyboard then
+                    updateKeybind(input.KeyCode)
+                    inputConnection:Disconnect()
+                end
+            end)
+        end)
     end
+
 
     return Lib
 
