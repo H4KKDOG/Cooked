@@ -92,6 +92,19 @@ function ToggleFly(Name, State, Input)
     end
 end
 
+function ToggleVFly(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        if Enabled or Flying then return end
+        VehicleFly = not VehicleFly
+
+        if VehicleFly then
+            VFly()
+        else
+            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+        end
+    end
+end
+
 function ToggleSell(Name, State, Input)
     if State == Enum.UserInputState.Begin then
         ReplicatedStorage.events.selleverything:InvokeServer()
@@ -149,6 +162,29 @@ function updateRodInWorkspace()
         end
     end
     return nil
+end
+
+function VFly()
+    while VehicleFly do
+        local MoveDirection = Vector3.new()
+        local cameraCFrame = workspace.CurrentCamera.CFrame
+
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.W) and cameraCFrame.LookVector or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.S) and cameraCFrame.LookVector or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.A) and cameraCFrame.RightVector or Vector3.new())
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.D) and cameraCFrame.RightVector or Vector3.new())
+        MoveDirection = MoveDirection + (UserInputService:IsKeyDown(Enum.KeyCode.Space) and Vector3.new(0, 1, 0) or Vector3.new())
+        MoveDirection = MoveDirection - (UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and Vector3.new(0, 1, 0) or Vector3.new())
+
+        if MoveDirection.Magnitude > 0 then
+            MoveDirection = MoveDirection.Unit * horizontalSpeed
+            HumanoidRootPart.Velocity = MoveDirection * 0.5
+        else
+            HumanoidRootPart.Velocity = Vector3.new(0, 0, 0) 
+        end
+
+        RunService.RenderStepped:Wait() 
+    end
 end
 
 function fly()
@@ -334,6 +370,7 @@ WindowAFK = UserInputService.WindowFocused:Connect(function()
 end)
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
 ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
+ContextActionService:BindAction('ToggleVFly', ToggleVFly, false, Enum.KeyCode.V)
 ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
 ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadPlus)
 
