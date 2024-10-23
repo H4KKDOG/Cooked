@@ -158,7 +158,6 @@ function findAbundancePart()
                 if part.Color ~= mediumStoneGrey then
                     teleportToPart(part)
                     abundancePartFound = true
-                    print("Abundance :", part.Name, "Color :", part.Color)
                     break
                 end
             end
@@ -185,7 +184,7 @@ function createStatusLabel(text)
     if statusLabel then
         statusLabel:Destroy()
     end
-    
+
     statusLabel = Instance.new("BillboardGui")
     statusLabel.Adornee = HumanoidRootPart
     statusLabel.Size = UDim2.new(0, 100, 0, 50)
