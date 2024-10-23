@@ -368,8 +368,8 @@ end)
 ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Enum.KeyCode.T)
 ContextActionService:BindAction('ToggleFly', ToggleFly, false, Enum.KeyCode.X)
 ContextActionService:BindAction('ToggleSell', ToggleSell, false, Enum.KeyCode.F)
-ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadMinus)
-ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadPlus)
+ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.KeypadPlus)
+ContextActionService:BindAction('TPWhirlpool', TPWhirlpool, false, Enum.KeyCode.KeypadMinus)
 ContextActionService:BindAction('TPEvent', TPEvent, false, Enum.KeyCode.KeypadMultiply)
 
 CoreGui:SetCore('SendNotification', {
