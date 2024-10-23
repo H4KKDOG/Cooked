@@ -108,7 +108,7 @@ end
 
 function TPWhirlpool()
     if Enabled or Flying then return end
-    local whirlpool = workspace.zones:FindFirstChild("Safe Whirlpool")
+    local whirlpool = workspace.active:FindFirstChild("Safe Whirlpool")
     if whirlpool then
         teleportToPart(whirlpool)
     else
