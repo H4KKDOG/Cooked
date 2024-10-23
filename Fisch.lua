@@ -143,7 +143,7 @@ function teleportBoatToPlayer()
         local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
 
         if basePart then
-            basePart.CFrame = HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+            basePart.CFrame = HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
         end
     end
 end
