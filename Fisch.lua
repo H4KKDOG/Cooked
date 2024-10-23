@@ -234,6 +234,7 @@ function AutoShake(Shake)
                         VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
                         VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                     end
+                    task.wait()
                 end
             end
             task.wait()
