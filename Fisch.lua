@@ -317,7 +317,7 @@ ContextActionService:BindAction('ToggleTP', ToggleTP, false, Enum.KeyCode.Keypad
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
-    Text = "Fisch Loaded!",
+    Text = "Fisch v.1.2!",
     Duration = math.huge,
     Button1 = "@zxc.shiro",
 })
