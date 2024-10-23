@@ -981,7 +981,7 @@ local function createBox(option, parent)
 		BackgroundTransparency = 1,
 		Text = option.text,
 		TextSize = 14,
-		Font = Enum.Font.Gotham,
+		Font = Enum.Font.GothamBold,
 		TextColor3 = Color3.fromRGB(100, 100, 100),
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Parent = main
