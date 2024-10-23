@@ -211,7 +211,7 @@ function AutoShake(Shake)
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
                 if currentButton then
                     GuiService.SelectedObject = currentButton
-                    task.wait(0.25)
+                    task.wait()
                     VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
                     VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
                 else
