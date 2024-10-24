@@ -354,9 +354,10 @@ AReel:UpdateToggle("Toggle On")
 
 Main:NewLabel("Extra")
 
-Main:NewToggle("No Oxygen", "ToggleInfo", function(value)
+local Oxy = Main:NewToggle("No Oxygen", "ToggleInfo", function(value)
     playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Disabled = value
 end)
+Oxy:UpdateToggle("Toggle On")
 
 Main:NewButton("Sell All Fish", "ButtonInfo", function()
     ReplicatedStorage.events.selleverything:InvokeServer()
