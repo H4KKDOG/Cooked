@@ -374,6 +374,10 @@ Fishing:NewKeybind("InviFly", "KeybindInfo", Enum.KeyCode.X, function()
     end
 end)
 
+Fishing:NewKeybind("Ui", "KeybindInfo", Enum.KeyCode.LeftControl, function()
+	Library:ToggleUI()
+end)
+
 Fishing:NewButton("AntiAFK (Label)", "ButtonInfo", function()
     replaceAFKEvent()
 end)
