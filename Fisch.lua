@@ -337,7 +337,7 @@ function AutoCast(Cast)
                         task.wait(0.5)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                         Rod.events.reset:FireServer()
-                        Rod.events.cast:FireServer(100.5)
+                        Rod.events.cast:FireServer(99)
                         task.wait(1.75)
                         Progress = false
                     end
