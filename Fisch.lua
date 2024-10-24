@@ -333,19 +333,15 @@ function AutoCast(Cast)
                     if Rod then
                         Progress = true
                         task.wait(1.25)
+                            
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
                         task.wait(0.5)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                         
-                        local rodPowerValue = workRod:FindFirstChild("values") and workRod.values:FindFirstChild("power")
-                        if rodPowerValue then
-                            Rod.events.reset:FireServer()
-                            rodPowerValue.Value = 99
-                            Rod.events.cast:FireServer(99)
-                            print("RodPower")
-                        end
+                        Rod.events.reset:FireServer()
+                        Rod.events.cast:FireServer(99)
 
-                        task.wait(1.75)
+                        task.wait(1.25)
                         Progress = false
                     end
                 end
