@@ -339,11 +339,10 @@ function AutoCast(Cast)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
                         local humanoidRootPart = playerBobberWorkspace:FindFirstChild("HumanoidRootPart")
-                        local power = humanoidRootPart:FindFirstChild("power")
-                        local powerbar = power:FindFirstChild("powerbar")
-                        local bar = powerbar:FindFirstChild("bar")
+                        local power = humanoidRootPart:WaitForChild("power")
+                        local powerbar = power:WaitForChild("powerbar")
+                        local bar = powerbar:WaitForChild("bar")
 
-                        local mouseButtonUpFired = false
                         local WaitForPerfect
 
                         if WaitForPerfect then
@@ -354,10 +353,9 @@ function AutoCast(Cast)
                             if bar and bar:IsA("Frame") then
                                 local barSizeY = bar.Size.Y
                                 
-                                if barSizeY.Scale == 1 and not mouseButtonUpFired then
+                                if barSizeY.Scale == 1 then
                                     VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                                     WaitForPerfect:Disconnect()
-                                    mouseButtonUpFired = true
                                 end
                             end
                         end)
