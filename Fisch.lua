@@ -59,13 +59,10 @@ function ToggleFarm()
     if not Enabled then
         AutoCast(false)
         AutoShake(false)
-        unfreezePlayer()
-        GuiService.SelectedObject = nil
         ShowNotification("Fishing", "OFF")
     else
         AutoCast(true)
         AutoShake(true)
-        freezePlayer()
         ShowNotification("Fishing", "ON")
     end
 end
@@ -327,13 +324,13 @@ function AutoCast(Cast)
                 if workRod and not workRod:FindFirstChild("bobber") then
                     if Rod then
                         Progress = true
-                        task.wait(1.5)
+                        task.wait(1.75)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
                         local humanoidRootPart = playerWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
-                        if not power then Progress = false return end
+                        if not power then return end
                         local powerbar = power:WaitForChild("powerbar", 5)
                         local bar = powerbar:WaitForChild("bar", 5)
 
@@ -354,7 +351,7 @@ function AutoCast(Cast)
                             end
                         end)
 
-                        task.wait(1.75)
+                        task.wait(2.75)
                         Progress = false
                     end
                 end
