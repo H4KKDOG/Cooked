@@ -359,8 +359,8 @@ Main:NewButton("Sell All Fish", "ButtonInfo", function()
     ReplicatedStorage.events.selleverything:InvokeServer()
 end)
 
-Main:NewButton("AntiAFK (Label)", "ButtonInfo", function()
-    ReplicatedStorage.events.selleverything:InvokeServer()
+Main:NewButton("AntiAFK [AFK]", "ButtonInfo", function()
+    replaceAFKEvent()
 end)
 
 --// Event
@@ -385,7 +385,6 @@ end)
 Event:NewButton("Altar", "ButtonInfo", function()
     TPAltar()
 end)
-
 
 --// Useless Func
 function isMobile()
