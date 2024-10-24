@@ -26,6 +26,7 @@ local Casted = false
 local Progress = false
 local Flying = false
 local IsTransparent = false
+local visibleParts = {}
 
 local horizontalSpeed = 150
 local verticalSpeed = 75
@@ -36,7 +37,6 @@ local InvisCon
 local lastshake
 local castConnection
 local shakeConnection
-local visibleParts = {}
 
 for _, part in pairs(Character:GetDescendants()) do
     if part:IsA("BasePart") and part.Transparency == 0 then
@@ -53,7 +53,6 @@ function ShowNotification(Title, Content, Time)
 end
 
 function ToggleFarm()
-    if Flying then return end
     Enabled = not Enabled
 
     if not Enabled then
@@ -68,7 +67,6 @@ function ToggleFarm()
 end
 
 function ToggleFly()
-    if Enabled then return end
     Flying = not Flying
 
     for _, part in pairs(visibleParts) do
@@ -83,12 +81,8 @@ function ToggleFly()
     end
 end
 
-function ToggleSell()
-    ReplicatedStorage.events.selleverything:InvokeServer()
-end
-
 function TPAltar()
-    if Enabled or Flying then return end
+    if Flying then return end
     if HumanoidRootPart then
         if teleportState == 0 then
             HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
@@ -101,7 +95,7 @@ function TPAltar()
 end
 
 function TPWhirlpool()
-    if Enabled or Flying then return end
+    if Flying then return end
     local whirlpool = workspace.active:FindFirstChild("Safe Whirlpool")
     if whirlpool then
         teleportToPart(whirlpool)
@@ -110,13 +104,8 @@ function TPWhirlpool()
     end
 end
 
-function TPAbundance()
-    if Enabled or Flying then return end
-    findAbundancePart()
-end
-
 function TPEvent()
-    if Enabled or Flying then return end
+    if Flying then return end
     local event = workspace.zones.fishing:FindFirstChild("FischFright24")
     if event and event:IsA("BasePart") then
         teleportToPart(event)
@@ -125,8 +114,30 @@ function TPEvent()
     end
 end
 
+function TPAbundance()
+    if Flying then return end
+    local abundancePartFound = false
+    local mediumStoneGrey = Color3.fromRGB(163, 162, 165)
+
+    for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
+        if part:IsA("Part") and part.Name ~= "FischFright24" then
+            if part.Material == Enum.Material.Plastic then
+                if part.Color ~= mediumStoneGrey then
+                    teleportToPart(part)
+                    abundancePartFound = true
+                    break
+                end
+            end
+        end
+    end
+
+    if not abundancePartFound then
+        ShowNotification("Abundance", "Invalid")
+    end
+end
+
 function TPlayerToBoat()
-    if Enabled or Flying then return end
+    if Flying then return end
     local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
     if not boatFolder then
         ShowNotification("Missing", "Boat")
@@ -151,27 +162,6 @@ function teleportToPart(part)
     local lookAtCFrame = CFrame.new(newPosition, part.Position)
 
     HumanoidRootPart.CFrame = lookAtCFrame
-end
-
-function findAbundancePart()
-    local abundancePartFound = false
-    local mediumStoneGrey = Color3.fromRGB(163, 162, 165)
-
-    for _, part in ipairs(workspace.zones.fishing:GetChildren()) do
-        if part:IsA("Part") and part.Name ~= "FischFright24" then
-            if part.Material == Enum.Material.Plastic then
-                if part.Color ~= mediumStoneGrey then
-                    teleportToPart(part)
-                    abundancePartFound = true
-                    break
-                end
-            end
-        end
-    end
-
-    if not abundancePartFound then
-        ShowNotification("Abundance", "Invalid")
-    end
 end
 
 function updateRodInWorkspace()
@@ -302,7 +292,7 @@ function AutoCast(Cast)
     if Cast then
         if castConnection then return end
         castConnection = RunService.Heartbeat:Connect(function()
-            if not Progress then
+            if not Progress and not Flying then
                 local workRod = updateRodInWorkspace()
                 if workRod and not workRod:FindFirstChild("bobber") then
                     if Rod then
@@ -402,7 +392,7 @@ WindowAFK = UserInputService.WindowFocused:Connect(function()
     WindowAFK:Disconnect()
 end)
 
-function onInputBegan(input, gameProcessedEvent)
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
     if gameProcessedEvent then return end
 
     if input.UserInputType == Enum.UserInputType.Keyboard then
@@ -411,7 +401,7 @@ function onInputBegan(input, gameProcessedEvent)
         elseif input.KeyCode == Enum.KeyCode.X then
             ToggleFly()
         elseif input.KeyCode == Enum.KeyCode.F then
-            ToggleSell()
+            ReplicatedStorage.events.selleverything:InvokeServer()
         elseif input.KeyCode == Enum.KeyCode.KeypadPeriod then
             TPAltar()
         elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
@@ -425,8 +415,6 @@ function onInputBegan(input, gameProcessedEvent)
         end
     end
 end
-
-UserInputService.InputBegan:Connect(onInputBegan)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
