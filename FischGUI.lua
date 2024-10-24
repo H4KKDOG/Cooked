@@ -337,17 +337,20 @@ local Main = Fishing:NewSection("Main")
 local Event = Teleport:NewSection("Event")
 
 --// Main
-Main:NewToggle("Auto Cast", "ToggleInfo", function(value)
+local ACast = Main:NewToggle("Auto Cast", "ToggleInfo", function(value)
     AutoCast(value)
 end)
+ACast:UpdateToggle("Toggle On")
 
-Main:NewToggle("Auto Shake", "ToggleInfo", function(value)
+local AShake = Main:NewToggle("Auto Shake", "ToggleInfo", function(value)
     AutoShake(value)
 end)
+AShake:UpdateToggle("Toggle On")
 
-Main:NewToggle("Auto Reel", "ToggleInfo", function(value)
+local AReel = Main:NewToggle("Auto Reel", "ToggleInfo", function(value)
     AutoReel(value)
 end)
+AReel:UpdateToggle("Toggle On")
 
 Main:NewLabel("Extra")
 
