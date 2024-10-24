@@ -338,8 +338,7 @@ function AutoCast(Cast)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
-                        local yourfavshiro = workspace:WaitForChild("yourfavshiro")
-                        local humanoidRootPart = yourfavshiro:WaitForChild("HumanoidRootPart")
+                        local humanoidRootPart = playerBobberWorkspace:WaitForChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power")
                         local powerbar = power:WaitForChild("powerbar")
                         local bar = powerbar:WaitForChild("bar")
