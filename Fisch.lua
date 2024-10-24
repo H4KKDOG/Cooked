@@ -340,8 +340,8 @@ function AutoCast(Cast)
 
                         local humanoidRootPart = playerBobberWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
-                        local powerbar = power:WaitForChild("powerbar")
-                        local bar = powerbar:WaitForChild("bar")
+                        local powerbar = power:FindFirstChild("powerbar")
+                        local bar = powerbar:FindFirstChild("bar")
 
                         local WaitForPerfect
 
