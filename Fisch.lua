@@ -297,7 +297,7 @@ function AutoCast(Cast)
                 if workRod and not workRod:FindFirstChild("bobber") then
                     if Rod then
                         Progress = true
-                        task.wait(1.75)
+                        task.wait(2.25)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
