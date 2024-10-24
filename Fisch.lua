@@ -303,7 +303,7 @@ function AutoCast(Cast)
 
                         local humanoidRootPart = playerWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
-                        if not power then return end
+                        if not power then Progress = false return end
                         local powerbar = power:WaitForChild("powerbar", 5)
                         local bar = powerbar:WaitForChild("bar", 5)
 
