@@ -327,14 +327,15 @@ function AutoCast(Cast)
                 if workRod and not workRod:FindFirstChild("bobber") then
                     if Rod then
                         Progress = true
-                        task.wait(1.25)
+                        task.wait(1.5)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
                         local humanoidRootPart = playerWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
-                        local powerbar = power:FindFirstChild("powerbar")
-                        local bar = powerbar:FindFirstChild("bar")
+                        if not power then Progress = false return end
+                        local powerbar = power:WaitForChild("powerbar", 5)
+                        local bar = powerbar:WaitForChild("bar", 5)
 
                         local WaitForPerfect
 
