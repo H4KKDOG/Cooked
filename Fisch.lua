@@ -339,12 +339,11 @@ function AutoCast(Cast)
                         
                         local rodPowerValue = workRod:FindFirstChild("values") and workRod.values:FindFirstChild("power")
                         if rodPowerValue then
+                            Rod.events.reset:FireServer()
                             rodPowerValue.Value = 99
+                            Rod.events.cast:FireServer(99)
                             print("RodPower")
                         end
-
-                        Rod.events.reset:FireServer()
-                        Rod.events.cast:FireServer(99)
 
                         task.wait(1.75)
                         Progress = false
