@@ -335,14 +335,33 @@ function AutoCast(Cast)
                     if Rod then
                         Progress = true
                         task.wait(1.25)
-                            
-                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                        task.wait(0.5)
-                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
 
-                        wait()
-                        Rod.events.reset:FireServer()
-                        Rod.events.cast:FireServer(99)
+                        VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+
+                        local yourfavshiro = workspace:WaitForChild("yourfavshiro")
+                        local humanoidRootPart = yourfavshiro:WaitForChild("HumanoidRootPart")
+                        local power = humanoidRootPart:WaitForChild("power")
+                        local powerbar = power:WaitForChild("powerbar")
+                        local bar = powerbar:WaitForChild("bar")
+
+                        local mouseButtonUpFired = false
+                        local WaitForPerfect
+
+                        if WaitForPerfect then
+                            WaitForPerfect:Disconnect()
+                        end
+                        
+                        WaitForPerfect = RunService.Heartbeat:Connect(function()
+                            if bar and bar:IsA("Frame") then
+                                local barSizeY = bar.Size.Y
+                                
+                                if barSizeY.Scale == 1 and not mouseButtonUpFired then
+                                    VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                                    WaitForPerfect:Disconnect()
+                                    mouseButtonUpFired = true
+                                end
+                            end
+                        end)
 
                         task.wait(1.25)
                         Progress = false
@@ -359,6 +378,7 @@ function AutoCast(Cast)
         end
     end
 end
+
 
 LocalPlayer.Character.ChildAdded:Connect(function(Child)
     if Child:IsA('Tool') and Child.Name:lower():find('rod') then
