@@ -20,7 +20,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local Head = LocalPlayer.Character:FindFirstChild("Head")
 local playerWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
 
-local Enabled = false
+local Enabled = true
 local Rod = false
 local Casted = false
 local Progress = false
