@@ -115,12 +115,19 @@ function TPToBoat()
 end
 
 function teleportToPart(part)
-    local offset = Vector3.new(100, 75, 0)
+    local offset
+    if Humanoid.Sit then
+        offset = Vector3.new(150, 0, 0)
+    else
+        offset = Vector3.new(100, 75, 0)
+    end
+
     local newPosition = part.Position + offset
     local lookAtCFrame = CFrame.new(newPosition, part.Position)
 
     HumanoidRootPart.CFrame = lookAtCFrame
 end
+
 
 --// Other Function
 function updateRodInWorkspace()
