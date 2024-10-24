@@ -363,10 +363,6 @@ Main:NewButton("AntiAFK (Label)", "ButtonInfo", function()
     ReplicatedStorage.events.selleverything:InvokeServer()
 end)
 
-Main:NewKeybind("TP to Boat", "KeybindInfo", Enum.KeyCode.B, function()
-    TPToBoat()
-end)
-
 --// Event
 Event:NewButton("FischFright24", "ButtonInfo", function()
     TPEvent()
@@ -416,6 +412,8 @@ elseif isPC() then
         if input.UserInputType == Enum.UserInputType.Keyboard then
             if input.KeyCode == Enum.KeyCode.LeftControl then
                 Library:ToggleUI()
+            elseif input.KeyCode == Enum.KeyCode.B then
+                TPToBoat()
             end
         end
     end)
