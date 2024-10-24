@@ -247,23 +247,6 @@ function unInvis()
     end
 end
 
-function freezePlayer()
-    if not HumanoidRootPart:FindFirstChild("FreezeBodyPosition") then
-        local bodyPosition = Instance.new("BodyPosition")
-        bodyPosition.Name = "FreezeBodyPosition"
-        bodyPosition.MaxForce = Vector3.new(5000, 5000, 5000)
-        bodyPosition.Position = HumanoidRootPart.Position
-        bodyPosition.Parent = HumanoidRootPart
-    end
-end
-
-function unfreezePlayer()
-    local bodyPosition = HumanoidRootPart:FindFirstChild("FreezeBodyPosition")
-    if bodyPosition then
-        bodyPosition:Destroy()
-    end
-end
-
 function replaceAFKEvent()
     local AFK = ReplicatedStorage:FindFirstChild("events"):FindFirstChild("afk")
     if AFK then
