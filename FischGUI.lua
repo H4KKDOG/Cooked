@@ -45,17 +45,14 @@ end
 
 --// Teleport
 function TPAltar()
-    if Flying then return end
     HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
 end
 
 function TPMoosewood()
-    if Flying then return end
     HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
 end
 
 function TPWhirlpool()
-    if Flying then return end
     local whirlpool = workspace.active:FindFirstChild("Safe Whirlpool")
     if whirlpool then
         teleportToPart(whirlpool)
@@ -65,7 +62,6 @@ function TPWhirlpool()
 end
 
 function TPEvent()
-    if Flying then return end
     local event = workspace.zones.fishing:FindFirstChild("FischFright24")
     if event and event:IsA("BasePart") then
         teleportToPart(event)
@@ -75,7 +71,6 @@ function TPEvent()
 end
 
 function TPAbundance()
-    if Flying then return end
     local abundancePartFound = false
     local mediumStoneGrey = Color3.fromRGB(163, 162, 165)
 
@@ -97,7 +92,6 @@ function TPAbundance()
 end
 
 function TPToBoat()
-    if Flying then return end
     local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
     if not boatFolder then
         ShowNotification("Boat", "Not Found")
@@ -214,7 +208,7 @@ function AutoCast(Cast)
     if Cast then
         if castConnection then return end
         castConnection = RunService.Heartbeat:Connect(function()
-            if not Progress and not Flying then
+            if not Progress then
                 local workRod = updateRodInWorkspace()
                 if workRod and not workRod:FindFirstChild("bobber") then
                     if Rod then
