@@ -9,18 +9,16 @@ until game:IsLoaded()
 local Players = game:GetService('Players')
 local CoreGui = game:GetService('StarterGui')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local ContextActionService = game:GetService('ContextActionService')
 local VirtualInputManager = game:GetService('VirtualInputManager')
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
-local GuiService = game:GetService('GuiService')
 
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:FindFirstChildOfClass("Humanoid")
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local Head = LocalPlayer.Character:FindFirstChild("Head")
-local playerBobberWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
+local playerWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
 
 local Enabled = false
 local Rod = false
@@ -32,7 +30,6 @@ local IsTransparent = false
 local horizontalSpeed = 150
 local verticalSpeed = 75
 local teleportState = 0
-local antiAFK = 0
 
 local bodyVelocity
 local InvisCon
@@ -152,15 +149,11 @@ function TPlayerToBoat()
 end
 
 function teleportToPart(part)
-    if Humanoid and Humanoid.Sit then
-        local offset = Vector3.new(100, 0, 0)
-        local newPosition = part.Position + offset
-        local lookAtCFrame = CFrame.new(newPosition, part.Position)
+    local offset = Vector3.new(100, 50, 0)
+    local newPosition = part.Position + offset
+    local lookAtCFrame = CFrame.new(newPosition, part.Position)
 
-        HumanoidRootPart.CFrame = lookAtCFrame
-    else
-        ShowNotification("OnBoat", "Missing")
-    end
+    HumanoidRootPart.CFrame = lookAtCFrame
 end
 
 function findAbundancePart()
@@ -185,8 +178,8 @@ function findAbundancePart()
 end
 
 function updateRodInWorkspace()
-    if playerBobberWorkspace then
-        for _, item in pairs(playerBobberWorkspace:GetChildren()) do
+    if playerWorkspace then
+        for _, item in pairs(playerWorkspace:GetChildren()) do
             if item:IsA('Tool') and item.Name:lower():find('rod') then
                 return item
             end
@@ -284,7 +277,7 @@ function replaceAFKEvent()
 
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
-        playerBobberWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Enabled = false
+        playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Enabled = false
         ShowNotification("AntiAFK", "Enabled")
     end
 end
@@ -338,7 +331,7 @@ function AutoCast(Cast)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
-                        local humanoidRootPart = playerBobberWorkspace:FindFirstChild("HumanoidRootPart")
+                        local humanoidRootPart = playerWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
                         local powerbar = power:FindFirstChild("powerbar")
                         local bar = powerbar:FindFirstChild("bar")
@@ -348,11 +341,11 @@ function AutoCast(Cast)
                         if WaitForPerfect then
                             WaitForPerfect:Disconnect()
                         end
-                        
+
                         WaitForPerfect = RunService.Heartbeat:Connect(function()
                             if bar and bar:IsA("Frame") then
                                 local barSizeY = bar.Size.Y
-                                
+
                                 if barSizeY.Scale == 1 then
                                     VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, false, game, 1)
                                     WaitForPerfect:Disconnect()
