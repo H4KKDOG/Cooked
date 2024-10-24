@@ -414,7 +414,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
             TPlayerToBoat()
         end
     end
-end
+end)
 
 CoreGui:SetCore('SendNotification', {
     Title = "Notification",
