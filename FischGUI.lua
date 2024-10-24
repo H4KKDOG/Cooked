@@ -145,7 +145,6 @@ function replaceAFKEvent()
 
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
-        playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Enabled = false
         ShowNotification("AntiAFK", "Enabled")
     end
 end
@@ -352,7 +351,15 @@ end)
 
 Main:NewLabel("Extra")
 
+Main:NewToggle("No Oxygen", "ToggleInfo", function(value)
+    playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Disabled = value
+end)
+
 Main:NewButton("Sell All Fish", "ButtonInfo", function()
+    ReplicatedStorage.events.selleverything:InvokeServer()
+end)
+
+Main:NewButton("AntiAFK (Label)", "ButtonInfo", function()
     ReplicatedStorage.events.selleverything:InvokeServer()
 end)
 
