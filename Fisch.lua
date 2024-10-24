@@ -339,7 +339,7 @@ function AutoCast(Cast)
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
                         local humanoidRootPart = playerBobberWorkspace:FindFirstChild("HumanoidRootPart")
-                        local power = humanoidRootPart:WaitForChild("power")
+                        local power = humanoidRootPart:WaitForChild("power", 5)
                         local powerbar = power:WaitForChild("powerbar")
                         local bar = powerbar:WaitForChild("bar")
 
