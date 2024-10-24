@@ -144,12 +144,10 @@ function TPlayerToBoat()
 
     local boat = boatFolder:FindFirstChildOfClass("Model")
     if boat then
-        local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
+        local basePart = boat:FindFirstChild("Base")
 
-        if basePart then
-            if HumanoidRootPart then
-                HumanoidRootPart.CFrame = basePart.CFrame + Vector3.new(0, 3, 0)
-            end
+        if basePart and basePart:IsA("Part") then
+            HumanoidRootPart.CFrame = basePart.CFrame + Vector3.new(0, basePart.Size.Y / 2 + 3, 0)
         end
     end
 end
