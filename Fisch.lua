@@ -20,7 +20,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local Head = LocalPlayer.Character:FindFirstChild("Head")
 local playerWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
 
-local Enabled = true
+local Enabled = false
 local Rod = false
 local Casted = false
 local Progress = false
@@ -421,4 +421,5 @@ CoreGui:SetCore('SendNotification', {
     Text = "Fisch Loaded!",
     Duration = math.huge,
     Button1 = "@zxc.shiro",
+    Callback = ToggleFarm()
 })
