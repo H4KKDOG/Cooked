@@ -334,7 +334,7 @@ local Fishing = Window:NewTab("Fishing")
 local Teleport = Window:NewTab("Teleport")
 
 local Main = Fishing:NewSection("Main")
-local Ocean = Teleport:NewSection("Event")
+local Event = Teleport:NewSection("Event")
 
 --// Main
 Main:NewToggle("Auto Cast", "ToggleInfo", function(value)
