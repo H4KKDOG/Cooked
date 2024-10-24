@@ -83,14 +83,12 @@ end
 
 function TPAltar()
     if Flying then return end
-    if HumanoidRootPart then
-        if teleportState == 0 then
-            HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
-            teleportState = 1
-        else
-            HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
-            teleportState = 0
-        end
+    if teleportState == 0 then
+        HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+        teleportState = 1
+    else
+        HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
+        teleportState = 0
     end
 end
 
@@ -402,7 +400,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
             ToggleFly()
         elseif input.KeyCode == Enum.KeyCode.F then
             ReplicatedStorage.events.selleverything:InvokeServer()
-        elseif input.KeyCode == Enum.KeyCode.KeypadPeriod then
+        elseif input.KeyCode == Enum.KeyCode.KeypadThree then
             TPAltar()
         elseif input.KeyCode == Enum.KeyCode.KeypadMinus then
             TPAbundance()
