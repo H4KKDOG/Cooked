@@ -1,14 +1,20 @@
-if game.PlaceId ~= 16732694052 then
-    return
-end
+if game.PlaceId ~= 16732694052 then return end
+if getgenv().Cooked then return end
+repeat task.wait() until game:IsLoaded()
+getgenv().Cooked = true
 
-if getgenv().Cooked then
-    return
-end
-
-repeat
-    task.wait()
-until game:IsLoaded()
+local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/Library/Fluent.lua"))()
+local Window = Library:CreateWindow{
+    Title = "Fisch GUI",
+    SubTitle = "@zxc.shiro",
+    TabWidth = 100,
+    Size = UDim2.fromOffset(750, 650),
+    Resize = true,
+    MinSize = Vector2.new(650, 550),
+    Acrylic = true,
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.LeftControl
+}
 
 local Players = game:GetService('Players')
 local CoreGui = game:GetService('StarterGui')
@@ -36,8 +42,8 @@ local verticalSpeed = 75
 
 local bodyVelocity
 local InvisCon
-local lastshake
 local AutoReel
+local lastshake
 local castConnection
 local shakeConnection
 local visibleParts = {}
@@ -48,27 +54,28 @@ for _, part in pairs(Character:GetDescendants()) do
     end
 end
 
-function ShowNotification(Title, Content, Time)
-    CoreGui:SetCore('SendNotification', {
-        Title = Title,
-        Text = Content,
-        Duration = Time or 2.5
-    })
+function TPWhirlpool()
+    if Flying then return end
+    local whirlpool = workspace.active:FindFirstChild("Safe Whirlpool")
+    if whirlpool then
+        teleportToPart(whirlpool)
+    else
+        Library:Notify{ Title = "Fisch", Content = "No Safe Whirlpool Found", Duration = 2.5 }
+    end
 end
 
-function teleportToPart(part)
-    if Humanoid and Humanoid.Sit then
-        local offset = Vector3.new(100, 0, 0)
-        local newPosition = part.Position + offset
-        local lookAtCFrame = CFrame.new(newPosition, part.Position)
-
-        HumanoidRootPart.CFrame = lookAtCFrame
+function TPEvent()
+    if Flying then return end
+    local event = workspace.zones.fishing:FindFirstChild("FischFright24")
+    if event and event:IsA("BasePart") then
+        teleportToPart(event)
     else
-        ShowNotification("OnBoat", "Missing")
+        Library:Notify{ Title = "Fisch", Content = "No FischFright24 Found", Duration = 2.5 }
     end
 end
 
 function findAbundancePart()
+    if Flying then return end
     local abundancePartFound = false
     local mediumStoneGrey = Color3.fromRGB(163, 162, 165)
 
@@ -85,7 +92,39 @@ function findAbundancePart()
     end
 
     if not abundancePartFound then
-        ShowNotification("Abundance", "Invalid")
+        Library:Notify{ Title = "Fisch", Content = "No Abundance Found", Duration = 2.5 }
+    end
+end
+
+function teleportToPart(part)
+    if Humanoid and Humanoid.Sit then
+        local offset = Vector3.new(100, 0, 0)
+        local newPosition = part.Position + offset
+        local lookAtCFrame = CFrame.new(newPosition, part.Position)
+
+        HumanoidRootPart.CFrame = lookAtCFrame
+    else
+        Library:Notify{ Title = "Fisch", Content = "Need to be OnBoat", Duration = 2.5 }
+    end
+end
+
+function TPlayerToBoat()
+    if Flying then return end
+    local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
+    if not boatFolder then
+        Library:Notify{ Title = "Fisch", Content = "No Boat Found", Duration = 2.5 }
+        return
+    end
+
+    local boat = boatFolder:FindFirstChildOfClass("Model")
+    if boat then
+        local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
+
+        if basePart then
+            if HumanoidRootPart then
+                HumanoidRootPart.CFrame = basePart.CFrame + Vector3.new(0, 3, 0)
+            end
+        end
     end
 end
 
@@ -173,7 +212,7 @@ function replaceAFKEvent()
         AFK:Destroy()
         LocalPlayer.PlayerGui.TopbarStandard.Holders.Left.Quest.Selectable = true
         playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Enabled = false
-        ShowNotification("AntiAFK", "Enabled")
+        Library:Notify{ Title = "Fisch", Content = "AntiAFK", Duration = 2.5 }
     end
 end
 
@@ -228,11 +267,8 @@ function AutoCast(Cast)
 
                         local humanoidRootPart = playerWorkspace:FindFirstChild("HumanoidRootPart")
                         local power = humanoidRootPart:WaitForChild("power", 5)
-
-                        if not power then Progress = false return end
-
-                        local powerbar = power:WaitForChild("powerbar", 5)
-                        local bar = powerbar:WaitForChild("bar", 5)
+                        local powerbar = power:FindFirstChild("powerbar")
+                        local bar = powerbar:FindFirstChild("bar")
 
                         local WaitForPerfect
 
@@ -312,108 +348,122 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
     end
 end)
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/Library/Kavo.lua"))()
-local Window = Library.CreateLib("Fisch @zxc.shiro", "BloodTheme")
+local Tabs = {
+    Fishing = Window:CreateTab{
+        Title = "Fishing",
+        Icon = "fish"
+    },
+    Teleport = Window:CreateTab{
+        Title = "Teleport",
+        Icon = "tree-palm"
+    },
+    Extra = Window:CreateTab{
+        Title = "Extra",
+        Icon = "circle-ellipsis"
+    }
+}
 
-local Main = Window:NewTab("Main")
-local Teleport = Window:NewTab("Teleport")
-
-local Fishing = Main:NewSection("Fishing")
-local Event = Teleport:NewSection("Event")
-
-Fishing:NewToggle("Auto Cast", "ToggleInfo", function(state)
-    AutoCast(state)
+local Cast = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Cast", Default = false })
+Cast:OnChanged(function(toggle)
+    AutoCast(toggle)
 end)
 
-Fishing:NewToggle("Auto Shake", "ToggleInfo", function(state)
-    AutoShake(state)
+local Shake = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Shake", Default = false })
+Shake:OnChanged(function(toggle)
+    AutoShake(toggle)
 end)
 
-Fishing:NewToggle("Auto Reel", "ToggleInfo", function(state)
-    AutoReel = state
+local Reel = Tabs.Fishing:CreateToggle("MyToggle", {Title = "Auto Reel", Default = false })
+Reel:OnChanged(function(toggle)
+    AutoReel = toggle
 end)
 
-Fishing:NewButton("Sell All Fish", "ButtonInfo", function()
-    ReplicatedStorage.events.selleverything:InvokeServer()
-end)
-
-Fishing:NewLabel("Misc")
-
-Fishing:NewKeybind("TP to Boat", "KeybindInfo", Enum.KeyCode.B, function()
-    if Flying then return end
-    local boatFolder = workspace.active.boats:FindFirstChild(LocalPlayer.Name)
-    if not boatFolder then
-        ShowNotification("Missing", "Boat")
-        return
+Tabs.Fishing:CreateButton{
+    Title = "Sell All",
+    Callback = function()
+        ReplicatedStorage.events.selleverything:InvokeServer()
     end
+}
 
-    local boat = boatFolder:FindFirstChildOfClass("Model")
-    if boat then
-        local basePart = boat.PrimaryPart or boat:FindFirstChild("BasePart")
+local Event = Tabs.Teleport:CreateDropdown("Dropdown", {
+    Title = "Ocean Event",
+    Values = {"Abundance", "FischFright24", "Whirlpool"},
+    Multi = false,
+    Default = 1,
+})
 
-        if basePart then
-            if HumanoidRootPart then
-                HumanoidRootPart.CFrame = basePart.CFrame + Vector3.new(0, 3, 0)
-            end
+Event:OnChanged(function(AAA)
+    Library:Notify{ Title = "Fisch", Content = "Event: "..AAA, Duration = 2.5}
+    if AAA == "Abundance" then
+        findAbundancePart()
+    elseif AAA == "FischFright24" then
+        TPEvent()
+    elseif AAA == "Whirlpool" then
+        TPWhirlpool()
+    end
+end)
+
+local Island = Tabs.Teleport:CreateDropdown("Dropdown", {
+    Title = "Island / Area",
+    Values = {"Moosewood", "Altar"},
+    Multi = false,
+    Default = 1,
+})
+
+Island:OnChanged(function(AAA)
+    Library:Notify{ Title = "Fisch", Content = "Island: "..AAA, Duration = 2.5}
+    if AAA == "Moosewood" then
+        HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
+    elseif AAA == "Altar" then
+        HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
+    end
+end)
+
+Tabs.Fishing:CreateButton{
+    Title = "AntiAFK (Label)",
+    Callback = function()
+        replaceAFKEvent()
+    end
+}
+
+Tabs.Extra:CreateKeybind("Keybind", {
+    Title = "InviFly",
+    Mode = "Toggle",
+    Default = "X",
+
+    Callback = function()
+        Flying = not Flying
+
+        for _, part in pairs(visibleParts) do
+            part.Transparency = part.Transparency == 0 and 0.5 or 0
         end
+
+        if Flying then
+            Invis()
+            fly()
+        else
+            unInvis()
+        end
+    end,
+
+    ChangedCallback = function(New)
+        Library:Notify{ Title = "Fisch", Content = "Bind: "..New, Duration = 2.5 }
     end
-end)
+})
 
-Fishing:NewKeybind("InviFly", "KeybindInfo", Enum.KeyCode.X, function()
-    Flying = not Flying
+Tabs.Extra:CreateKeybind("Keybind", {
+    Title = "TP to Boat",
+    Mode = "Toggle",
+    Default = "B",
 
-    for _, part in pairs(visibleParts) do
-        part.Transparency = part.Transparency == 0 and 0.5 or 0
+    Callback = function()
+        TPlayerToBoat()
+    end,
+
+    ChangedCallback = function(New)
+        Library:Notify{ Title = "Fisch", Content = "Bind: "..New, Duration = 2.5 }
     end
+})
 
-    if Flying then
-        Invis()
-        fly()
-    else
-        unInvis()
-    end
-end)
-
-Fishing:NewKeybind("Ui", "KeybindInfo", Enum.KeyCode.LeftControl, function()
-	Library:ToggleUI()
-end)
-
-Fishing:NewButton("AntiAFK (Label)", "ButtonInfo", function()
-    replaceAFKEvent()
-end)
-
-Event:NewButton("FrischFright", "ButtonInfo", function()
-    if Flying then return end
-    local event = workspace.zones.fishing:FindFirstChild("FischFright24")
-    if event and event:IsA("BasePart") then
-        teleportToPart(event)
-    else
-        ShowNotification("Event", "Invalid")
-    end
-end)
-
-Event:NewButton("Abundance", "ButtonInfo", function()
-    findAbundancePart()
-end)
-
-Event:NewButton("Whirlpool", "ButtonInfo", function()
-    if Flying then return end
-    local whirlpool = workspace.active:FindFirstChild("Safe Whirlpool")
-    if whirlpool then
-        teleportToPart(whirlpool)
-    else
-        ShowNotification("Whirlpool", "Invalid")
-    end
-end)
-
-Event:NewLabel("Island/Area")
-
-Event:NewButton("Altar", "ButtonInfo", function()
-    HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1296.32080078125, -805.292236328125, -298.93817138671875))
-end)
-
-Event:NewButton("Moosewood", "ButtonInfo", function()
-    HumanoidRootPart.CFrame = CFrame.new(383.060546875, 134.50001525878906, 267.64471435546875)
-end)
-
-getgenv().Cooked = true
+Window:SelectTab(1)
+Library:Notify{ Title = "Fisch", Content = "Loaded.", Duration = 5 }
