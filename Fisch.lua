@@ -338,10 +338,10 @@ function AutoCast(Cast)
 
                         VirtualInputManager:SendMouseButtonEvent(1, 1, Enum.UserInputType.MouseButton1.Value, true, game, 1)
 
-                        local humanoidRootPart = playerBobberWorkspace:WaitForChild("HumanoidRootPart")
-                        local power = humanoidRootPart:WaitForChild("power")
-                        local powerbar = power:WaitForChild("powerbar")
-                        local bar = powerbar:WaitForChild("bar")
+                        local humanoidRootPart = playerBobberWorkspace:FindFirstChild("HumanoidRootPart")
+                        local power = humanoidRootPart:FindFirstChild("power")
+                        local powerbar = power:FindFirstChild("powerbar")
+                        local bar = powerbar:FindFirstChild("bar")
 
                         local mouseButtonUpFired = false
                         local WaitForPerfect
@@ -362,7 +362,7 @@ function AutoCast(Cast)
                             end
                         end)
 
-                        task.wait(1.25)
+                        task.wait(1.75)
                         Progress = false
                     end
                 end
