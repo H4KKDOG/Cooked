@@ -401,6 +401,7 @@ if isMobile() then
         TPToBoat()
     end)
 elseif isPC() then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/H4KKDOG/Cooked/refs/heads/main/InviFly.lua", true))()
     UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         if gameProcessedEvent then return end
 
