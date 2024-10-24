@@ -296,20 +296,22 @@ function AutoShake(Shake)
             local shakeUI = LocalPlayer.PlayerGui:FindFirstChild("shakeui")
             if shakeUI and shakeUI:FindFirstChild("safezone") then
                 local currentButton = shakeUI.safezone:FindFirstChild("button")
-                if currentButton ~= lastshake then
-                    lastshake = currentButton
+                if currentButton then
+                    if currentButton ~= lastshake then
+                        lastshake = currentButton
 
-                    local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
-                    local radius = ButtonSize.X / 2
-                    local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
-                    local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
+                        local ButtonPosition, ButtonSize = currentButton.AbsolutePosition, currentButton.AbsoluteSize
+                        local radius = ButtonSize.X / 2
+                        local ClickPositionX = ButtonPosition.X + ButtonSize.X - radius * 0.55
+                        local ClickPositionY = ButtonPosition.Y + ButtonSize.Y - radius * 0.55
 
-                    if ClickPositionX ~= 29 then
-                        VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
-                        VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                        if ClickPositionX ~= 29 then
+                            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, true, game, 1)
+                            VirtualInputManager:SendMouseButtonEvent(ClickPositionX, ClickPositionY, Enum.UserInputType.MouseButton1.Value, false, game, 1)
+                        end
+
+                        task.wait()
                     end
-
-                    task.wait()
                 end
             end
 
