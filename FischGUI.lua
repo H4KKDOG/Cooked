@@ -340,24 +340,24 @@ local Event = Teleport:NewSection("Event")
 local ACast = Main:NewToggle("Auto Cast", "ToggleInfo", function(value)
     AutoCast(value)
 end)
-ACast:UpdateToggle("Toggle On")
+ACast:UpdateToggle("Auto Cast", true)
 
 local AShake = Main:NewToggle("Auto Shake", "ToggleInfo", function(value)
     AutoShake(value)
 end)
-AShake:UpdateToggle("Toggle On")
+AShake:UpdateToggle("Auto Shake", true)
 
 local AReel = Main:NewToggle("Auto Reel", "ToggleInfo", function(value)
     AutoReel(value)
 end)
-AReel:UpdateToggle("Toggle On")
+AReel:UpdateToggle("Auto Reel", true)
 
 Main:NewLabel("Extra")
 
 local Oxy = Main:NewToggle("No Oxygen", "ToggleInfo", function(value)
     playerWorkspace:FindFirstChild("client"):FindFirstChild("oxygen").Disabled = value
 end)
-Oxy:UpdateToggle("Toggle On")
+Oxy:UpdateToggle("No Oxygen", true)
 
 Main:NewButton("Sell All Fish", "ButtonInfo", function()
     ReplicatedStorage.events.selleverything:InvokeServer()
