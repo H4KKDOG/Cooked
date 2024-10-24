@@ -149,7 +149,7 @@ function TPlayerToBoat()
 end
 
 function teleportToPart(part)
-    local offset = Vector3.new(100, 50, 0)
+    local offset = Vector3.new(100, 75, 0)
     local newPosition = part.Position + offset
     local lookAtCFrame = CFrame.new(newPosition, part.Position)
 
