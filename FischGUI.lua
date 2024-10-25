@@ -111,9 +111,9 @@ end
 function teleportToPart(part)
     local offset
     if Humanoid.Sit then
-        offset = Vector3.new(150, 0, 0)
+        offset = Vector3.new(150, 3, 0)
     else
-        offset = Vector3.new(75, 0, 0)
+        offset = Vector3.new(75, 3, 0)
     end
 
     local topPosition = part.Position + Vector3.new(0, part.Size.Y / 2, 0)
