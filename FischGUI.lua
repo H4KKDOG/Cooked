@@ -113,15 +113,15 @@ function teleportToPart(part)
     if Humanoid.Sit then
         offset = Vector3.new(150, 0, 0)
     else
-        offset = Vector3.new(100, 75, 0)
+        offset = Vector3.new(75, 0, 0)
     end
 
-    local newPosition = part.Position + offset
-    local lookAtCFrame = CFrame.new(newPosition, part.Position)
+    local topPosition = part.Position + Vector3.new(0, part.Size.Y / 2, 0)
+    local newPosition = topPosition + offset
 
+    local lookAtCFrame = CFrame.new(newPosition, topPosition)
     HumanoidRootPart.CFrame = lookAtCFrame
 end
-
 
 --// Other Function
 function updateRodInWorkspace()
