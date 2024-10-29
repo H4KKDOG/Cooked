@@ -5,7 +5,6 @@ local RunService = game:GetService("RunService")
 
 local horizontalSpeed = 175
 local verticalSpeed = 75
-local teleportState = 0
 
 local bodyVelocity
 local InvisCon
@@ -19,9 +18,11 @@ local function onCharacterAdded(newCharacter)
     local Head = newCharacter:FindFirstChild("Head")
     local playerWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
     local Character = newCharacter
-    
+
     visibleParts = {}
-    
+    Flying = false
+    isInvisible = false
+
     for _, part in pairs(Character:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency == 0 then
             table.insert(visibleParts, part)
