@@ -8,6 +8,7 @@ local verticalSpeed = 75
 
 local bodyVelocity
 local InvisCon
+local InputCon
 local Flying = false
 local isInvisible = false
 local visibleParts = {}
@@ -15,13 +16,14 @@ local visibleParts = {}
 local function onCharacterAdded(newCharacter)
     local Humanoid = newCharacter:FindFirstChildOfClass("Humanoid")
     local HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
-    local Head = newCharacter:FindFirstChild("Head")
-    local playerWorkspace = workspace:FindFirstChild(LocalPlayer.Name)
     local Character = newCharacter
 
     visibleParts = {}
     Flying = false
     isInvisible = false
+
+    if InputCon then InputCon:Disconnect() end
+    if InvisCon then InvisCon:Disconnect() end
 
     for _, part in pairs(Character:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency == 0 then
@@ -91,7 +93,7 @@ local function onCharacterAdded(newCharacter)
         end
     end
 
-    UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    InputCon = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         if gameProcessedEvent then return end
 
         if input.UserInputType == Enum.UserInputType.Keyboard then
