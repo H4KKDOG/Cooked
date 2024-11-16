@@ -45,6 +45,9 @@ local function disguiseCharacter(char, id)
         until success
 
         humanoid:ApplyDescriptionClientServer(desc)
+
+        print("\n\nFakeAvatar Applied\n")
+        print("")
     end)
 end
 
