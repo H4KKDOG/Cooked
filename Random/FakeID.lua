@@ -131,15 +131,25 @@ end
 
 -- Makes the player's character headless
 local function makeHeadless()
-    task.spawn(function()
-        while runService.RenderStepped:Wait() do
-            pcall(function()
-                local char = lp.Character or lp.CharacterAdded:Wait()
-                local head = char:WaitForChild("Head")
-                head.Transparency = 1
-                local face = head:FindFirstChildOfClass("Decal")
-                if face then face:Destroy() end
-            end)
+    local char = lp.Character or lp.CharacterAdded:Wait()
+    local head = char:WaitForChild("Head")
+    head.Transparency = 1
+
+    -- Remove any face decal
+    local face = head:FindFirstChildOfClass("Decal")
+    if face then face:Destroy() end
+
+    -- Listen for changes to the Head's Transparency
+    head:GetPropertyChangedSignal("Transparency"):Connect(function()
+        if head.Transparency ~= 1 then
+            head.Transparency = 1
+        end
+    end)
+
+    -- Handle new decals added to the Head
+    head.ChildAdded:Connect(function(child)
+        if child:IsA("Decal") then
+            child:Destroy()
         end
     end)
 end
