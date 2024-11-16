@@ -68,6 +68,7 @@ local function disguisechar(char, id)
         desc.HeightScale = hum:WaitForChild("HumanoidDescription").HeightScale
 
         -- Clone and apply disguise
+        char.Archivable = true
         local disguiseclone = char:Clone()
         disguiseclone.Name = "disguisechar"
         disguiseclone.Parent = workspace
