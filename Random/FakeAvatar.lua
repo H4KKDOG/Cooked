@@ -1,4 +1,3 @@
--- Global Configuration
 if not getgenv().Config then
     getgenv().Config = {
         Headless = true,
@@ -6,15 +5,16 @@ if not getgenv().Config then
     }
 end
 
--- Services
+if getgenv().FakeAvatar then
+    return
+end
+getgenv().FakeAvatar = true
+
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 local workspace = game:GetService("Workspace")
-
--- Local Player
 local lp = players.LocalPlayer
 
--- Cleans up the character by removing all old accessories and clothing
 local function cleanCharacter(char)
     for _, obj in ipairs(char:GetChildren()) do
         if obj:IsA("Accessory") or obj:IsA("Shirt") or obj:IsA("Pants") or obj:IsA("ShirtGraphic") or obj:IsA("BodyColors") then
@@ -28,11 +28,9 @@ local function cleanCharacter(char)
     end
 end
 
--- Applies a new appearance to the player's character
 local function disguiseCharacter(char, id)
     task.spawn(function()
         if not char then return end
-
         cleanCharacter(char)
 
         local humanoid = char:FindFirstChildOfClass("Humanoid")
@@ -45,13 +43,9 @@ local function disguiseCharacter(char, id)
         until success
 
         humanoid:ApplyDescriptionClientServer(desc)
-
-        print("\n\nFakeAvatar\n")
-        print("")
     end)
 end
 
--- Makes the player's character headless
 local function makeHeadless()
     task.spawn(function()
         local char = lp.Character or lp.CharacterAdded:Wait()
@@ -75,7 +69,6 @@ local function makeHeadless()
     end)
 end
 
--- Initialization
 lp.CharacterAppearanceId = Config.FakeId
 
 lp.CharacterAdded:Connect(function(char)
