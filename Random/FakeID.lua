@@ -145,7 +145,6 @@ local function makeHeadless()
 end
 
 -- Initialization
-
 lp.CharacterAppearanceId = Config.FakeId
 monitorUIText()
 
