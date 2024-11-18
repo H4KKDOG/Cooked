@@ -1,4 +1,4 @@
-local httpService = (game:GetService('HttpService')
+local httpService = game:GetService('HttpService')
 
 if copyfunction and isfolder then
 	local isfolder_, isfile_, listfiles_ = copyfunction(isfolder), copyfunction(isfile), copyfunction(listfiles);
