@@ -28,8 +28,7 @@
             }
         },
         "BundleId": 0,
-        "Name": "Confident",
-        "ProductId": 0
+        "Name": "Confident"
     },
     {
         "Animations": {
@@ -60,8 +59,7 @@
             }
         },
         "BundleId": 2,
-        "Name": "Popstar",
-        "ProductId": 0
+        "Name": "Popstar"
     },
     {
         "Animations": {
@@ -92,8 +90,7 @@
             }
         },
         "BundleId": 3,
-        "Name": "Patrol",
-        "ProductId": 0
+        "Name": "Patrol"
     },
     {
         "Animations": {
@@ -124,8 +121,7 @@
             }
         },
         "BundleId": 4,
-        "Name": "Sneaky",
-        "ProductId": 0
+        "Name": "Sneaky"
     },
     {
         "Animations": {
@@ -156,8 +152,7 @@
             }
         },
         "BundleId": 5,
-        "Name": "Princess",
-        "ProductId": 0
+        "Name": "Princess"
     },
     {
         "Animations": {
@@ -188,8 +183,7 @@
             }
         },
         "BundleId": 6,
-        "Name": "Cowboy",
-        "ProductId": 0
+        "Name": "Cowboy"
     },
     {
         "Animations": {
@@ -220,8 +214,7 @@
             }
         },
         "BundleId": 7,
-        "Name": "Stylized Female",
-        "ProductId": 0
+        "Name": "Stylized Female"
     },
     {
         "Animations": {
@@ -255,8 +248,7 @@
             }
         },
         "BundleId": 331856,
-        "Name": "Bold",
-        "ProductId": 1780868293
+        "Name": "Bold"
     },
     {
         "Animations": {
@@ -290,8 +282,7 @@
             }
         },
         "BundleId": 48,
-        "Name": "Elder",
-        "ProductId": 369653681
+        "Name": "Elder"
     },
     {
         "Animations": {
@@ -325,8 +316,7 @@
             }
         },
         "BundleId": 33,
-        "Name": "Vampire",
-        "ProductId": 369653663
+        "Name": "Vampire"
     },
     {
         "Animations": {
@@ -360,8 +350,7 @@
             }
         },
         "BundleId": 55,
-        "Name": "Pirate",
-        "ProductId": 369653689
+        "Name": "Pirate"
     },
     {
         "Animations": {
@@ -395,8 +384,7 @@
             }
         },
         "BundleId": 68,
-        "Name": "Knight",
-        "ProductId": 369653706
+        "Name": "Knight"
     },
     {
         "Animations": {
@@ -430,8 +418,7 @@
             }
         },
         "BundleId": 80,
-        "Name": "Zombie",
-        "ProductId": 369653719
+        "Name": "Zombie"
     },
     {
         "Animations": {
@@ -465,8 +452,7 @@
             }
         },
         "BundleId": 427999,
-        "Name": "Adidas",
-        "ProductId": 1879136294
+        "Name": "Adidas"
     },
     {
         "Animations": {
@@ -500,8 +486,7 @@
             }
         },
         "BundleId": 32,
-        "Name": "Werewolf",
-        "ProductId": 369653662
+        "Name": "Werewolf"
     },
     {
         "Animations": {
@@ -535,8 +520,7 @@
             }
         },
         "BundleId": 79,
-        "Name": "Levitation",
-        "ProductId": 369653718
+        "Name": "Levitation"
     },
     {
         "Animations": {
@@ -570,8 +554,7 @@
             }
         },
         "BundleId": 56,
-        "Name": "Cartoony",
-        "ProductId": 369653690
+        "Name": "Cartoony"
     },
     {
         "Animations": {
@@ -605,8 +588,7 @@
             }
         },
         "BundleId": 83,
-        "Name": "Stylish",
-        "ProductId": 369653722
+        "Name": "Stylish"
     },
     {
         "Animations": {
@@ -640,8 +622,7 @@
             }
         },
         "BundleId": 667,
-        "Name": "Oldschool",
-        "ProductId": 1023464725
+        "Name": "Oldschool"
     },
     {
         "Animations": {
@@ -675,8 +656,7 @@
             }
         },
         "BundleId": 356,
-        "Name": "Rthro",
-        "ProductId": 411751974
+        "Name": "Rthro"
     },
     {
         "Animations": {
@@ -710,8 +690,7 @@
             }
         },
         "BundleId": 63,
-        "Name": "Mage",
-        "ProductId": 369653700
+        "Name": "Mage"
     },
     {
         "Animations": {
@@ -745,8 +724,7 @@
             }
         },
         "BundleId": 43,
-        "Name": "Toy",
-        "ProductId": 369653676
+        "Name": "Toy"
     },
     {
         "Animations": {
@@ -780,8 +758,7 @@
             }
         },
         "BundleId": 39,
-        "Name": "Bubbly",
-        "ProductId": 369653672
+        "Name": "Bubbly"
     },
     {
         "Animations": {
@@ -815,8 +792,7 @@
             }
         },
         "BundleId": 75,
-        "Name": "Ninja",
-        "ProductId": 369653713
+        "Name": "Ninja"
     },
     {
         "Animations": {
@@ -850,8 +826,7 @@
             }
         },
         "BundleId": 82,
-        "Name": "Robot ",
-        "ProductId": 369653721
+        "Name": "Robot "
     },
     {
         "Animations": {
@@ -885,8 +860,7 @@
             }
         },
         "BundleId": 81,
-        "Name": "Superhero",
-        "ProductId": 369653720
+        "Name": "Superhero"
     },
     {
         "Animations": {
@@ -920,7 +894,6 @@
             }
         },
         "BundleId": 34,
-        "Name": "Astronaut",
-        "ProductId": 369653664
+        "Name": "Astronaut"
     }
 ]
