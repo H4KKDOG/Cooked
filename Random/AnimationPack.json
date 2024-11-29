@@ -1,8 +1,5 @@
 [
     {
-        "CustomImage": "rbxassetid://18812005744",
-        "Name": "Confident",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=1070017263"
@@ -30,12 +27,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=1070009914"
             }
         },
-        "BundleId": 0
+        "BundleId": 0,
+        "Name": "Confident",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812004390",
-        "Name": "Popstar",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=1212980338"
@@ -63,12 +59,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=1212852603"
             }
         },
-        "BundleId": 2
+        "BundleId": 2,
+        "Name": "Popstar",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812004850",
-        "Name": "Patrol",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=1151231493"
@@ -96,12 +91,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=1151204998"
             }
         },
-        "BundleId": 3
+        "BundleId": 3,
+        "Name": "Patrol",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812003361",
-        "Name": "Sneaky",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=1132510133"
@@ -129,12 +123,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=1132500520"
             }
         },
-        "BundleId": 4
+        "BundleId": 4,
+        "Name": "Sneaky",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812003901",
-        "Name": "Princess",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=941028902"
@@ -162,12 +155,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=941018893"
             }
         },
-        "BundleId": 5
+        "BundleId": 5,
+        "Name": "Princess",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812005219",
-        "Name": "Cowboy",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=1014421541"
@@ -195,12 +187,11 @@
                 "Swim": "http://www.roblox.com/asset/?id=1014406523"
             }
         },
-        "BundleId": 6
+        "BundleId": 6,
+        "Name": "Cowboy",
+        "ProductId": 0
     },
     {
-        "CustomImage": "rbxassetid://18812002767",
-        "Name": "Stylized Female",
-        "ProductId": 0,
         "Animations": {
             "walk": {
                 "WalkAnim": "http://www.roblox.com/asset/?id=4708193840"
@@ -228,7 +219,9 @@
                 "Swim": "http://www.roblox.com/asset/?id=4708189360"
             }
         },
-        "BundleId": 7
+        "BundleId": 7,
+        "Name": "Stylized Female",
+        "ProductId": 0
     },
     {
         "Animations": {
