@@ -262,7 +262,7 @@
             }
         },
         "BundleId": 331856,
-        "Name": "Bold  by e.l.f.",
+        "Name": "Bold",
         "ProductId": 1780868293
     },
     {
@@ -297,7 +297,7 @@
             }
         },
         "BundleId": 48,
-        "Name": "Elder ",
+        "Name": "Elder",
         "ProductId": 369653681
     },
     {
@@ -332,7 +332,7 @@
             }
         },
         "BundleId": 33,
-        "Name": "Vampire ",
+        "Name": "Vampire",
         "ProductId": 369653663
     },
     {
@@ -367,7 +367,7 @@
             }
         },
         "BundleId": 55,
-        "Name": "Pirate ",
+        "Name": "Pirate",
         "ProductId": 369653689
     },
     {
@@ -402,7 +402,7 @@
             }
         },
         "BundleId": 68,
-        "Name": "Knight ",
+        "Name": "Knight",
         "ProductId": 369653706
     },
     {
@@ -437,7 +437,7 @@
             }
         },
         "BundleId": 80,
-        "Name": "Zombie ",
+        "Name": "Zombie",
         "ProductId": 369653719
     },
     {
@@ -472,7 +472,7 @@
             }
         },
         "BundleId": 427999,
-        "Name": "adidas Sports ",
+        "Name": "Adidas",
         "ProductId": 1879136294
     },
     {
@@ -507,7 +507,7 @@
             }
         },
         "BundleId": 32,
-        "Name": "Werewolf ",
+        "Name": "Werewolf",
         "ProductId": 369653662
     },
     {
@@ -542,7 +542,7 @@
             }
         },
         "BundleId": 79,
-        "Name": "Levitation ",
+        "Name": "Levitation",
         "ProductId": 369653718
     },
     {
@@ -577,7 +577,7 @@
             }
         },
         "BundleId": 56,
-        "Name": "Cartoony ",
+        "Name": "Cartoony",
         "ProductId": 369653690
     },
     {
@@ -612,7 +612,7 @@
             }
         },
         "BundleId": 83,
-        "Name": "Stylish ",
+        "Name": "Stylish",
         "ProductId": 369653722
     },
     {
@@ -647,7 +647,7 @@
             }
         },
         "BundleId": 667,
-        "Name": "Oldschool ",
+        "Name": "Oldschool",
         "ProductId": 1023464725
     },
     {
@@ -682,7 +682,7 @@
             }
         },
         "BundleId": 356,
-        "Name": "Rthro ",
+        "Name": "Rthro",
         "ProductId": 411751974
     },
     {
@@ -717,43 +717,8 @@
             }
         },
         "BundleId": 63,
-        "Name": "Mage ",
+        "Name": "Mage",
         "ProductId": 369653700
-    },
-    {
-        "Animations": {
-            "idle": {
-                "Animation2": "http://www.roblox.com/asset/?id=18747063918",
-                "Animation1": "http://www.roblox.com/asset/?id=18747067405"
-            },
-            "climb": {
-                "ClimbAnim": "http://www.roblox.com/asset/?id=18747060903"
-            },
-            "run": {
-                "RunAnim": "http://www.roblox.com/asset/?id=18747070484"
-            },
-            "swim": {
-                "Swim": "http://www.roblox.com/asset/?id=18747073181"
-            },
-            "swimidle": {
-                "SwimIdle": "http://www.roblox.com/asset/?id=18747071682"
-            },
-            "jump": {
-                "JumpAnim": "http://www.roblox.com/asset/?id=18747069148"
-            },
-            "fall": {
-                "FallAnim": "http://www.roblox.com/asset/?id=18747062535"
-            },
-            "pose": {
-                "Pose": "http://www.roblox.com/asset/?id=18747065848"
-            },
-            "walk": {
-                "WalkAnim": "http://www.roblox.com/asset/?id=18747074203"
-            }
-        },
-        "BundleId": 455003,
-        "Name": "No Boundaries  by Walmart",
-        "ProductId": 1894787805
     },
     {
         "Animations": {
@@ -787,7 +752,7 @@
             }
         },
         "BundleId": 43,
-        "Name": "Toy ",
+        "Name": "Toy",
         "ProductId": 369653676
     },
     {
@@ -822,7 +787,7 @@
             }
         },
         "BundleId": 39,
-        "Name": "Bubbly ",
+        "Name": "Bubbly",
         "ProductId": 369653672
     },
     {
@@ -857,7 +822,7 @@
             }
         },
         "BundleId": 75,
-        "Name": "Ninja ",
+        "Name": "Ninja",
         "ProductId": 369653713
     },
     {
@@ -927,7 +892,7 @@
             }
         },
         "BundleId": 81,
-        "Name": "Superhero ",
+        "Name": "Superhero",
         "ProductId": 369653720
     },
     {
@@ -962,7 +927,7 @@
             }
         },
         "BundleId": 34,
-        "Name": "Astronaut ",
+        "Name": "Astronaut",
         "ProductId": 369653664
     }
 ]
