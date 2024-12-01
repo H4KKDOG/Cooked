@@ -244,63 +244,64 @@ function library:Window(name)
 	
 	return Label
     end
-    function functions:Toggle(text, on, callback)
-        local callback = callback or function() end
-
-        sizes[winCount] = sizes[winCount] + 32
-        Window.Size = UDim2.new(0, 207, 0, sizes[winCount] + 10)
-
-        listOffset[winCount] = listOffset[winCount] + 32
-
-        local ToggleDescription = Instance.new("TextLabel")
-        local ToggleButton = Instance.new("TextButton")
-        local ToggleFiller = Instance.new("Frame")
-
-        ToggleDescription.Name = "ToggleDescription"
-        ToggleDescription.Parent = Window
-        ToggleDescription.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        ToggleDescription.BackgroundTransparency = 1.000
-        ToggleDescription.Position = UDim2.new(0, 14, 0, listOffset[winCount])
-        ToggleDescription.Size = UDim2.new(0, 131, 0, 26)
-        ToggleDescription.Font = Enum.Font.SourceSans
-        ToggleDescription.Text = text or "Toggle"
-        ToggleDescription.TextColor3 = Color3.fromRGB(245, 246, 250)
-        ToggleDescription.TextSize = 16.000
-        ToggleDescription.TextWrapped = true
-        ToggleDescription.TextXAlignment = Enum.TextXAlignment.Left
-        ToggleDescription.ZIndex = 2 + zindex
-
-        ToggleButton.Name = "ToggleButton"
-        ToggleButton.Parent = ToggleDescription
-        ToggleButton.BackgroundColor3 = Color3.fromRGB(47, 54, 64)
-        ToggleButton.BorderColor3 = Color3.fromRGB(113, 128, 147)
-        ToggleButton.Position = UDim2.new(1.2061069, 0, 0.0769230798, 0)
-        ToggleButton.Size = UDim2.new(0, 22, 0, 22)
-        ToggleButton.Font = Enum.Font.SourceSans
-        ToggleButton.Text = ""
-        ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-        ToggleButton.TextSize = 14.000
-        ToggleButton.ZIndex = 2 + zindex
-        ToggleButton.MouseButton1Up:Connect(function()
-            ToggleFiller.Visible = not ToggleFiller.Visible
-            callback(ToggleFiller.Visible)
-        end)
-
-        ToggleFiller.Name = "ToggleFiller"
-        ToggleFiller.Parent = ToggleButton
-        ToggleFiller.BackgroundColor3 = Color3.fromRGB(68, 189, 50)
-        ToggleFiller.BorderColor3 = Color3.fromRGB(47, 54, 64)
-        ToggleFiller.Position = UDim2.new(0, 5, 0, 5)
-        ToggleFiller.Size = UDim2.new(0, 12, 0, 12)
-        ToggleFiller.Visible = on
-        ToggleFiller.ZIndex = 2 + zindex
-
-        if on then
-            callback(true)
-        end
-    
-        pastSliders[winCount] = false
-    end
+	function functions:Toggle(text, on, callback)
+	    local callback = callback or function() end
+	
+	    sizes[winCount] = sizes[winCount] + 32
+	    Window.Size = UDim2.new(0, 207, 0, sizes[winCount] + 10)
+	    listOffset[winCount] = listOffset[winCount] + 32
+	
+	    local ToggleDescription = Instance.new("TextLabel")
+	    local ToggleButton = Instance.new("TextButton")
+	    local ToggleFiller = Instance.new("Frame")
+	
+	    ToggleDescription.Name = "ToggleDescription"
+	    ToggleDescription.Parent = Window
+	    ToggleDescription.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	    ToggleDescription.BackgroundTransparency = 1.000
+	    ToggleDescription.Position = UDim2.new(0, 14, 0, listOffset[winCount])
+	    ToggleDescription.Size = UDim2.new(0, 131, 0, 26)
+	    ToggleDescription.Font = Enum.Font.SourceSans
+	    ToggleDescription.Text = text or "Toggle"
+	    ToggleDescription.TextColor3 = Color3.fromRGB(245, 246, 250)
+	    ToggleDescription.TextSize = 16.000
+	    ToggleDescription.TextWrapped = true
+	    ToggleDescription.TextXAlignment = Enum.TextXAlignment.Left
+	    ToggleDescription.ZIndex = 2 + zindex
+	
+	    ToggleButton.Name = "ToggleButton"
+	    ToggleButton.Parent = ToggleDescription
+	    ToggleButton.BackgroundColor3 = Color3.fromRGB(47, 54, 64)
+	    ToggleButton.BorderColor3 = Color3.fromRGB(113, 128, 147)
+	    ToggleButton.Position = UDim2.new(1.2061069, 0, 0.0769230798, 0)
+	    ToggleButton.Size = UDim2.new(0, 22, 0, 22)
+	    ToggleButton.Font = Enum.Font.SourceSans
+	    ToggleButton.Text = ""
+	    ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+	    ToggleButton.TextSize = 14.000
+	    ToggleButton.ZIndex = 2 + zindex
+	    ToggleButton.MouseButton1Up:Connect(function()
+	        ToggleFiller.Visible = not ToggleFiller.Visible
+	        callback(ToggleFiller.Visible)
+	    end)
+	
+	    ToggleFiller.Name = "ToggleFiller"
+	    ToggleFiller.Parent = ToggleButton
+	    ToggleFiller.BackgroundColor3 = Color3.fromRGB(68, 189, 50)
+	    ToggleFiller.BorderColor3 = Color3.fromRGB(47, 54, 64)
+	    ToggleFiller.Position = UDim2.new(0, 5, 0, 5)
+	    ToggleFiller.Size = UDim2.new(0, 12, 0, 12)
+	    ToggleFiller.Visible = on
+	    ToggleFiller.ZIndex = 2 + zindex
+	
+	    if on then
+	        task.defer(function()
+	            callback(true)
+	        end)
+	    end
+	
+	    pastSliders[winCount] = false
+	end
     function functions:Box(text, callback)
         local callback = callback or function() end
 
