@@ -24,59 +24,61 @@ local player = players.LocalPlayer;
 local mouse = player:GetMouse();
 local run = game:service('RunService');
 local stepped = run.Stepped;
-
 function Dragify(obj)
-    spawn(function()
-        local minitial;
-        local initial;
-        local isdragging;
-        obj.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                isdragging = true;
-                minitial = input.Position;
-                initial = obj.Position;
-                local con;
+	spawn(function()
+		local minitial;
+		local initial;
+		local isdragging;
+	    obj.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				isdragging = true;
+				minitial = input.Position;
+				initial = obj.Position;
+				local con;
                 con = stepped:Connect(function()
-                    if isdragging then
-                        local delta = Vector3.new(mouse.X, mouse.Y, 0) - minitial;
-                        obj.Position = UDim2.new(initial.X.Scale, initial.X.Offset + delta.X, initial.Y.Scale, initial.Y.Offset + delta.Y);
-                    else
-                        con:Disconnect();
-                    end;
+        			if isdragging then
+						local delta = Vector3.new(mouse.X, mouse.Y, 0) - minitial;
+						obj.Position = UDim2.new(initial.X.Scale, initial.X.Offset + delta.X, initial.Y.Scale, initial.Y.Offset + delta.Y);
+					else
+						con:Disconnect();
+					end;
                 end);
                 input.Changed:Connect(function()
-                    if input.UserInputState == Enum.UserInputState.End then
-                        isdragging = false;
-                    end;
-                end);
-            end;
-        end)
-    end)
+    			    if input.UserInputState == Enum.UserInputState.End then
+					    isdragging = false;
+				    end;
+			    end);
+		end;
+	end);
+end)
 end
 
 -- Instances:
 
 local function protect_gui(obj) 
-    if destroyed then
-        obj.Parent = game.CoreGui
-        return
-    end
-    if syn and syn.protect_gui then
-        syn.protect_gui(obj)
-        obj.Parent = game.CoreGui
-    elseif PROTOSMASHER_LOADED then
-        obj.Parent = get_hidden_gui()
-    else
-        obj.Parent = game.CoreGui
-    end
+if destroyed then
+   obj.Parent = game.CoreGui
+   return
 end
-
+if syn and syn.protect_gui then
+syn.protect_gui(obj)
+obj.Parent = game.CoreGui
+elseif PROTOSMASHER_LOADED then
+obj.Parent = get_hidden_gui()
+else
+obj.Parent = game.CoreGui
+end
+end
 local TurtleUiLib = Instance.new("ScreenGui")
+
 TurtleUiLib.Name = "TurtleUiLib"
+
 protect_gui(TurtleUiLib)
 
 local xOffset = 20
+
 local uis = game:GetService("UserInputService")
+
 local keybindConnection
 
 function library:Destroy()
@@ -85,10 +87,9 @@ function library:Destroy()
         keybindConnection:Disconnect()
     end
 end
-
 function library:Hide()
-    TurtleUiLib.Enabled = not TurtleUiLib.Enabled
-end    
+   TurtleUiLib.Enabled = not TurtleUiLib.Enabled
+end	
 
 function library:Keybind(key)
     if keybindConnection then keybindConnection:Disconnect() end
@@ -108,8 +109,8 @@ function library:Window(name)
 
     UiWindow.Name = "UiWindow"
     UiWindow.Parent = TurtleUiLib
-    UiWindow.BackgroundColor3 = Color3.fromRGB(128, 128, 128) -- Gray background
-    UiWindow.BorderColor3 = Color3.fromRGB(128, 128, 128)
+    UiWindow.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
+    UiWindow.BorderColor3 = Color3.fromRGB(0, 151, 230)
     UiWindow.Position = UDim2.new(0, xOffset, 0, 20)
     UiWindow.Size = UDim2.new(0, 207, 0, 33)
     UiWindow.ZIndex = 4 + zindex
@@ -125,8 +126,8 @@ function library:Window(name)
     local Header = Instance.new("Frame")
     Header.Name = "Header"
     Header.Parent = UiWindow
-    Header.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Black header
-    Header.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Header.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
+    Header.BorderColor3 = Color3.fromRGB(0, 151, 230)
     Header.Position = UDim2.new(0, 0, -0.0202544238, 0)
     Header.Size = UDim2.new(0, 207, 0, 26)
     Header.ZIndex = 5 + zindex
@@ -145,7 +146,7 @@ function library:Window(name)
     HeaderText.ZIndex = 6 + zindex
     HeaderText.Font = Enum.Font.SourceSans
     HeaderText.Text = name or "Window"
-    HeaderText.TextColor3 = Color3.fromRGB(255, 255, 255) -- White font
+    HeaderText.TextColor3 = Color3.fromRGB(47, 54, 64)
     HeaderText.TextSize = 17.000
 
     local Minimise = Instance.new("TextButton")
@@ -153,20 +154,20 @@ function library:Window(name)
     Minimise.Name = "Minimise"
     Minimise.Parent = Header
     Minimise.BackgroundTransparency = 1.000
-    Minimise.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Minimise.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Minimise.BackgroundColor3 = Color3.fromRGB(0, 168, 255)
+    Minimise.BorderColor3 = Color3.fromRGB(0, 168, 255)
     Minimise.Position = UDim2.new(0, 185, 0, 2)
     Minimise.Size = UDim2.new(0, 22, 0, 22)
     Minimise.ZIndex = 7 + zindex
     Minimise.Font = Enum.Font.SourceSansLight
     Minimise.Text = "."
-    Minimise.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+    Minimise.TextColor3 = Color3.fromRGB(0, 0, 0)
     Minimise.TextSize = 20.000
 
     local UICorner = Instance.new("UICorner")
     UICorner.Parent = Minimise
     UICorner.CornerRadius = UDim.new(0, 10)
-    
+	
     Minimise.MouseButton1Up:connect(function()
         Window.Visible = not Window.Visible
     end)
@@ -185,6 +186,7 @@ function library:Window(name)
 
     local functions = {}
     functions.__index = functions
+    functions.Ui = UiWindow
 
     sizes[winCount] = 33
     listOffset[winCount] = 10
@@ -214,7 +216,7 @@ function library:Window(name)
         Button.TextColor3 = Color3.fromRGB(245, 246, 250)
         Button.TextSize = 16.000
         Button.TextStrokeTransparency = 123.000
-        Button .TextWrapped = true
+        Button.TextWrapped = true
         Button.Text = name
         Button.MouseButton1Down:Connect(callback)
         local UICorner = Instance.new("UICorner")
@@ -243,25 +245,24 @@ function library:Window(name)
         Label.Text = text or "Label"
         Label.TextSize = 16.000
         Label.ZIndex = 2 + zindex
-        Label.TextColor3 = Color3.fromRGB(245, 246, 250) -- Ensure label color is visible against gray background
 
         local UICorner = Instance.new("UICorner")
         UICorner.Parent = Label
         UICorner.CornerRadius = UDim.new(0, 10)
 
         if type(color) == "boolean" and color then
-            spawn(function()
+	    spawn(function()
                 while wait() do
                     local hue = tick() % 5 / 5
                     Label.TextColor3 = Color3.fromHSV(hue, 1, 1)
                 end
-            end)
+	    end)
         else
             Label.TextColor3 = color
         end
         pastSliders[winCount] = false
 	
-        return Label
+	return Label
     end
 	function functions:Toggle(text, on, callback)
 	    local callback = callback or function() end
