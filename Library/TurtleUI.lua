@@ -119,6 +119,10 @@ function library:Window(name)
 
     xOffset = xOffset + 230
 
+    local UICorner = Instance.new("UICorner")
+    UICorner.Parent = UiWindow
+    UICorner.CornerRadius = UDim.new(0, 10)
+
     local Header = Instance.new("Frame")
     Header.Name = "Header"
     Header.Parent = UiWindow
@@ -127,6 +131,10 @@ function library:Window(name)
     Header.Position = UDim2.new(0, 0, -0.0202544238, 0)
     Header.Size = UDim2.new(0, 207, 0, 26)
     Header.ZIndex = 5 + zindex
+
+    local HeaderCorner = Instance.new("UICorner")
+    HeaderCorner.Parent = Header
+    HeaderCorner.CornerRadius = UDim.new(0, 10) 
 
     local HeaderText = Instance.new("TextLabel")
     HeaderText.Name = "HeaderText"
@@ -206,6 +214,9 @@ function library:Window(name)
         Button.TextWrapped = true
         Button.Text = name
         Button.MouseButton1Down:Connect(callback)
+        local UICorner = Instance.new("UICorner")
+        UICorner.Parent = Button
+        UICorner.CornerRadius = UDim.new(0, 10)
 
         pastSliders[winCount] = false
     end
@@ -229,6 +240,10 @@ function library:Window(name)
         Label.Text = text or "Label"
         Label.TextSize = 16.000
         Label.ZIndex = 2 + zindex
+
+        local UICorner = Instance.new("UICorner")
+        UICorner.Parent = Label
+        UICorner.CornerRadius = UDim.new(0, 10)
 
         if type(color) == "boolean" and color then
 	    spawn(function()
@@ -254,6 +269,8 @@ function library:Window(name)
 	    local ToggleDescription = Instance.new("TextLabel")
 	    local ToggleButton = Instance.new("TextButton")
 	    local ToggleFiller = Instance.new("Frame")
+	    local UICornerToggleButton = Instance.new("UICorner")
+	    local UICornerToggleFiller = Instance.new("UICorner")
 	
 	    ToggleDescription.Name = "ToggleDescription"
 	    ToggleDescription.Parent = Window
@@ -280,6 +297,10 @@ function library:Window(name)
 	    ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 	    ToggleButton.TextSize = 14.000
 	    ToggleButton.ZIndex = 2 + zindex
+
+	    UICornerToggleButton.Parent = ToggleButton
+	    UICornerToggleButton.CornerRadius = UDim.new(0.5, 0)
+		
 	    ToggleButton.MouseButton1Up:Connect(function()
 	        ToggleFiller.Visible = not ToggleFiller.Visible
 	        callback(ToggleFiller.Visible)
@@ -293,6 +314,9 @@ function library:Window(name)
 	    ToggleFiller.Size = UDim2.new(0, 12, 0, 12)
 	    ToggleFiller.Visible = on
 	    ToggleFiller.ZIndex = 2 + zindex
+
+	    UICornerToggleFiller.Parent = ToggleFiller
+	    UICornerToggleFiller.CornerRadius = UDim.new(1, 0)
 	
 	    if on then
 	        task.defer(function()
