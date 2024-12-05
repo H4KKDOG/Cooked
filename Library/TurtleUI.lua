@@ -109,8 +109,8 @@ function library:Window(name)
 
     UiWindow.Name = "UiWindow"
     UiWindow.Parent = TurtleUiLib
-    UiWindow.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
-    UiWindow.BorderColor3 = Color3.fromRGB(0, 151, 230)
+    UiWindow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    UiWindow.BorderColor3 = Color3.fromRGB(0, 0, 0)
     UiWindow.Position = UDim2.new(0, xOffset, 0, 20)
     UiWindow.Size = UDim2.new(0, 207, 0, 33)
     UiWindow.ZIndex = 4 + zindex
@@ -126,8 +126,8 @@ function library:Window(name)
     local Header = Instance.new("Frame")
     Header.Name = "Header"
     Header.Parent = UiWindow
-    Header.BackgroundColor3 = Color3.fromRGB(0, 151, 230)
-    Header.BorderColor3 = Color3.fromRGB(0, 151, 230)
+    Header.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Header.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Header.Position = UDim2.new(0, 0, -0.0202544238, 0)
     Header.Size = UDim2.new(0, 207, 0, 26)
     Header.ZIndex = 5 + zindex
@@ -146,32 +146,10 @@ function library:Window(name)
     HeaderText.ZIndex = 6 + zindex
     HeaderText.Font = Enum.Font.SourceSans
     HeaderText.Text = name or "Window"
-    HeaderText.TextColor3 = Color3.fromRGB(47, 54, 64)
+    HeaderText.TextColor3 = Color3.fromRGB(255, 255, 255)
     HeaderText.TextSize = 17.000
 
-    local Minimise = Instance.new("TextButton")
     local Window = Instance.new("Frame")
-    Minimise.Name = "Minimise"
-    Minimise.Parent = Header
-    Minimise.BackgroundTransparency = 1.000
-    Minimise.BackgroundColor3 = Color3.fromRGB(0, 168, 255)
-    Minimise.BorderColor3 = Color3.fromRGB(0, 168, 255)
-    Minimise.Position = UDim2.new(0, 185, 0, 2)
-    Minimise.Size = UDim2.new(0, 22, 0, 22)
-    Minimise.ZIndex = 7 + zindex
-    Minimise.Font = Enum.Font.SourceSansLight
-    Minimise.Text = "."
-    Minimise.TextColor3 = Color3.fromRGB(0, 0, 0)
-    Minimise.TextSize = 20.000
-
-    local UICorner = Instance.new("UICorner")
-    UICorner.Parent = Minimise
-    UICorner.CornerRadius = UDim.new(0, 10)
-	
-    Minimise.MouseButton1Up:connect(function()
-        Window.Visible = not Window.Visible
-    end)
-
     Window.Name = "Window"
     Window.Parent = Header
     Window.BackgroundColor3 = Color3.fromRGB(47, 54, 64)
