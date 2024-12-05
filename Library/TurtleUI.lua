@@ -159,7 +159,7 @@ function library:Window(name)
     Minimise.Size = UDim2.new(0, 22, 0, 22)
     Minimise.ZIndex = 7 + zindex
     Minimise.Font = Enum.Font.SourceSansLight
-    Minimise.Text = "-"
+    Minimise.Text = "."
     Minimise.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
     Minimise.TextSize = 20.000
 
@@ -169,11 +169,6 @@ function library:Window(name)
     
     Minimise.MouseButton1Up:connect(function()
         Window.Visible = not Window.Visible
-        if Window.Visible then
-            Minimise.Text = "-"
-        else
-            Minimise.Text = "+"
-        end
     end)
 
     Window.Name = "Window"
