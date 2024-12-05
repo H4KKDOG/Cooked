@@ -76,7 +76,7 @@ TurtleUiLib.Name = "TurtleUiLib"
 protect_gui(TurtleUiLib)
 
 local xOffset = 20
-local uis = game:GetService("User InputService")
+local uis = game:GetService("UserInputService")
 local keybindConnection
 
 function library:Destroy()
