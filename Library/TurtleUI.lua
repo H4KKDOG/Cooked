@@ -162,6 +162,11 @@ function library:Window(name)
     Minimise.Text = "_"
     Minimise.TextColor3 = Color3.fromRGB(0, 0, 0)
     Minimise.TextSize = 20.000
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.Parent = Minimise
+    UICorner.CornerRadius = UDim.new(0, 10)
+	
     Minimise.MouseButton1Up:connect(function()
         Window.Visible = not Window.Visible
 	if Window.Visible then
@@ -178,6 +183,10 @@ function library:Window(name)
     Window.Position = UDim2.new(0, 0, 0, 0)
     Window.Size = UDim2.new(0, 207, 0, 33)
     Window.ZIndex = 1 + zindex
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.Parent = Window
+    UICorner.CornerRadius = UDim.new(0, 10)
 
     local functions = {}
     functions.__index = functions
@@ -297,9 +306,6 @@ function library:Window(name)
 	    ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 	    ToggleButton.TextSize = 14.000
 	    ToggleButton.ZIndex = 2 + zindex
-
-	    UICornerToggleButton.Parent = ToggleButton
-	    UICornerToggleButton.CornerRadius = UDim.new(0.5, 0)
 		
 	    ToggleButton.MouseButton1Up:Connect(function()
 	        ToggleFiller.Visible = not ToggleFiller.Visible
