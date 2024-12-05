@@ -153,13 +153,14 @@ function library:Window(name)
     local Window = Instance.new("Frame")
     Minimise.Name = "Minimise"
     Minimise.Parent = Header
+    Minimise.BackgroundTransparency = 1.000
     Minimise.BackgroundColor3 = Color3.fromRGB(0, 168, 255)
     Minimise.BorderColor3 = Color3.fromRGB(0, 168, 255)
     Minimise.Position = UDim2.new(0, 185, 0, 2)
     Minimise.Size = UDim2.new(0, 22, 0, 22)
     Minimise.ZIndex = 7 + zindex
     Minimise.Font = Enum.Font.SourceSansLight
-    Minimise.Text = "_"
+    Minimise.Text = "-"
     Minimise.TextColor3 = Color3.fromRGB(0, 0, 0)
     Minimise.TextSize = 20.000
 
@@ -170,7 +171,7 @@ function library:Window(name)
     Minimise.MouseButton1Up:connect(function()
         Window.Visible = not Window.Visible
 	if Window.Visible then
-		Minimise.Text = "_"
+		Minimise.Text = "-"
 	else
 		Minimise.Text = "+"
 	end
