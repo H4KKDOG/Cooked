@@ -160,69 +160,68 @@ local defaults; do
             return c
         end
         
-        function types:Toggle(name, options, callback)
-            local default  = options.default or false;
-            local location = options.location or self.flags;
-            local flag     = options.flag or "";
-            local callback = callback or function() end;
-            
-            location[flag] = default;
-
-            local check = library:Create('Frame', {
-                BackgroundTransparency = 1;
-                Size = UDim2.new(1, 0, 0, 25);
-                LayoutOrder = self:GetOrder();
-                library:Create('TextLabel', {
-                    Name = name;
-                    Text = "\r" .. name;
-                    BackgroundTransparency = 1;
-                    TextColor3 = library.options.textcolor;
-                    Position = UDim2.new(0, 5, 0, 0);
-                    Size     = UDim2.new(1, -5, 1, 0);
-                    TextXAlignment = Enum.TextXAlignment.Left;
-                    Font = library.options.font;
-                    TextSize = library.options.fontsize;
-                    TextStrokeTransparency = library.options.textstroke;
-                    TextStrokeColor3 = library.options.strokecolor;
-                    library:Create('TextButton', {
-                        Text = (location[flag] and utf8.char(10003) or "");
-                        Font = library.options.font;
-                        TextSize = library.options.fontsize;
-                        Name = 'Checkmark';
-                        Size = UDim2.new(0, 20, 0, 20);
-                        Position = UDim2.new(1, -25, 0, 4);
-                        TextColor3 = library.options.textcolor;
-                        BackgroundColor3 = library.options.bgcolor;
-                        BorderColor3 = library.options.bordercolor;
-                        TextStrokeTransparency = library.options.textstroke;
-                        TextStrokeColor3 = library.options.strokecolor;
-                    })
-                });
-                Parent = self.container;
-            });
-                
-            local function click(t)
-                location[flag] = not location[flag];
-                callback(location[flag])
-                check:FindFirstChild(name).Checkmark.Text = location[flag] and utf8.char(10003) or "";
-            end
-
-            check:FindFirstChild(name).Checkmark.MouseButton1Click:connect(click)
-            library.callbacks[flag] = click;
-
-            if location[flag] == true then
-                callback(location[flag])
-            end
-
-            self:Resize();
-            return {
-                Set = function(self, b)
-                    location[flag] = b;
-                    callback(location[flag])
-                    check:FindFirstChild(name).Checkmark.Text = location[flag] and utf8.char(10003) or "";
-                end
-            }
-        end
+	function types:Toggle(name, options, callback)
+	    local default = options.default or false
+	    local location = options.location or self.flags
+	    local flag = options.flag or ""
+	    local callback = callback or function() end
+	    
+	    location[flag] = default
+	    
+	    local check = library:Create('Frame', {
+	        BackgroundTransparency = 1,
+	        Size = UDim2.new(1, 0, 0, 25),
+	        LayoutOrder = self:GetOrder(),
+	        library:Create('TextLabel', {
+	            Name = name,
+	            Text = "\r" .. name,
+	            BackgroundTransparency = 1,
+	            TextColor3 = library.options.textcolor,
+	            Position = UDim2.new(0, 5, 0, 0),
+	            Size = UDim2.new(1, -5, 1, 0),
+	            TextXAlignment = Enum.TextXAlignment.Left,
+	            Font = library.options.font,
+	            TextSize = library.options.fontsize,
+	            TextStrokeTransparency = library.options.textstroke,
+	            TextStrokeColor3 = library.options.strokecolor,
+	            library:Create('TextButton', {
+	                Text = (location[flag] and utf8.char(10003) or ""),
+	                Font = library.options.font,
+	                TextSize = library.options.fontsize,
+	                Name = 'Checkmark',
+	                Size = UDim2.new(0, 20, 0, 20),
+	                Position = UDim2.new(1, -25, 0, 4),
+	                TextColor3 = library.options.textcolor,
+	                BackgroundColor3 = library.options.bgcolor,
+	                BorderColor3 = library.options.bordercolor,
+	                TextStrokeTransparency = library.options.textstroke,
+	                TextStrokeColor3 = library.options.strokecolor,
+	            })
+	        }),
+	        Parent = self.container,
+	    })
+	    
+	    local function click(t)
+	        location[flag] = not location[flag]
+	        callback(location[flag])
+	        check:FindFirstChild(name).Checkmark.Text = location[flag] and utf8.char(10003) or ""
+	    end
+	    
+	    check:FindFirstChild(name).Checkmark.MouseButton1Click:connect(click)
+	    library.callbacks[flag] = click
+	    
+	    callback(location[flag])
+	    
+	    self:Resize()
+	    
+	    return {
+	        Set = function(self, b)
+	            location[flag] = b
+	            callback(location[flag])
+	            check:FindFirstChild(name).Checkmark.Text = location[flag] and utf8.char(10003) or ""
+	        end
+	    }
+	end
         
         function types:Button(name, callback)
             callback = callback or function() end;
